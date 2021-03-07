@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React, {useState} from 'react';
+import { Global, css } from '@emotion/react'
 
 const options = [
   {
@@ -11,7 +12,7 @@ const options = [
     value: 'fr'
   },
   {
-    description: 'Española',
+    description: 'Español',
     value: 'es'
   },
 
@@ -20,6 +21,16 @@ const options = [
 const LabelStyled = styled.label`
   white-space: nowrap;
   margin-right: 4px;
+  ${(props) =>
+    props.isScreenReaderOnly &&
+    css`
+     position:absolute;
+      left:-10000px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    `}
 `
 
 const SelectStyled = styled.select`
@@ -30,7 +41,8 @@ const Select = (props) => {
   const {
     labelFor,
     labelTitle,
-    selectOptions
+    selectOptions,
+    isScreenReaderOnly
   } = props;
 
   const handleChange = (e) => {
@@ -38,7 +50,7 @@ const Select = (props) => {
   }
   return (
     <>
-        <LabelStyled for={labelFor}>{labelTitle}</LabelStyled>
+  <LabelStyled isScreenReaderOnly={isScreenReaderOnly} for={labelFor}>{labelTitle}</LabelStyled>
   <SelectStyled value={value} name={labelFor} id={labelFor} onChange={handleChange}>
     {options.map(opt => (
       <option value={opt.value}>{opt.description}</option>

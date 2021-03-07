@@ -29,6 +29,7 @@ const DesktopNavLinks = () => {
           <Select 
             labelFor='language'
             labelTitle='Language'
+            isScreenReaderOnly
           />
 
         </span>
