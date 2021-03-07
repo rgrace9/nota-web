@@ -7,9 +7,9 @@ const Layout = ({ children }) => (
     <Navbar />
 
      </MenuProvider>
-    <div style={{marginTop: '100px'}}>
+    <main style={{marginTop: '100px'}}>
       {children}
-    </div>
+    </main>
   </div>
 )
 export default Layout;
