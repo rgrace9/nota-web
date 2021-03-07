@@ -15,6 +15,10 @@ const options = [
     description: 'Español',
     value: 'es'
   },
+  {
+    description: '中文',
+    value: 'zh'
+  }
 
 ]
 
@@ -42,16 +46,19 @@ const Select = (props) => {
     labelFor,
     labelTitle,
     selectOptions,
-    isScreenReaderOnly
+    isScreenReaderOnly,
+    onChange,
+    defaultValue
   } = props;
 
   const handleChange = (e) => {
-    setValue(e.target.value)
+    setValue(e.target.value);
+    onChange(e.target.value)
   }
   return (
     <>
   <LabelStyled isScreenReaderOnly={isScreenReaderOnly} for={labelFor}>{labelTitle}</LabelStyled>
-  <SelectStyled value={value} name={labelFor} id={labelFor} onChange={handleChange}>
+  <SelectStyled defaultValue={defaultValue} value={value} name={labelFor} id={labelFor} onChange={handleChange}>
     {options.map(opt => (
       <option value={opt.value}>{opt.description}</option>
     ))}

@@ -5,20 +5,51 @@ import { useMenuContext } from "../../../utils/state";
 import { useTheme } from "../../../utils/hooks";
 import Icon from "../Icon";
 import Select from '../dataEntry/Select'
-
-export const links = ['resources', 'events', "about", "contact"];
+import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 const DesktopNavLinks = () => {
   const { closeMenu } = useMenuContext();
-  const [theme, toggleTheme] = useTheme();
 
+  
+  const { t } = useTranslation('nav')
+  const router = useRouter()
+  
+  const links = [
+    {
+      title:t('resources'),
+      link: 'resources'
+    },
+    {
+      title: t('events'),
+      link: 'events'
+    },
+    {
+      title: t("about"),
+      link: 'about'
+    },
+    {
+      title: t("contact"), 
+      link: 'contact'
+    }
+  ];
+
+  const onLanguageChange = (selectedLocale) => {
+    if (router.locales.includes(selectedLocale)) {
+      router.push(router.pathname, router.pathname, { locale: selectedLocale })
+    }
+  }
   return (
     <NavLinksWrapper className="nav-links">
       {links.map((link) => (
-        <li key={link}>
-          <Link href={`/${link}`} onClick={closeMenu}>
+        <li key={link.link}>
+          <Link
+            href={`/${link.link}`}
+            onClick={closeMenu}
+            locale={router.locale || router.defaultLocale}
+          >
            <NavLink className="link">
-            {link || 'Main'}
+            {link.title}
            </NavLink>
           </Link>
         </li>
@@ -30,6 +61,8 @@ const DesktopNavLinks = () => {
             labelFor='language'
             labelTitle='Language'
             isScreenReaderOnly
+            onChange={onLanguageChange}
+            defaultValue={router.locale}
           />
 
         </span>
@@ -77,6 +110,7 @@ export const NavLink = styled.a`
   cursor: pointer;
   text-transform: capitalize;
   color: var(--text);
+  white-space: nowrap;
   &::before {
     content: "";
     display: block;
