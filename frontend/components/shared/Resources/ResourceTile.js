@@ -23,8 +23,8 @@ const ResourceTile = props => {
   }, []);
 
   return (
-    <ResourceTileContainer class="card reorder" onClick={handleTileClick}>
-      <TileImage className='card__image' src="https://assets.codepen.io/282691/man-landscape-unsplash.jpg" alt="" loading="lazy" width="500" height="200" />
+    <ResourceTileContainer onClick={handleTileClick}>
+      <TileImage  src="/images/pompeii_fresco.jpeg" alt="" loading="lazy" width="500" height="200" />
 
       <TileContent>
 
@@ -58,8 +58,8 @@ const TileContent = styled.div`
   }
   }
 `
-const TileImage = styled.img`
-
+const TileImage = styled.div`
+  background-image: url('/images/pompeii_fresco.jpeg');
 height: auto;
 background-position: center center;
   background-repeat: no-repeat;
@@ -82,7 +82,7 @@ background-position: center center;
   }
 
 `
-const ResourceTileContainer = styled.article`
+const ResourceTileContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   margin-bottom: 20px;
@@ -92,6 +92,7 @@ const ResourceTileContainer = styled.article`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: white;
   cursor: pointer;
   &:hover {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);

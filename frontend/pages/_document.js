@@ -55,7 +55,6 @@ export default class MyDocument extends Document {
     `}
   />
         <Head>
-        <title>Project Nota</title>
           <style
             data-emotion-css={this.props.ids.join(" ")}
             dangerouslySetInnerHTML={{ __html: this.props.css }}

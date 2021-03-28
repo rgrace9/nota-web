@@ -10,7 +10,7 @@ const ResourcesList = props => {
   return (
     <ResourcesListContainer>
       {resources.map(r => (
-        <ResourceItem>
+        <ResourceItem key={r}>
           
           <ResourceTile key={r} data={r}/>
         </ResourceItem>

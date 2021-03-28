@@ -7,7 +7,7 @@ import { Global, css } from '@emotion/react'
 const Container = props => {
 
   const {children, bgColor, ..._props} = props;
-  console.log(bgColor)
+
   return (
     <ContainerWrapper bgColor={bgColor}>
       <ContainerStyled >{children}</ContainerStyled>
