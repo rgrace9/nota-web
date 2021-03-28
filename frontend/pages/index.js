@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {Search, FeaturedResources} from '../features';
 import Head from 'next/head';
-
+import {HeroImage} from '../components/shared/Hero'
 export default function Home() {
 
   const { t } = useTranslation('home')
@@ -12,10 +12,17 @@ export default function Home() {
   return (
     <Layout>
             <Head>
-        <title>Project Nota</title>
+        <title>Project Nota | Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <HeroImage
+        heroTitle='Project Nota'
+        heroSubtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        linkTitle='Learn More'
+        href='/about'
+      />
         <Container>
+          
         <Search />
         </Container>
         <FeaturedResources />

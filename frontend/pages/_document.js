@@ -29,7 +29,8 @@ export default class MyDocument extends Document {
     width: 100%;
   }
   body {
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
+    /* font-family: "Montserrat", sans-serif; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--bg);
@@ -54,6 +55,7 @@ export default class MyDocument extends Document {
     `}
   />
         <Head>
+        <title>Project Nota</title>
           <style
             data-emotion-css={this.props.ids.join(" ")}
             dangerouslySetInnerHTML={{ __html: this.props.css }}
@@ -76,6 +78,7 @@ export default class MyDocument extends Document {
 <meta name="msapplication-TileColor" content="#ffffff"/>
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
 <meta name="theme-color" content="#ffffff"></meta>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet"></link>
         </Head>
         <body>
           <Main />

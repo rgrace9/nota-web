@@ -17,6 +17,7 @@ a {
 
 :root {
   --text: #fff;
+  --text-dark: #24261b;
   /* --bg: #232323; */
   /* --bg: #380606; */
   --bg: #f8f0ee;

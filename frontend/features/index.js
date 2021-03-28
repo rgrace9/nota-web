@@ -1,7 +1,7 @@
 import FeaturedResources from './FeaturedResources';
-import Search from './Search';
+import {SearchBar as Search} from './Search';
 
 export {
   FeaturedResources,
-  Search
+  Search 
 }

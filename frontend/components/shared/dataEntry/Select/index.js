@@ -60,7 +60,7 @@ const Select = (props) => {
   <LabelStyled isScreenReaderOnly={isScreenReaderOnly} for={labelFor}>{labelTitle}</LabelStyled>
   <SelectStyled defaultValue={defaultValue} value={value} name={labelFor} id={labelFor} onChange={handleChange}>
     {options.map(opt => (
-      <option value={opt.value}>{opt.description}</option>
+      <option key={opt.value} value={opt.value}>{opt.description}</option>
     ))}
   </SelectStyled>
     </>

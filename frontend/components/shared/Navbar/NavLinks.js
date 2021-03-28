@@ -45,12 +45,11 @@ const DesktopNavLinks = () => {
         <li key={link.link}>
           <Link
             href={`/${link.link}`}
-            onClick={closeMenu}
             locale={router.locale || router.defaultLocale}
           >
-           <NavLink className="link">
+           <a className="link">
             {link.title}
-           </NavLink>
+           </a>
           </Link>
         </li>
       ))}
@@ -77,6 +76,43 @@ export default DesktopNavLinks;
 const NavLinksWrapper = styled.ul`
   flex: 1;
   display: flex;
+  .link {
+    /* &:focus {
+      outline: 1px solid white;
+    
+    } */
+  position: relative;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  text-transform: capitalize;
+  color: var(--text);
+  white-space: nowrap;
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 0;
+    background: var(--text);
+    transition: width 150ms linear;
+  }
+  /* outline: none; */
+  /* &:focus::before {
+      outline: none;
+      width: 100%;
+    
+    } */
+  &:focus {
+    outline: 1px solid white;
+  }
+  &:hover::before {
+    width: 100%;
+  }
+
+  }
   justify-content: center;
   align-items: center;
   list-style: none;
@@ -122,7 +158,12 @@ export const NavLink = styled.a`
     background: var(--text);
     transition: width 150ms linear;
   }
+  &:focus {
+      outline: 1px solid white;
+    
+    }
   &:hover::before {
     width: 100%;
   }
+
 `;

@@ -7,7 +7,7 @@ const Layout = ({ children }) => (
     <Navbar />
 
      </MenuProvider>
-    <main style={{marginTop: '100px'}}>
+    <main>
       {children}
     </main>
   </div>
