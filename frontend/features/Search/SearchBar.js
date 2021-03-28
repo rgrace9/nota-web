@@ -33,6 +33,7 @@ export default SearchBar;
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
+  font-size: 32px;
 
 `
 
@@ -54,15 +55,17 @@ const SearchInput = styled.input`
   border: 3px solid var(--text-dark);
   border-right: none;
   padding: 5px;
-  height: 36px;
+  height: 42px;
   border-radius: 5px 0 0 5px;
   outline: none;
   color: var(--text-dark);
+  font-size: 24px;
 `
 
 const SearchBtn = styled.button`
     /* width: 40px; */
-  height: 36px;
+  width: 50px;
+  height: 42px;
   padding: 4px;
   border: 1px solid var(--text-dark);
   background: var(--text-dark);

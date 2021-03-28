@@ -25,7 +25,10 @@ export default function Home() {
           
         <Search />
         </Container>
+        <Container bgColor='#B67C58'>
         <FeaturedResources />
+
+        </Container>
     </Layout>
   );
 };
