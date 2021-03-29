@@ -3,6 +3,8 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { extractCritical } from "@emotion/server";
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
+import { Provider, Button } from "reakit";
+
 
 const Body = styled.body``
 export default class MyDocument extends Document {
@@ -80,8 +82,10 @@ export default class MyDocument extends Document {
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet"></link>
         </Head>
         <body>
-          <Main />
-          <NextScript />
+          <Provider>
+            <Main />
+            <NextScript />
+          </Provider>
         </body>
       </Html>
     );

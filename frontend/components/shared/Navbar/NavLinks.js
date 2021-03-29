@@ -6,7 +6,8 @@ import { useTheme } from "../../../utils/hooks";
 import Icon from "../Icon";
 import Select from '../dataEntry/Select'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Menu from './NavigationMenu';
 
 const DesktopNavLinks = () => {
   const { closeMenu } = useMenuContext();
@@ -40,17 +41,13 @@ const DesktopNavLinks = () => {
     }
   }
   return (
+    <React.Fragment>
+      
+
     <NavLinksWrapper className="nav-links">
       {links.map((link) => (
         <li key={link.link}>
-          <Link
-            href={`/${link.link}`}
-            locale={router.locale || router.defaultLocale}
-          >
-           <a className="link">
-            {link.title}
-           </a>
-          </Link>
+          <Menu href={link.link} title={link.title} />
         </li>
       ))}
       <li>
@@ -68,6 +65,7 @@ const DesktopNavLinks = () => {
        
       </li>
     </NavLinksWrapper>
+    </React.Fragment>
   );
 };
 
@@ -76,43 +74,6 @@ export default DesktopNavLinks;
 const NavLinksWrapper = styled.ul`
   flex: 1;
   display: flex;
-  .link {
-    /* &:focus {
-      outline: 1px solid white;
-    
-    } */
-  position: relative;
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-  text-transform: capitalize;
-  color: var(--text);
-  white-space: nowrap;
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 0;
-    background: var(--text);
-    transition: width 150ms linear;
-  }
-  /* outline: none; */
-  /* &:focus::before {
-      outline: none;
-      width: 100%;
-    
-    } */
-  &:focus {
-    outline: 1px solid white;
-  }
-  &:hover::before {
-    width: 100%;
-  }
-
-  }
   justify-content: center;
   align-items: center;
   list-style: none;
