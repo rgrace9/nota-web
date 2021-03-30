@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import styled from '@emotion/styled';
 
 const convertBreadcrumb = string => {
   return string
@@ -33,25 +34,73 @@ const Breadcrumbs = () => {
   }
 
   return (
-    <nav aria-label="breadcrumbs">
+    <StyledContainer aria-label="breadcrumbs">
       <ol className="breadcrumb">
-        <li>
-          <a href="/">HOME</a>
-        </li>
+        <StyledListItem>
+          <a style={{color: 'black'}} href="/">HOME</a>
+        </StyledListItem>
         {breadcrumbs.map((breadcrumb, i) => {
           return (
-            <li key={breadcrumb.href}>
+            <StyledListItem key={breadcrumb.href}>
               <Link href={breadcrumb.href}>
-                <a>
+                <a aria-current="page">
                   {convertBreadcrumb(breadcrumb.breadcrumb)}
                 </a>
               </Link>
-            </li>
+            </StyledListItem>
           );
         })}
       </ol>
-    </nav>
+    </StyledContainer>
   );
 };
 
 export default Breadcrumbs;
+
+const StyledListItem = styled.li`
+    &:not(:first-child) {
+    &::before {
+      display: inline-block;
+      margin: 0 1em;
+      transform: rotate(15deg);
+      border-right: 0.1em solid currentColor;
+      height: 0.8em;
+      content: '';
+  }
+}
+`
+
+const StyledContainer = styled.nav`
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    padding: 4px 60px;
+    z-index: 1;
+  .breadcrumb {
+    /* display: flex;
+    flex-direction: row; */
+    color: black;
+  }
+  & [aria-current="page"] {
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+}
+  ol {
+  display: inline-flex;
+  font-size: initial;
+  list-style: none;
+
+  }
+}
+
+li {
+  /* margin-right: 20px; */
+
+
+/* .breadcrumb ol > li a:not([href]) {
+  font-weight: bold;
+} */
+
+`

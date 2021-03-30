@@ -7,8 +7,8 @@ const Nav = styled.div`
 `;
 
 const Navbar = () => (
-  <Nav>
+
     <DesktopNav />
-  </Nav>
+
 );
 export default Navbar;

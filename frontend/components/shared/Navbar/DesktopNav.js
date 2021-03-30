@@ -13,25 +13,27 @@ const DesktopNavbar = () => {
 
   
   return (
-    <DesktopNav>
-      <div className="home-link-container">
-      <Link href="/">
-        <a className='home-link'>
-        <img
-          alt='Project Nota'
-    
-          className='logo'
+   
+      <DesktopNav aria-label='Menu'>
+        <div className="home-link-container">
+        <Link href="/">
+          <a className='home-link'>
+          <img
+            alt='Project Nota'
       
-        src='/project-nota-lupercal-logo.png'
-        />
+            className='logo'
+        
+          src='/project-nota-lupercal-logo.png'
+          />
 
-        </a>
-      </Link>
+          </a>
+        </Link>
 
-      </div>
-      <NavLinks />
-      <Hamburger toggled={isMenuOpen} toggle={toggleMenu} duration={0} />
-    </DesktopNav>
+        </div>
+        <NavLinks />
+        <Hamburger toggled={isMenuOpen} toggle={toggleMenu} duration={0} />
+      </DesktopNav>
+  
   );
 };
 
