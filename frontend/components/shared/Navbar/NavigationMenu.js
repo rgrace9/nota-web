@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import DownArrow from '../Icon/DownArrow';
+import PropTypes from 'prop-types';
 
 import {
   useMenuState,
@@ -42,10 +43,11 @@ const Menu = React.forwardRef(
 );
 
 
-const Example = (props) => {
+const NavMenu = (props) => {
   const {
     href,
-    title
+    title,
+    links
   } = props;
     const router = useRouter()
 
@@ -53,41 +55,27 @@ const Example = (props) => {
   return (
     <StyledMenu>
       <Menu
-        menuProps={{ "aria-label": "Custom menu", 'className': 'menu' }}
+        menuProps={{ "aria-label": "Menu", 'className': 'menu' }}
         disclosure={
           <StyledBtn>
             <p>{title}</p>
           <DownArrow height='24px' width='24px'  /></StyledBtn>
       
       }
-        menuItems={[
-          <Link
-          href={`/${href}`}
-          locale={router.locale || router.defaultLocale}
-        >
-         <a className="link">
-          {title}
-         </a>
-        </Link>,
-          <Link
-          href={`/${href}`}
-          locale={router.locale || router.defaultLocale}
-        >
-         <a className="link">
-          {title}
-         </a>
-        </Link>,
-  
-          <MenuSeparator />,
-          <Menu
-            menuProps={{ "aria-label": "Sub Menu" }}
-            disclosure={<button>Sub Menu</button>}
-            menuItems={[
-              <button>Custom item 4</button>,
-              <button>Custom item 5</button>,
-            ]}
-          />,
-        ]}
+        menuItems={
+          links.map(l => (
+            <React.Fragment>
+              <Link
+              href={`/${l.href}`}
+              locale={router.locale || router.defaultLocale}
+            >
+            <a className="link">
+              {l.title}
+            </a>
+            </Link>
+            <MenuSeparator />
+            </React.Fragment>
+          ))}
       />
 
     </StyledMenu>
@@ -95,15 +83,27 @@ const Example = (props) => {
 }
 
 
-export default Example;
+export default NavMenu;
 
+NavMenu.propTypes = {
+  links: PropTypes.array
+}
+
+NavMenu.defaultProps = {
+  links: []
+}
 const StyledBtn = styled.button`
   display: flex;
   align-items: center;
   background-color: transparent;
   color: white;
   border: none;
+  outline: inherit;
   font-size: 18px;
+  padding: 2px 5px;
+  &:focus {
+    outline: 1px solid white;
+  }
   p {
     white-space: nowrap;
   }
@@ -130,6 +130,7 @@ const StyledMenu = styled.div`
   flex-direction: column !important;
   background-color: white;
   border-radius: 0;
+  min-width: 100px;
 }
 .menu-item {
   background-color: white;
@@ -182,3 +183,19 @@ const StyledMenuItem = styled.div`
 
 
 `
+
+
+/*
+
+          <MenuSeparator />,
+          <Menu
+            menuProps={{ "aria-label": "Sub Menu" }}
+            disclosure={<button>Sub Menu</button>}
+            menuItems={[
+              <button>Custom item 4</button>,
+              <button>Custom item 5</button>,
+            ]}
+          />,
+
+
+*/

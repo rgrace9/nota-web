@@ -19,19 +19,37 @@ const DesktopNavLinks = () => {
   const links = [
     {
       title:t('resources'),
-      link: 'resources'
+      link: 'resources',
+      links: [
+        {
+          title: 'Search',
+          href: 'search',
+        },
+        {
+          title: 'Lesson Plans',
+          href: 'lesson-plans',
+        },
+      ]
     },
     {
       title: t('events'),
-      link: 'events'
+      link: 'events',
+      links: [
+        {
+          title: 'Transcribathons',
+          href: 'transcribathons'
+        }
+      ]
     },
     {
       title: t("about"),
-      link: 'about'
-    },
-    {
-      title: t("contact"), 
-      link: 'contact'
+      link: 'about',
+      links: [
+        {
+          title: t("contact"), 
+          href: 'contact'
+        }
+      ]
     }
   ];
 
@@ -47,7 +65,7 @@ const DesktopNavLinks = () => {
     <NavLinksWrapper className="nav-links">
       {links.map((link) => (
         <li key={link.link}>
-          <Menu href={link.link} title={link.title} />
+          <Menu links={link.links} href={link.link} title={link.title} />
         </li>
       ))}
       <li>

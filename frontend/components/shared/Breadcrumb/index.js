@@ -32,12 +32,15 @@ const Breadcrumbs = () => {
   if (!breadcrumbs) {
     return null;
   }
-
+  console.log(breadcrumbs)
   return (
     <StyledContainer aria-label="breadcrumbs">
       <ol className="breadcrumb">
         <StyledListItem>
-          <a style={{color: 'black'}} href="/">HOME</a>
+          
+        <Link href="/">
+          <a style={{color: 'black'}} >HOME</a>
+        </Link>
         </StyledListItem>
         {breadcrumbs.map((breadcrumb, i) => {
           return (
@@ -58,7 +61,7 @@ const Breadcrumbs = () => {
 export default Breadcrumbs;
 
 const StyledListItem = styled.li`
-    &:not(:first-child) {
+    &:not(:first-of-type) {
     &::before {
       display: inline-block;
       margin: 0 1em;
@@ -66,6 +69,21 @@ const StyledListItem = styled.li`
       border-right: 0.1em solid currentColor;
       height: 0.8em;
       content: '';
+  }
+}
+&:hover {
+  text-decoration: underline;
+}
+a {
+  padding: 2px 5px;
+  &:focus {
+  outline: 1px solid currentColor;
+}
+}
+
+&:only-child {
+  &::before {
+      display: none;
   }
 }
 `
