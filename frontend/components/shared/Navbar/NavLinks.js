@@ -8,7 +8,7 @@ import Select from '../dataEntry/Select'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router';
 import Menu from './NavigationMenu';
-
+import SearchIcon from '@/components/shared/Icon/ThinSearchIcon';
 const DesktopNavLinks = () => {
   const { closeMenu } = useMenuContext();
 
@@ -22,13 +22,21 @@ const DesktopNavLinks = () => {
       link: 'resources',
       links: [
         {
-          title: 'Search',
-          href: 'search',
-        },
-        {
           title: 'Lesson Plans',
           href: 'lesson-plans',
         },
+        {
+          title: 'Biographies',
+          href: 'biographies'
+        },
+        {
+          title: 'Digitizations',
+          href: 'digitizations'
+        },
+        {
+          title: 'Translations',
+          href: 'translations'
+        }
       ]
     },
     {
@@ -68,6 +76,13 @@ const DesktopNavLinks = () => {
           <Menu links={link.links} href={link.link} title={link.title} />
         </li>
       ))}
+      <li>
+        <Link href='/search'>
+        <NavLink className='nav-search'>
+          Search
+        </NavLink>
+        </Link>
+      </li>
       <li>
         <span className='language-selector'>
           <Icon name='earth' />
@@ -116,6 +131,9 @@ const NavLinksWrapper = styled.ul`
       margin: 0 !important;
     }
   }
+  .nav-search {
+    
+  }
 `;
 
 export const NavLink = styled.a`
@@ -126,6 +144,7 @@ export const NavLink = styled.a`
   text-transform: capitalize;
   color: var(--text);
   white-space: nowrap;
+  font-size: 18px;
   &::before {
     content: "";
     display: block;

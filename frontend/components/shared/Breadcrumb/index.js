@@ -32,7 +32,7 @@ const Breadcrumbs = () => {
   if (!breadcrumbs) {
     return null;
   }
-  console.log(breadcrumbs)
+
   return (
     <StyledContainer aria-label="breadcrumbs">
       <ol className="breadcrumb">

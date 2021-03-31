@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
   }
   body {
     font-family: 'Nunito Sans', sans-serif;
-    /* font-family: "Montserrat", sans-serif; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--bg);

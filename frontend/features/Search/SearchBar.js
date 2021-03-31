@@ -12,7 +12,7 @@ const SearchBar = props => {
   return (
     <SearchContainer>
       <HeadingStyle>Search</HeadingStyle>
-      <form onSubmit={onSearch} class="search-box">
+      <form onSubmit={onSearch} className="search-box">
         <SearchBarContainer>
           <SearchInput type="search" placeholder="Type here to search..." />
           <SearchBtn aria-label='Search' type="submit">

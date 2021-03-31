@@ -96,13 +96,14 @@ const StyledBtn = styled.button`
   display: flex;
   align-items: center;
   background-color: transparent;
-  color: white;
+  color: var(--text);
   border: none;
   outline: inherit;
   font-size: 18px;
   padding: 2px 5px;
+  font-family: 'Nunito Sans', sans-serif;
   &:focus {
-    outline: 1px solid white;
+    outline: 1px solid var(--text);
   }
   p {
     white-space: nowrap;
