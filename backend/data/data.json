@@ -1,5 +1,29 @@
 {
+  "authors": [
+    {
+      "name": "Catarina Imperiale"
+    },
+    {
+      "name": "Lercari Pallavicini"
+    },
+    {
+      "name": "Johanna Otho"
+    },
+    {
+      "name": "Maria Hutchenson"
+    },
+    {
+      "name": "Anna Memorata"
+    },
+    {
+      "name": "Camille de Morel"
+    }
+  ],
   "categories": [
+    {
+      "name": "blah",
+      "slug": "blah"
+    },
     {
       "name": "news",
       "slug": "news"
@@ -23,7 +47,7 @@
   ],
   "homepage": {
     "seo": {
-      "metaTitle": "My personal Strapi blog",
+      "metaTitle": "Project Nota!",
       "metaDescription": "Discover my SEO friendly blog built with Strapi.",
       "shareImage": null
     },

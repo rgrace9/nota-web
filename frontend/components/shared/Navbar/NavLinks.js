@@ -86,14 +86,13 @@ const DesktopNavLinks = () => {
       ))}
       <li>
         <Link href='/search'>
-        <a className='nav-search'>
-          Search
+        <a aria-label='search' className='nav-search'>
+          <SearchIcon />
         </a>
         </Link>
       </li>
       <li>
         <span className='language-selector'>
-          <Icon name='earth' />
           <Select 
             labelFor='language'
             labelTitle='Language'
@@ -141,31 +140,19 @@ const NavLinksWrapper = styled.ul`
   }
   .nav-search {
     position: relative;
-  color: white;
   text-decoration: none;
   cursor: pointer;
   text-transform: capitalize;
   color: var(--text);
   white-space: nowrap;
   font-size: 18px;
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 0;
-    background: var(--text);
-    transition: width 150ms linear;
-  }
+    display: flex;
+    padding: 2px;
   &:focus {
       outline: 1px solid white;
     
     }
-  &:hover::before {
-    width: 100%;
-  }
+
 
   }
 `;

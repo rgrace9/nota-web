@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "articles",
   "info": {
-    "name": "article"
+    "name": "article",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "title": {
@@ -39,9 +41,10 @@
       "targetField": "title",
       "required": true
     },
-    "category": {
-      "model": "category",
-      "via": "articles"
+    "categories": {
+      "collection": "category",
+      "via": "articles",
+      "dominant": true
     },
     "image": {
       "model": "file",
@@ -55,8 +58,8 @@
       "required": true
     },
     "author": {
-      "via": "articles",
-      "model": "writer"
+      "model": "writer",
+      "via": "articles"
     }
   }
 }
