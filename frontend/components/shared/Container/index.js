@@ -6,17 +6,17 @@ import { Global, css } from '@emotion/react'
 
 const Container = props => {
 
-  const {children, bgColor, ..._props} = props;
+  const {children, bgColor, justifyContent, ..._props} = props;
 
   return (
     <ContainerWrapper bgColor={bgColor}>
-      <ContainerStyled >{children}</ContainerStyled>
+      <ContainerStyled justifyContent={justifyContent}>{children}</ContainerStyled>
     </ContainerWrapper>
   );
 };
 
 Container.propTypes = {
-  
+  justifyContent: PropTypes.string
 };
 
 export default Container;

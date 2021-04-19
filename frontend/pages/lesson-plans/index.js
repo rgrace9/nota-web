@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import {SearchFiltersContainer} from '@/components/shared/SearchFilters';
 
 import Layout from '@/components/Layout';
 import ContentLayout from '@/components/Layout/ContentLayout';
@@ -12,7 +13,9 @@ const LessonPlans = props => {
       <ContentLayout
         title='Lesson Plans'
       >
-        <p>Lorem Ipsum</p>
+        <SearchFiltersContainer>
+          Lorem Ipsum
+        </SearchFiltersContainer>
       </ContentLayout>
     </Layout>
   );

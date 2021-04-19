@@ -6,6 +6,9 @@ const Container  =  styled.div`
   width: 100%;
   margin: 30px ;
   max-width: 1500px;
+  ${(props) => props.justifyContent ? css`
+      justify-content: ${props.justifyContent};
+    ` : 'initial'}
    /* margin: auto; */
   @media (min-width: 768px) {
     /* screen width is less than 768px (medium) */
