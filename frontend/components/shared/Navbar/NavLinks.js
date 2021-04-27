@@ -22,16 +22,16 @@ const DesktopNavLinks = () => {
       link: 'resources',
       links: [
         {
-          title: 'Lesson Plans',
-          href: 'lesson-plans',
-        },
-        {
-          title: 'Biographies',
-          href: 'biographies'
+          title: 'Authors',
+          href: 'authors'
         },
         {
           title: 'Digitizations',
           href: 'digitizations'
+        },
+        {
+          title: 'Lesson Plans',
+          href: 'lesson-plans',
         },
         {
           title: 'Translations',
