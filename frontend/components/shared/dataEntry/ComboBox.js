@@ -15,7 +15,7 @@ const ComboboxSelect = props => {
   return (
     <div>
       <Combobox aria-label="choose a fruit">
-        <ComboboxInput autoComplete />
+        <ComboboxInput autoComplete="true" />
         <ComboboxPopover>
           <ComboboxList>
             {options.map(opt => (

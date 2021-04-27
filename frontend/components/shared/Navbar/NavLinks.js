@@ -66,6 +66,10 @@ const DesktopNavLinks = () => {
           href: 'contact'
         }
       ]
+    },
+    {
+      title: t("donate"),
+      link: 'donate',
     }
   ];
 
@@ -81,16 +85,16 @@ const DesktopNavLinks = () => {
     <NavLinksWrapper className="nav-links">
       {links.map((link) => (
         <li key={link.link}>
-          <Menu links={link.links} href={link.link} title={link.title} />
+          <Menu link={link.link} links={link.links} href={link.link} title={link.title} />
         </li>
       ))}
-      <li>
+      {/* <li>
         <Link href='/search'>
         <a aria-label='search' className='nav-search'>
           <SearchIcon />
         </a>
         </Link>
-      </li>
+      </li> */}
       <li>
         <span className='language-selector'>
           <Select 

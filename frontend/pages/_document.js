@@ -4,13 +4,11 @@ import { extractCritical } from "@emotion/server";
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
 import { Provider, Button } from "reakit";
-import { ServerStyleSheets } from '@material-ui/core/styles';
 
 const Body = styled.body``
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
-    const sheets = new ServerStyleSheets();
     const page = await ctx.renderPage();
     const styles = extractCritical(page.html);
     return { ...initialProps, ...page, ...styles };

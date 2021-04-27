@@ -47,38 +47,52 @@ const NavMenu = (props) => {
   const {
     href,
     title,
-    links
+    links,
+    link
   } = props;
     const router = useRouter()
 
 
   return (
-    <StyledMenu>
-      <Menu
-        menuProps={{ "aria-label": "Menu", 'className': 'menu' }}
-        disclosure={
-          <StyledBtn>
-            <p>{title}</p>
-          <DownArrow height='24px' width='24px'  /></StyledBtn>
-      
-      }
-        menuItems={
-          links.map(l => (
-            <React.Fragment>
-              <Link
-              href={`/${l.href}`}
-              locale={router.locale || router.defaultLocale}
-            >
-            <a className="link">
-              {l.title}
-            </a>
-            </Link>
-            <MenuSeparator />
-            </React.Fragment>
-          ))}
-      />
+    links.length ? (
+        <StyledMenu>
+        <Menu
+          menuProps={{ "aria-label": "Menu", 'className': 'menu' }}
+          disclosure={
+            <StyledBtn>
+              <p>{title}</p>
+            <DownArrow height='24px' width='24px'  /></StyledBtn>
+        
+        }
+          menuItems={
+            links.map(l => (
+              <React.Fragment>
+                <Link
+                href={`/${l.href}`}
+                locale={router.locale || router.defaultLocale}
+              >
+              <a className="link">
+                {l.title}
+              </a>
+              </Link>
+              <MenuSeparator />
+              </React.Fragment>
+            ))}
+        />
 
-    </StyledMenu>
+        </StyledMenu>
+      ) : (
+       
+        <Link
+        href={`/${link}`}
+        locale={router.locale || router.defaultLocale}
+      >
+      <StyledNavLink href={`/${link}`} className="link">
+        {title}
+      </StyledNavLink>
+      </Link>
+      )
+
   );
 }
 
@@ -92,6 +106,19 @@ NavMenu.propTypes = {
 NavMenu.defaultProps = {
   links: []
 }
+
+const StyledNavLink = styled.a`
+    color: white;
+  /* border: none; */
+  /* outline: inherit; */
+  font-size: 18px;
+  padding: 2px 5px;
+  font-family: 'Nunito Sans', sans-serif;
+  &:focus {
+    outline: 1px solid var(--text);
+  }
+`
+
 const StyledBtn = styled.button`
   display: flex;
   align-items: center;
@@ -186,17 +213,3 @@ const StyledMenuItem = styled.div`
 `
 
 
-/*
-
-          <MenuSeparator />,
-          <Menu
-            menuProps={{ "aria-label": "Sub Menu" }}
-            disclosure={<button>Sub Menu</button>}
-            menuItems={[
-              <button>Custom item 4</button>,
-              <button>Custom item 5</button>,
-            ]}
-          />,
-
-
-*/

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {woodSmoke} from '@/styles/colors';
 import Container from '../Container';
-
 const SearchFiltersContainer = props => {
   const {title, children} = props;
   return (
