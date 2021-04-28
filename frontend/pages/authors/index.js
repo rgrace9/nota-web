@@ -11,6 +11,8 @@ import { PrimaryButton } from "@/components/shared/Button";
 import StrapiClient from "@/lib/StrapiClient";
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
+import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
+import {createQueryString} from 'utils/queryString';
 
 const STRAPI_CLIENT = new StrapiClient();
 
@@ -53,7 +55,7 @@ const BREADCRUMBS_LIST = [
 ];
 const Authors = (props) => {
   const {
-    value: authorName,
+    value: selectedAuthor,
     bind: bindAuthorName,
     reset: resetAuthorName,
   } = useListBox("all");
@@ -67,11 +69,18 @@ const Authors = (props) => {
     data: { authors, locations },
   } = props;
 
-  
+  const onSearch = (authorValue, locationValue) => {
+    const searchParams = {
+      'id_eq': authorValue,
+      'location.id_eq': locationValue
+    }
+    const testing = createQueryString(searchParams);
+    console.log(testing)
+  }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(authorName, authorLocation)
-   
+    console.log(selectedAuthor, authorLocation)
+    onSearch(selectedAuthor, authorLocation)
    
   };
 
@@ -88,7 +97,7 @@ const Authors = (props) => {
                   labelText="Author"
                   labelValue="author"
                   options={authors}
-                  value={authorName}
+                  value={selectedAuthor}
                   {...bindAuthorName}
                 />
               </StyledSelectContainer>
@@ -110,6 +119,8 @@ const Authors = (props) => {
             </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
+
+        <AuthorSearchResults results={authors} />
       </ContentLayout>
     </Layout>
   );
