@@ -20,6 +20,8 @@ const StyledContainer = styled.div`
 
 [data-reach-listbox-button] {
   /* max-width: 300px; */
+  overflow: hidden;
+    white-space: nowrap;
   width: 100%;
   background: white;
   height: 30px;

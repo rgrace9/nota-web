@@ -31,7 +31,7 @@ const ResourceTile = props => {
 
       <StyledTitle>
         <Link href={`/authors/${data.id}`}>
-          <a target='_blank'>{data.name}</a>
+          <a>{data.name}</a>
         </Link>
       </StyledTitle>
 

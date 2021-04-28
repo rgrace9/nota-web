@@ -64,9 +64,14 @@ const Authors = (props) => {
     bind: bindAuthorLocation,
     reset: resetAuthorLocation,
   } = useListBox("all");
+  const {
+    value: selectedTimePeriod,
+    bind: bindSelectedTimePeriod,
+    reset: resetSelectedTimePeriod,
+  } = useListBox("all");
   
   const {
-    data: { authors, locations },
+    data: { authors, locations, timePeriods },
   } = props;
 
   const onSearch = (authorValue, locationValue) => {
@@ -85,7 +90,7 @@ const Authors = (props) => {
   };
 
   return (
-    <Layout pageTitle="Authors" breadcrumbsList={BREADCRUMBS_LIST}>
+    <Layout pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
         <SearchFiltersContainer>
           <form onSubmit={handleSubmit}>
@@ -113,6 +118,18 @@ const Authors = (props) => {
 
                 />
               </StyledSelectContainer>
+              <StyledSelectContainer>
+                <ListBox
+                  dataKey="name"
+                  allObject={{ name: "All Periods", id: "all" }}
+                  labelText="Period"
+                  labelValue="author-period"
+                  options={timePeriods}
+                  value={selectedTimePeriod}
+                  {...bindSelectedTimePeriod}
+
+                />
+              </StyledSelectContainer>
             </StyledFieldsContainer>
             <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
@@ -135,13 +152,14 @@ export const getStaticProps = async (props) => {
 
   const authors = await STRAPI_CLIENT.fetchAPI("authors");
   const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
-
+  const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods')
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
       data: {
         authors,
         locations,
+        timePeriods
       },
     },
   };
