@@ -40,13 +40,27 @@ width: 100%;
 const StyledBtnContainer = styled.div`
   text-align: center;
 `
+
+const BREADCRUMBS_LIST = [
+  {
+    href: '/',
+    title: 'Home'
+  },
+  {
+    href: '/authors',
+    title: 'Authors',
+    isCurrentPage: true
+  },
+]
 const Authors = props => {
   console.log({props})
-  const {data} = props;
+  const {data: {authors, locations}} = props;
+
 
   return (
     <Layout
       pageTitle='Authors'
+      breadcrumbsList={BREADCRUMBS_LIST}
     >
       <ContentLayout
         title='Authors'
@@ -55,7 +69,7 @@ const Authors = props => {
           <form>
             <StyledFieldsContainer>
               <StyledSelectContainer>
-            <ListBox labelText='Author' labelValue='author' options={data}/>
+            <ListBox labelText='Author' labelValue='author' options={authors}/>
 
               </StyledSelectContainer>
               <StyledSelectContainer>
@@ -81,13 +95,17 @@ export default Authors;
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
-  console.log(props)
-  const data = await STRAPI_CLIENT.fetchAPI('authors');
-  console.log({data})
+
+  const authors = await STRAPI_CLIENT.fetchAPI('authors');
+  const locations = await STRAPI_CLIENT.fetchAPI('author-locations');
+
   return {
     props: {
       ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-      data
+      data: {
+        authors,
+        locations
+      }
     }
   }
 }

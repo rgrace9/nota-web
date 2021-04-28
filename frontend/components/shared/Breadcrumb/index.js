@@ -2,64 +2,53 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react"
+import PropTypes from 'prop-types';
 
-const convertBreadcrumb = string => {
-  return string
-    .replace(/-/g, ' ')
-    .replace(/oe/g, 'ö')
-    .replace(/ae/g, 'ä')
-    .replace(/ue/g, 'ü')
-    .toUpperCase();
-};
 
-const Breadcrumbs = () => {
+const BreadcrumbContainer = styled(Breadcrumb)`
+  padding: 5px 20px;
+`
+
+
+const Breadcrumbs = (props) => {
   const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] = useState(null);
 
-  useEffect(() => {
-    if (router) {
-      const linkPath = router.asPath.split('/');
-      linkPath.shift();
+  const {breadcrumbsList} = props;
 
-      const pathArray = linkPath.map((path, i) => {
-        return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
-      });
-
-      setBreadcrumbs(pathArray);
-    }
-  }, [router]);
-
-  if (!breadcrumbs) {
+  if (!breadcrumbsList) {
     return null;
   }
 
   return (
-    <StyledContainer aria-label="breadcrumbs">
-      <ol className="breadcrumb">
-        <StyledListItem>
-          
-        <Link href="/">
-          <a style={{color: 'black'}} >HOME</a>
-        </Link>
-        </StyledListItem>
-        {breadcrumbs.map((breadcrumb, i) => {
-          return (
-            <StyledListItem key={breadcrumb.href}>
-              <Link href={breadcrumb.href}>
-                <a aria-current="page">
-                  {convertBreadcrumb(breadcrumb.breadcrumb)}
-                </a>
-              </Link>
-            </StyledListItem>
-          );
-        })}
-      </ol>
-    </StyledContainer>
-  );
+    <BreadcrumbContainer>
+      {breadcrumbsList.map(b => (
+        <BreadcrumbItem>
+        <Link href={b.href} isCurrentPage={Boolean(b.isCurrentPage)}>
+                      <a>
+                        {b.title}
+                      </a>
+                    </Link>
+        </BreadcrumbItem>
+      ))}
+    </BreadcrumbContainer>
+  )
+
 };
 
 export default Breadcrumbs;
 
+Breadcrumbs.propTypes = {
+  breadcrumbsList: PropTypes.array
+}
+Breadcrumbs.defaultProps = {
+  breadcrumbsList: []
+}
 const StyledListItem = styled.li`
     &:not(:first-of-type) {
     &::before {

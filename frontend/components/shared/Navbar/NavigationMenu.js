@@ -138,6 +138,7 @@ const StyledBtn = styled.button`
 `
 
 const StyledMenu = styled.div`
+
 .link {
   padding: 10px 20px;
   color: var(--text-dark);
@@ -159,6 +160,7 @@ const StyledMenu = styled.div`
   background-color: white;
   border-radius: 0;
   min-width: 100px;
+  border: 1px black solid;
 }
 .menu-item {
   background-color: white;
@@ -174,7 +176,7 @@ const StyledMenu = styled.div`
   text-transform: capitalize;
   color: var(--text-dark);
   white-space: nowrap;
-  
+
   /* &::before {
     content: "";
     display: block;

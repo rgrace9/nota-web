@@ -19,7 +19,7 @@ ContentLayout.propTypes = {
 export default ContentLayout;
 
 const StyledContainer = styled.div`
-  margin-top: 75px;
+  margin-top: 20px;
   padding: 0px 60px;
 `
 const StyledHeading = styled.h1`

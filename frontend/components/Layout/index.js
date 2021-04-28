@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/shared/Breadcrumb'
 import React from 'react';
 
 
-const Layout = ({ pageTitle, children }) => (
+const Layout = ({ pageTitle, children, breadcrumbsList }) => (
   <React.Fragment>
                <Head>
         <title>{pageTitle}</title>
@@ -15,7 +15,7 @@ const Layout = ({ pageTitle, children }) => (
     <Navbar />
 
 
-    <Breadcrumb />
+    <Breadcrumb breadcrumbsList={breadcrumbsList} />
   
 
     <main>
@@ -25,9 +25,11 @@ const Layout = ({ pageTitle, children }) => (
 )
 
 Layout.propTypes = {
-  pageTitle: PropTypes.string
+  pageTitle: PropTypes.string,
+  breadcrumbsList: PropTypes.array,
 }
 Layout.defaultProps = {
-  pageTitle: 'Project Nota'
+  pageTitle: 'Project Nota',
+  breadcrumbsList: []
 }
 export default Layout;

@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import VisuallyHidden from "@reach/visually-hidden";
 import styled from '@emotion/styled';
-
+import { Select } from "@chakra-ui/react"
 const StyledContainer = styled.div`
 
 [data-reach-listbox-arrow]  {
@@ -42,7 +42,7 @@ const StyledList = styled(ListboxList)`
 `
 
 const ListBoxContainer = props => {
-  const {labelText, options, labelValue} = props;
+  const {labelText, options, labelValue, dataKey} = props;
 
   let labelId = `${labelValue}-label--id`;
     let [value, setValue] = React.useState("pollo");
@@ -61,18 +61,22 @@ const ListBoxContainer = props => {
             <StyledList>
             {options.map(opt => (
               <ListboxOption key={opt.id} value={opt.id}>
-                {opt.name} 
+                {opt[dataKey]} 
               </ListboxOption>
             ))}
             </StyledList>
           </ListboxPopover>
         </StyledListBox>
+
       </StyledContainer>
     );
 };
 
 ListBoxContainer.propTypes = {
-  
+  dataKey: PropTypes.string
+};
+ListBoxContainer.defaultProps = {
+  dataKey: 'name'
 };
 
 export default ListBoxContainer;

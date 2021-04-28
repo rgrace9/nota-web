@@ -39,6 +39,7 @@ const LabelStyled = styled.label`
 
 const SelectStyled = styled.select`
   font-size: 16px;
+  color: black;
 `
 const Select = (props) => {
   const [value, setValue] = useState(undefined)
