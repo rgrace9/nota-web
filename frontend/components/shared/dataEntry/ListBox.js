@@ -42,10 +42,14 @@ const StyledList = styled(ListboxList)`
 `
 
 const ListBoxContainer = props => {
-  const {labelText, options, labelValue, dataKey} = props;
-
+  const {labelText, options, labelValue, dataKey, allObject, onChange, value} = props;
+ 
+  const formattedList = [
+    allObject,
+    ...options
+  ]
   let labelId = `${labelValue}-label--id`;
-    let [value, setValue] = React.useState("pollo");
+
     return (
       <StyledContainer>
         <label for={labelValue}>{labelText}</label>
@@ -54,12 +58,12 @@ const ListBoxContainer = props => {
           value={value}
           id={labelValue}
           name={labelValue}
-          onChange={(value) => setValue(value)}
+          onChange={onChange}
         >
           <ListboxButton arrow="▼" />
           <ListboxPopover>
             <StyledList>
-            {options.map(opt => (
+            {formattedList.map(opt => (
               <ListboxOption key={opt.id} value={opt.id}>
                 {opt[dataKey]} 
               </ListboxOption>
@@ -73,10 +77,12 @@ const ListBoxContainer = props => {
 };
 
 ListBoxContainer.propTypes = {
-  dataKey: PropTypes.string
+  dataKey: PropTypes.string,
+  allObject: PropTypes.object,
 };
 ListBoxContainer.defaultProps = {
-  dataKey: 'name'
+  dataKey: 'name',
+  allObject: {}
 };
 
 export default ListBoxContainer;
