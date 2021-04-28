@@ -21,10 +21,7 @@ export default function Home() {
         linkTitle='Learn More'
         href='/about'
       />
-        <Container>
-          
-        <Search />
-        </Container>
+
         <Container bgColor='#B67C58'>
         <FeaturedResources />
 

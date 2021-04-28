@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import {burgundy, white} from '@/styles/colors';
 
 const StyledPrimaryButton = styled.button`
-  padding: 4px 16px;
+  padding: 4px 30px;
   border: 2px solid black;
   background-color: white;
+  border-radius: 15px;
+  min-height: 30px;
+  &:hover {
+    background-color: ${burgundy};
+    color: ${white};
+    border: 2px solid ${white};
+  }
 `
 const PrimaryButton = props => {
   const {type, text, onClick} = props;

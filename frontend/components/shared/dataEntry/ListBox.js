@@ -19,10 +19,12 @@ const StyledContainer = styled.div`
 }
 
 [data-reach-listbox-button] {
-  min-width: 300px;
+  /* max-width: 300px; */
+  width: 100%;
   background: white;
   height: 30px;
 }
+width: 100%;
 
 
 
@@ -31,6 +33,7 @@ const StyledContainer = styled.div`
 
 const StyledListBox = styled(ListboxInput)`
   min-height: 50px;
+  width: 100%;
 `
 
 const StyledList = styled(ListboxList)`
