@@ -28,7 +28,7 @@ const Breadcrumbs = (props) => {
   return (
     <BreadcrumbContainer>
       {breadcrumbsList.map(b => (
-        <BreadcrumbItem>
+        <BreadcrumbItem key={b.href}>
         <Link href={b.href} isCurrentPage={Boolean(b.isCurrentPage)}>
                       <a>
                         {b.title}

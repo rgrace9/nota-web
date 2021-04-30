@@ -1,6 +1,13 @@
+import qs from 'qs'
+
+const formatQuery = (params) => {
+  return qs.stringify(params)
+}
+
+
 const createQueryString = (params) => {
 
-  const qs = Object.keys(params).map(key => {
+  const formattedQueryString = Object.keys(params).map(key => {
 
     if (params[key] !== 'all') {
       return `${key}=${params[key]}`
@@ -10,10 +17,11 @@ const createQueryString = (params) => {
   })
     .join('&');
   
-  return qs;
+  return formattedQueryString;
 }
 
 
 export {
   createQueryString,
+  formatQuery
 }

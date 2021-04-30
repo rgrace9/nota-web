@@ -54,7 +54,7 @@ const ListBoxContainer = props => {
 
     return (
       <StyledContainer>
-        <label for={labelValue}>{labelText}</label>
+        <label htmlFor={labelValue}>{labelText}</label>
         <StyledListBox
           aria-labelledby={labelId}
           value={value}
@@ -66,7 +66,7 @@ const ListBoxContainer = props => {
           <ListboxPopover>
             <StyledList>
             {formattedList.map(opt => (
-              <ListboxOption key={opt.id} value={opt.id}>
+              <ListboxOption key={opt.id} value={opt.id.toString()}>
                 {opt[dataKey]} 
               </ListboxOption>
             ))}

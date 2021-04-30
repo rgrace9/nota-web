@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchFiltersContainer } from "@/components/shared/SearchFilters";
@@ -12,7 +12,9 @@ import StrapiClient from "@/lib/StrapiClient";
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
 import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
-import {createQueryString} from 'utils/queryString';
+import {createQueryString, formatQuery} from 'utils/queryString';
+import { useRouter, withRouter } from 'next/router'
+import qs from 'qs'
 
 const STRAPI_CLIENT = new StrapiClient();
 
@@ -54,6 +56,16 @@ const BREADCRUMBS_LIST = [
   },
 ];
 const Authors = (props) => {
+  const [authorResults, setAuthorResults] = useState([])
+  const [loadingResults, setLoadingResults] = useState(false)
+  const [searchQuery, setSearchQuery] = useState({})
+  const {
+    data: { authors, locations, timePeriods },
+    router
+  } = props;
+  const {pathname, query} = router;
+  const queryParams = useMemo(() => qs.parse(query), [query]);
+
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -70,25 +82,48 @@ const Authors = (props) => {
     reset: resetSelectedTimePeriod,
   } = useListBox("all");
   
-  const {
-    data: { authors, locations, timePeriods },
-  } = props;
+  useEffect(() => {
+    setAuthorResults(authors)
+  }, [])
 
-  const onSearch = (authorValue, locationValue) => {
-    const searchParams = {
-      'id_eq': authorValue,
-      'location.id_eq': locationValue
+  useEffect(() => {
+    setSearchQuery(queryParams)
+    bindAuthorName.onChange(queryParams['id_eq'] || 'all')
+  }, [pathname, queryParams])
+
+ 
+  const onSearch = async (authorValue, locationValue, timeValue) => {
+
+    try {
+      const searchParams = {
+        ...(authorValue !== 'all' && {'id_eq': authorValue,}),
+        ...(locationValue !== 'all' && {'location.id_eq': locationValue,}),
+        ...(timeValue !== 'all' && {'timePeriod.id_eq': timeValue,}),
+      }
+      const formattedSearchQuery = formatQuery(searchParams)
+      console.log('search query', formattedSearchQuery)
+      const newURL = `authors?${formattedSearchQuery}`;
+      const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
+      router.push(newURL)
+      
+      setAuthorResults(res)
+      setLoadingResults(false)
+
+    } catch(err) {
+      setAuthorResults([])
+      setLoadingResults(false)
+      throw err
     }
-    const testing = createQueryString(searchParams);
-    console.log(testing)
+
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(selectedAuthor, authorLocation)
-    onSearch(selectedAuthor, authorLocation)
+    console.log(selectedAuthor, authorLocation, selectedTimePeriod)
+    onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
    
   };
 
+  // console.log('LOCATION', searchQuery['location.id_eq'])
   return (
     <Layout pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
@@ -137,7 +172,7 @@ const Authors = (props) => {
           </form>
         </SearchFiltersContainer>
 
-        <AuthorSearchResults results={authors} />
+        <AuthorSearchResults loading={loadingResults} results={authorResults} />
       </ContentLayout>
     </Layout>
   );
@@ -145,11 +180,10 @@ const Authors = (props) => {
 
 Authors.propTypes = {};
 
-export default Authors;
+export default withRouter(Authors);
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
-
   const authors = await STRAPI_CLIENT.fetchAPI("authors");
   const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
   const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods')
