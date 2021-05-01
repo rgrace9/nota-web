@@ -5,15 +5,29 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {Search, FeaturedResources} from '../../features';
 import {HeroImage} from '../../components/shared/Hero'
 import StrapiClient from "@/lib/StrapiClient";
+import styled from "@emotion/styled";
+import { device } from "@/styles/screenSizes";
+
 
 const STRAPI_CLIENT = new StrapiClient();
 
-const TEST_BREADCRUMBS = [
-  {
-    href: '/resources',
-    breadcrumb: 'Resources'
+
+const RelatedContentContainer = styled.aside`
+  flex: 0 0 12em;
+  background: pink;
+`
+
+const PageWrapper = styled.div`
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: ease all .5s;
+  @media ${device.tablet} {
+    flex: 1;
+    flex-direction: row;
   }
-]
+`
 export default function Home(props) {
 
   const {author} = props;
@@ -45,8 +59,16 @@ export default function Home(props) {
  
 
         <Container>
-          <h1>{author.name}</h1>
+          <PageWrapper>
+            <div>
+              <h1>{author.name}</h1>
 
+            </div>
+          <RelatedContentContainer>
+            <h3>Related Resource</h3>
+          </RelatedContentContainer>
+
+          </PageWrapper>
         </Container>
     </Layout>
   );
