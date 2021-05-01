@@ -13,8 +13,13 @@ const STRAPI_CLIENT = new StrapiClient();
 
 
 const RelatedContentContainer = styled.aside`
-  flex: 0 0 12em;
   background: pink;
+  flex: 1;
+  flex-direction: row;
+  width: 100%;
+  @media ${device.mobileL} {
+    flex: 0 0 12em;
+  }
 `
 
 const PageWrapper = styled.div`
@@ -23,7 +28,8 @@ const PageWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     transition: ease all .5s;
-  @media ${device.tablet} {
+    width: 100%;
+  @media ${device.mobileL} {
     flex: 1;
     flex-direction: row;
   }
@@ -62,7 +68,9 @@ export default function Home(props) {
           <PageWrapper>
             <div>
               <h1>{author.name}</h1>
-
+              <h2>Author Details</h2>
+              <p>{author.biography}</p>
+              <p>{author.timePeriod && author.timePeriod.name}</p>
             </div>
           <RelatedContentContainer>
             <h3>Related Resource</h3>
