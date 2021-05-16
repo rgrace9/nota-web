@@ -77,7 +77,7 @@ const Authors = (props) => {
   } = data;
   const {pathname, query} = router;
   const queryParams = useMemo(() => qs.parse(query), [query]);
-  console.log(queryParams)
+  
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -108,7 +108,6 @@ const Authors = (props) => {
         const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
         const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
         if (isMounted) {
-          console.log('queryParams', queryParams)
           setSearchQuery(queryParams)
           bindAuthorName.onChange(queryParams['id_eq'] || 'all');
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
@@ -136,18 +135,6 @@ const Authors = (props) => {
     };
   }, [])
 
-
-  // useEffect(() => {
-
-  //   setSearchQuery(queryParams)
-  //   bindAuthorName.onChange(queryParams['id_eq'] || 'all');
-  //   bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
-  //   bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
-  //   // onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
-  // }, [queryParams])
-
-
-
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
     try {
@@ -157,7 +144,6 @@ const Authors = (props) => {
         ...(timeValue !== 'all' && {'timePeriod.id_eq': timeValue,}),
       }
       const formattedSearchQuery = formatQuery(searchParams)
-      console.log('search query', formattedSearchQuery)
       const newURL = `authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
       router.push(newURL)
@@ -178,7 +164,6 @@ const Authors = (props) => {
    
   };
 
-  // console.log('LOCATION', searchQuery['location.id_eq'])
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
