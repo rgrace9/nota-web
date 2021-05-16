@@ -34,6 +34,24 @@ const PageWrapper = styled.div`
     flex-direction: row;
   }
 `
+
+const StyledPrimaryHeading = styled.h1`
+  font-size: 28px;
+  font-weight: 500;
+`
+const StyledSecondaryHeading = styled.h1`
+  font-size: 24px;
+`
+
+const StyledText= styled.p`
+  line-height: 1.5;
+  font-size: 16px;
+`
+
+const StyledMainContentWrapper = styled.div`
+  width: 100%;
+  padding-right: 20px;
+`
 export default function Home(props) {
 
   const {author} = props;
@@ -56,7 +74,6 @@ export default function Home(props) {
 
   const { t } = useTranslation('home')
 
-  console.log(props)
   return (
     <Layout
       pageTitle={`${author.name} | Project Nota`}
@@ -66,14 +83,31 @@ export default function Home(props) {
 
         <Container>
           <PageWrapper>
-            <div>
-              <h1>{author.name}</h1>
-              <h2>Author Details</h2>
-              <p>{author.biography}</p>
-              <p>{author.timePeriod && author.timePeriod.name}</p>
-            </div>
+            <StyledMainContentWrapper>
+              <section>
+              <StyledPrimaryHeading>{author.name}</StyledPrimaryHeading>
+                <p>{author.timePeriod && author.timePeriod.name}</p>
+                <p>{author.location && author.location.name}</p>
+              </section>
+             
+
+
+              <section>
+                <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
+              <StyledText>{author.biography}</StyledText>
+              </section>
+              <section>
+                <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
+              {/* <StyledText>{author.biography}</StyledText> */}
+              </section>
+              <section>
+                <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
+              {/* <StyledText>{author.biography}</StyledText> */}
+              </section>
+              
+            </StyledMainContentWrapper>
           <RelatedContentContainer>
-            <h3>Related Resource</h3>
+            <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
           </RelatedContentContainer>
 
           </PageWrapper>
