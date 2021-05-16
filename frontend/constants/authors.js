@@ -1,16 +1,5 @@
 export const AUTHOR_OPTIONS = [
   {
-  "id": "all",
-  "name": "All Authors",
-  "biography": null,
-  "published_at": "2021-04-17T15:35:54.227Z",
-  "created_at": "2021-04-17T15:35:54.231Z",
-  "updated_at": "2021-04-17T15:35:54.231Z",
-  "categories": [],
-  "transcriptions": [],
-  "lesson_plans": []
-  },
-  {
   "id": 31,
   "name": "Catarina Imperiale",
   "biography": null,

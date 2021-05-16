@@ -55,17 +55,29 @@ const BREADCRUMBS_LIST = [
     isCurrentPage: true,
   },
 ];
+
+const INITIAL_DATA = {
+  authors: [],
+  locations: [],
+  timePeriods: [],
+  isError: false,
+  isLoading: false
+}
 const Authors = (props) => {
   const [authorResults, setAuthorResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
-  const [searchQuery, setSearchQuery] = useState({})
+  const [searchQuery, setSearchQuery] = useState({});
+  const [data, setData] = useState(INITIAL_DATA)
+  
   const {
-    data: { authors, locations, timePeriods },
     router
   } = props;
+  const {
+    authors, locations, timePeriods
+  } = data;
   const {pathname, query} = router;
   const queryParams = useMemo(() => qs.parse(query), [query]);
-
+  console.log(queryParams)
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -83,15 +95,59 @@ const Authors = (props) => {
   } = useListBox("all");
   
   useEffect(() => {
-    setAuthorResults(authors)
+
+    const fetchPageData = async () => {
+      try {
+        setData(prevState => {
+          return {
+            ...prevState,
+            isLoading: true
+          }
+        })
+        const authors = await STRAPI_CLIENT.fetchAPI("authors");
+        const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
+        const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
+        if (isMounted) {
+          console.log('queryParams', queryParams)
+          setSearchQuery(queryParams)
+          bindAuthorName.onChange(queryParams['id_eq'] || 'all');
+          bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+          bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+          setData(prevState => {
+            return {
+              ...prevState,
+              isLoading: false,
+              authors,
+              locations,
+              timePeriods
+            }
+          })
+        }
+      } catch(err) {
+
+        throw err;
+      }
+    }
+    let isMounted = true;
+
+    fetchPageData();
+    return () => {
+      isMounted = false; 
+    };
   }, [])
 
-  useEffect(() => {
-    setSearchQuery(queryParams)
-    bindAuthorName.onChange(queryParams['id_eq'] || 'all')
-  }, [pathname, queryParams])
 
- 
+  // useEffect(() => {
+
+  //   setSearchQuery(queryParams)
+  //   bindAuthorName.onChange(queryParams['id_eq'] || 'all');
+  //   bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+  //   bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+  //   // onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
+  // }, [queryParams])
+
+
+
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
     try {
@@ -118,16 +174,15 @@ const Authors = (props) => {
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(selectedAuthor, authorLocation, selectedTimePeriod)
     onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
    
   };
 
   // console.log('LOCATION', searchQuery['location.id_eq'])
   return (
-    <Layout pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
+    <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
-        <SearchFiltersContainer>
+        <SearchFiltersContainer loading={data.isLoading}>
           <form onSubmit={handleSubmit}>
             <StyledFieldsContainer>
               <StyledSelectContainer>
@@ -184,17 +239,10 @@ export default withRouter(Authors);
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
-  const authors = await STRAPI_CLIENT.fetchAPI("authors");
-  const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
-  const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods')
+  
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
-      data: {
-        authors,
-        locations,
-        timePeriods
-      },
     },
   };
 };

@@ -4,14 +4,18 @@ import styled from '@emotion/styled';
 import {woodSmoke, white} from '@/styles/colors';
 import Container from '../Container';
 const SearchFiltersContainer = props => {
-  const {title, children} = props;
+  const {title, children, loading} = props;
   return (
     <Container justifyContent='center'>
       <StyledContainer>
         <h2>Search Filters</h2>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
         <div>
           {children}
         </div>
+        )}
       </StyledContainer>
     </Container>
   );

@@ -13,7 +13,7 @@ const ResultsList = props => {
     )
   }
   return (
-    <section aria-live="polite" aria-busy="true">
+    <section aria-live="polite" aria-busy="false">
       <ResourcesListContainer>
         {results.map(r => (
           <ResourceItem key={r.id}>
