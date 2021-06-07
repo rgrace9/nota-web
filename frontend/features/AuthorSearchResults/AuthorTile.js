@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
 import Link from 'next/link';
+import { device } from "@/styles/screenSizes";
 
 
 const ResourceTile = props => {
@@ -50,6 +51,7 @@ export default ResourceTile;
 
 const StyledTitle = styled.h3`
   font-weight: 500;
+  padding-top: 10px;
   font-size: 20px;
   text-decoration: underline;
   margin-bottom: 20px;
@@ -58,7 +60,6 @@ const TileContent = styled.div`
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: 1rem;
   color: var(--text-dark);
   height: 120px;
   /* font-size: 1.6rem; */
@@ -85,9 +86,9 @@ height: auto;
 background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  /* border-top-left-radius: 0.25rem; */
+  display: none;
+  margin-right: 0px;
   border-top-right-radius: 0.25rem;
-  display: flex;
   flex-direction: row;
   min-width: 300px;
   overflow: hidden;
@@ -104,13 +105,16 @@ background-position: center center;
     }
   }
 
+  @media ${device.tablet} {
+    display: flex;
+    margin-right: 15px;
+  }
 `
 const ResourceTileContainer = styled.div`
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   margin-bottom: 20px;
   background-color: white;
-  border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
   display: flex;
   flex-direction: row;

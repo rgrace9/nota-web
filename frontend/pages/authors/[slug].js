@@ -7,29 +7,43 @@ import {HeroImage} from '../../components/shared/Hero'
 import StrapiClient from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
+import * as colors from 'styles/colors';
+import qs from 'qs'
+import Link from 'next/link';
 
 
 const STRAPI_CLIENT = new StrapiClient();
 
 
 const RelatedContentContainer = styled.aside`
-  background: pink;
+  background: ${colors.silver};
   flex: 1;
   flex-direction: row;
-  width: 100%;
-  @media ${device.mobileL} {
-    flex: 0 0 12em;
+  padding: 10px;
+  max-width: 320px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  height: 50vh;
+  min-height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  @media ${device.tablet} {
+    flex: 0 0 20em;
+    
+  }
+  @media ${device.desktop} {
+    flex: 0 0 20em;
+    /* min-height: 50vh; */
   }
 `
 
 const PageWrapper = styled.div`
     display: flex;
-    min-height: 100vh;
+    
     flex-direction: column;
     justify-content: space-between;
     transition: ease all .5s;
     width: 100%;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     flex: 1;
     flex-direction: row;
   }
@@ -54,7 +68,7 @@ const StyledMainContentWrapper = styled.div`
 `
 export default function Home(props) {
 
-  const {author} = props;
+  const {author, relatedAuthors} = props;
   const BREADCRUMBS_LIST = [
     {
       href: "/",
@@ -108,6 +122,17 @@ export default function Home(props) {
             </StyledMainContentWrapper>
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
+            <ul>
+              {relatedAuthors.map(relatedAuthor => (
+                <li key={relatedAuthor.id}>
+                  <Link href={`/authors/${relatedAuthor.id}`}>
+                    <a>
+                    {relatedAuthor.name}
+                    </a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </RelatedContentContainer>
 
           </PageWrapper>
@@ -133,10 +158,15 @@ export async function getStaticPaths() {
 }
 export const getStaticProps = async ({ locale, params }) => {
   const author = await STRAPI_CLIENT.fetchAPI(`authors/${params.slug}`);
+  const authorLocation = author.location && author.location.id;
+  const authorTimePeriod = author.timePeriod && author.timePeriod.id;
+  const query = qs.stringify({ _where: { 'id_ne': author.id, _or: [{ 'timePeriod.id_eq': authorTimePeriod }, { 'location.id_eq': authorLocation }] } })
+  const relatedAuthors = await STRAPI_CLIENT.fetchAPI(`authors?${query}`);
 
   return {
     props: {
       ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-      author
+      author,
+      relatedAuthors
     }
 }}

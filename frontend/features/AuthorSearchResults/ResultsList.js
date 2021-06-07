@@ -13,17 +13,19 @@ const ResultsList = props => {
     )
   }
   return (
-    <section aria-live="polite" aria-busy="false">
-      <ResourcesListContainer>
-        {results.map(r => (
-          <ResourceItem key={r.id}>
-            
-            <ResourceTile key={r} data={r}/>
-          </ResourceItem>
-        ))}
-        
-      </ResourcesListContainer>
-    </section>
+
+      <section aria-live="polite" aria-busy="false">
+        <ResourcesListContainer>
+          {results.map(r => (
+            <ResourceItem key={r.id}>
+              
+              <ResourceTile key={r} data={r}/>
+            </ResourceItem>
+          ))}
+          
+        </ResourcesListContainer>
+      </section>
+ 
   );
 };
 
@@ -48,13 +50,6 @@ const ResourceItem = styled.li`
   display: flex;
   padding: 1rem;
   width: 100%;
-  /* @media(min-width: 40rem) {
-    width: 50%;
-  } */
-  /* @media(min-width: 56rem) {
-    width: 33.3333%;
-  } */
-
 `
 
 export default ResultsList;

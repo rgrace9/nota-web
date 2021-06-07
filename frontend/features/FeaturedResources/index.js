@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import {ResourcesList} from '../../components/shared/Resources';
+import {ResourcesList} from 'components/shared/Resources';
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);

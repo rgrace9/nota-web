@@ -4,9 +4,9 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import Breadcrumb from '@/components/shared/Breadcrumb'
 import React from 'react';
+import {LoadingPage} from 'components/shared/Loading';
 
-
-const Layout = ({ pageTitle, children, breadcrumbsList }) => (
+const Layout = ({ pageTitle, children, breadcrumbsList, loading }) => (
   <React.Fragment>
                <Head>
         <title>{pageTitle}</title>
@@ -19,7 +19,11 @@ const Layout = ({ pageTitle, children, breadcrumbsList }) => (
   
 
     <main>
-      {children}
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        children
+      )}
     </main>
   </React.Fragment>
 )

@@ -15,6 +15,7 @@ import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
 import {createQueryString, formatQuery} from 'utils/queryString';
 import { useRouter, withRouter } from 'next/router'
 import qs from 'qs'
+import Container from '@/components/shared/Container'
 
 const STRAPI_CLIENT = new StrapiClient();
 
@@ -24,7 +25,7 @@ const StyledFieldsContainer = styled.div`
   flex-direction: column;
   @media ${device.tablet} {
     justify-content: space-between;
-    flex-direction: row;
+    /* flex-direction: row; */
   }
   /* padding: 5px;
     margin: 10px; */
@@ -35,8 +36,8 @@ const StyledSelectContainer = styled.div`
   margin: 0px;
   width: 100%;
   @media ${device.tablet} {
-    width: 50%;
-    margin: 15px;
+    /* width: 50%; */
+    /* margin: 15px; */
   }
 `;
 
@@ -76,8 +77,10 @@ const Authors = (props) => {
     authors, locations, timePeriods
   } = data;
   const {pathname, query} = router;
+  console.log(typeof JSON.stringify(query))
   const queryParams = useMemo(() => qs.parse(query), [query]);
-  
+ 
+  const queryString = JSON.stringify(query);
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -97,6 +100,7 @@ const Authors = (props) => {
   useEffect(() => {
 
     const fetchPageData = async () => {
+      console.log(queryString)
       try {
         setData(prevState => {
           return {
@@ -211,8 +215,9 @@ const Authors = (props) => {
             </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
-
-        <AuthorSearchResults loading={loadingResults} results={authorResults} />
+        <Container>
+          <AuthorSearchResults loading={loadingResults} results={authorResults} />
+        </Container>
       </ContentLayout>
     </Layout>
   );
