@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Breadcrumb from '@/components/shared/Breadcrumb'
 import React from 'react';
 import {LoadingPage} from 'components/shared/Loading';
+import Footer from 'components/shared/Footer';
 
 const Layout = ({ pageTitle, children, breadcrumbsList, loading }) => (
   <React.Fragment>
@@ -25,6 +26,8 @@ const Layout = ({ pageTitle, children, breadcrumbsList, loading }) => (
         children
       )}
     </main>
+
+    <Footer />
   </React.Fragment>
 )
 
