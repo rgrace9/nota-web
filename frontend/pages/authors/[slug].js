@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {Search, FeaturedResources} from '../../features';
 import {HeroImage} from '../../components/shared/Hero'
-import StrapiClient from "@/lib/StrapiClient";
+import {STRAPI_CLIENT, fetchStrapiApi} from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
@@ -12,7 +12,6 @@ import qs from 'qs'
 import Link from 'next/link';
 
 
-const STRAPI_CLIENT = new StrapiClient();
 
 
 const RelatedContentContainer = styled.aside`
@@ -69,6 +68,7 @@ const StyledMainContentWrapper = styled.div`
 export default function Home(props) {
 
   const {author, relatedAuthors} = props;
+  
   const BREADCRUMBS_LIST = [
     {
       href: "/",
@@ -142,7 +142,7 @@ export default function Home(props) {
 };
 
 export async function getStaticPaths() {
-  const authors = await STRAPI_CLIENT.fetchAPI("authors");
+  const authors = await fetchStrapiApi("authors");
 
   const paths = authors.map((author) => {
     return {
@@ -157,16 +157,27 @@ export async function getStaticPaths() {
   }
 }
 export const getStaticProps = async ({ locale, params }) => {
-  const author = await STRAPI_CLIENT.fetchAPI(`authors/${params.slug}`);
-  const authorLocation = author.location && author.location.id;
-  const authorTimePeriod = author.timePeriod && author.timePeriod.id;
-  const query = qs.stringify({ _where: { 'id_ne': author.id, _or: [{ 'timePeriod.id_eq': authorTimePeriod }, { 'location.id_eq': authorLocation }] } })
-  const relatedAuthors = await STRAPI_CLIENT.fetchAPI(`authors?${query}`);
+  const author = await fetchStrapiApi(`authors/${params.slug}`);
+  try {
+    const authorLocation = author.location && author.location.id;
+    const authorTimePeriod = author.timePeriod && author.timePeriod.id;
+    const query = qs.stringify({ _where: { 'id_ne': author.id, _or: [{ 'timePeriod.id_eq': authorTimePeriod }, { 'location.id_eq': authorLocation }] } })
+    const relatedAuthors = await fetchStrapiApi(`authors?${query}`);
+    
+    return {
+      props: {
+        ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
+        author,
+        relatedAuthors
+      }
+  }
 
-  return {
-    props: {
-      ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-      author,
-      relatedAuthors
-    }
-}}
+  } catch(err) {
+    return {
+      props: {
+        ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
+        author,
+        relatedAuthors: []
+      }
+  }
+  }}
