@@ -2,9 +2,9 @@ import Layout from '../../components/Layout';
 import Container from '../../components/shared/Container';
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import {Search, FeaturedResources} from '../../features';
-import {HeroImage} from '../../components/shared/Hero'
-import {STRAPI_CLIENT, fetchStrapiApi} from "@/lib/StrapiClient";
+import { Search, FeaturedResources } from '../../features';
+import { HeroImage } from '../../components/shared/Hero'
+import { STRAPI_CLIENT, fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
@@ -56,7 +56,7 @@ const StyledSecondaryHeading = styled.h1`
   font-size: 24px;
 `
 
-const StyledText= styled.p`
+const StyledText = styled.p`
   line-height: 1.5;
   font-size: 16px;
 `
@@ -65,10 +65,14 @@ const StyledMainContentWrapper = styled.div`
   width: 100%;
   padding-right: 20px;
 `
+
+const StyledListContainer = styled.ul`
+  padding-left: 40px;
+`
 export default function Home(props) {
 
-  const {author, relatedAuthors} = props;
-  
+  const { author, relatedAuthors } = props;
+  // console.log({ author })
   const BREADCRUMBS_LIST = [
     {
       href: "/",
@@ -93,33 +97,37 @@ export default function Home(props) {
       pageTitle={`${author.name} | Project Nota`}
       breadcrumbsList={BREADCRUMBS_LIST}
     >
- 
 
-        <Container>
-          <PageWrapper>
-            <StyledMainContentWrapper>
-              <section>
+
+      <Container>
+        <PageWrapper>
+          <StyledMainContentWrapper>
+            <section>
               <StyledPrimaryHeading>{author.name}</StyledPrimaryHeading>
-                <p>{author.timePeriod && author.timePeriod.name}</p>
-                <p>{author.location && author.location.name}</p>
-              </section>
-             
+              <p>{author.timePeriod && author.timePeriod.name}</p>
+              <p>{author.location && author.location.name}</p>
+            </section>
 
 
-              <section>
-                <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
+
+            <section>
+              <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
               <StyledText>{author.biography}</StyledText>
-              </section>
-              <section>
-                <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
+            </section>
+            <section>
+              <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
+              <StyledListContainer>
+                {author.lessonPlans.map(lp => (
+                  <li><a target='_blank' href={`/lesson-plans/${lp.slug}`}>{lp.title}</a></li>
+                ))}
+              </StyledListContainer>
+            </section>
+            <section>
+              <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
               {/* <StyledText>{author.biography}</StyledText> */}
-              </section>
-              <section>
-                <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-              {/* <StyledText>{author.biography}</StyledText> */}
-              </section>
-              
-            </StyledMainContentWrapper>
+            </section>
+
+          </StyledMainContentWrapper>
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
             <ul>
@@ -127,7 +135,7 @@ export default function Home(props) {
                 <li key={relatedAuthor.id}>
                   <Link href={`/authors/${relatedAuthor.id}`}>
                     <a>
-                    {relatedAuthor.name}
+                      {relatedAuthor.name}
                     </a>
                   </Link>
                 </li>
@@ -135,8 +143,8 @@ export default function Home(props) {
             </ul>
           </RelatedContentContainer>
 
-          </PageWrapper>
-        </Container>
+        </PageWrapper>
+      </Container>
     </Layout>
   );
 };
@@ -163,21 +171,22 @@ export const getStaticProps = async ({ locale, params }) => {
     const authorTimePeriod = author.timePeriod && author.timePeriod.id;
     const query = qs.stringify({ _where: { 'id_ne': author.id, _or: [{ 'timePeriod.id_eq': authorTimePeriod }, { 'location.id_eq': authorLocation }] } })
     const relatedAuthors = await fetchStrapiApi(`authors?${query}`);
-    
+
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
         author,
         relatedAuthors
       }
-  }
+    }
 
-  } catch(err) {
+  } catch (err) {
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
         author,
         relatedAuthors: []
       }
+    }
   }
-  }}
+}

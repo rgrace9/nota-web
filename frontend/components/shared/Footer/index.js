@@ -4,40 +4,28 @@ import styled from "@emotion/styled";
 const StyledFooter = styled.footer`
   background-color: #DEB9AD;
   text-align: center;
+  height: 100px;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 `
 const Footer = () => {
   return (
-    <StyledFooter class="footer-distributed">
+    <StyledFooter>
 
-    <div class="footer-right">
 
-      <a href="#"><i class="fa fa-facebook"></i></a>
-      <a href="#"><i class="fa fa-twitter"></i></a>
-      <a href="#"><i class="fa fa-linkedin"></i></a>
-      <a href="#"><i class="fa fa-github"></i></a>
+      <div >
 
-    </div>
+        <p class="footer-links">
 
-    <div class="footer-left">
 
-      <p class="footer-links">
-        <a class="link-1" href="#">Home</a>
+        </p>
 
-        <a href="#">Blog</a>
+        <p>Project Nota &copy; 2021</p>
+      </div>
 
-        <a href="#">Pricing</a>
-
-        <a href="#">About</a>
-
-        <a href="#">Faq</a>
-
-        <a href="#">Contact</a>
-      </p>
-
-      <p>Project Nota &copy; 2021</p>
-    </div>
-
-  </StyledFooter>
+    </StyledFooter>
   );
 };
 

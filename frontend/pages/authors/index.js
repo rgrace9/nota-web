@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchFiltersContainer } from "@/components/shared/SearchFilters";
@@ -12,7 +12,7 @@ import StrapiClient from "@/lib/StrapiClient";
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
 import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
-import {createQueryString, formatQuery} from 'utils/queryString';
+import { createQueryString, formatQuery } from 'utils/queryString';
 import { useRouter, withRouter } from 'next/router'
 import qs from 'qs'
 import Container from '@/components/shared/Container'
@@ -69,17 +69,17 @@ const Authors = (props) => {
   const [loadingResults, setLoadingResults] = useState(false)
   const [searchQuery, setSearchQuery] = useState({});
   const [data, setData] = useState(INITIAL_DATA)
-  
+
   const {
     router
   } = props;
   const {
     authors, locations, timePeriods
   } = data;
-  const {pathname, query} = router;
-  console.log(typeof JSON.stringify(query))
+  const { pathname, query } = router;
+  // console.log(typeof JSON.stringify(query))
   const queryParams = useMemo(() => qs.parse(query), [query]);
- 
+
   const queryString = JSON.stringify(query);
   const {
     value: selectedAuthor,
@@ -96,7 +96,7 @@ const Authors = (props) => {
     bind: bindSelectedTimePeriod,
     reset: resetSelectedTimePeriod,
   } = useListBox("all");
-  
+
   useEffect(() => {
 
     const fetchPageData = async () => {
@@ -126,7 +126,7 @@ const Authors = (props) => {
             }
           })
         }
-      } catch(err) {
+      } catch (err) {
 
         throw err;
       }
@@ -135,7 +135,7 @@ const Authors = (props) => {
 
     fetchPageData();
     return () => {
-      isMounted = false; 
+      isMounted = false;
     };
   }, [])
 
@@ -143,19 +143,19 @@ const Authors = (props) => {
 
     try {
       const searchParams = {
-        ...(authorValue !== 'all' && {'id_eq': authorValue,}),
-        ...(locationValue !== 'all' && {'location.id_eq': locationValue,}),
-        ...(timeValue !== 'all' && {'timePeriod.id_eq': timeValue,}),
+        ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
+        ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
+        ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
       }
       const formattedSearchQuery = formatQuery(searchParams)
       const newURL = `authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
       router.push(newURL)
-      
+
       setAuthorResults(res)
       setLoadingResults(false)
 
-    } catch(err) {
+    } catch (err) {
       setAuthorResults([])
       setLoadingResults(false)
       throw err
@@ -165,7 +165,7 @@ const Authors = (props) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
-   
+
   };
 
   return (
@@ -229,7 +229,7 @@ export default withRouter(Authors);
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
-  
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
