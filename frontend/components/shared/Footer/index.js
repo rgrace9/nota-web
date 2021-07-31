@@ -17,7 +17,7 @@ const Footer = () => {
 
       <div >
 
-        <p class="footer-links">
+        <p>
 
 
         </p>

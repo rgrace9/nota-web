@@ -111,6 +111,7 @@ const Authors = (props) => {
         const authors = await STRAPI_CLIENT.fetchAPI("authors");
         const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
         const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
+        setAuthorResults(authors)
         if (isMounted) {
           setSearchQuery(queryParams)
           bindAuthorName.onChange(queryParams['id_eq'] || 'all');
@@ -168,6 +169,7 @@ const Authors = (props) => {
 
   };
 
+  console.log(authors, authorResults)
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
