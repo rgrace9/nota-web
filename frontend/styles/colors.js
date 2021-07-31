@@ -21,3 +21,9 @@ export const beige = '#e8d0b3';
 export const silver = '#F2F2F2';
 
 export const darkGray = '#E3E3E3';
+
+export const graySilver = '#DFDFDD';
+
+export const peachPink = '#DEB9AD'
+
+export const palePeachPink ='#F4E8E4'

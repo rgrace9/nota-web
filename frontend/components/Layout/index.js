@@ -17,7 +17,7 @@ const StyledMain = styled.main`
 `
 
 
-const Layout = ({ pageTitle, children, breadcrumbsList, loading }) => (
+const Layout = ({ pageTitle, children, breadcrumbsList, loadingText, loading }) => (
   <StyledContainer>
     <Head>
       <title>{pageTitle}</title>
@@ -31,7 +31,7 @@ const Layout = ({ pageTitle, children, breadcrumbsList, loading }) => (
 
     <StyledMain>
       {loading ? (
-        <LoadingPage />
+        <LoadingPage loadingText={loadingText} />
       ) : (
         children
       )}

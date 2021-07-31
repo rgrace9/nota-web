@@ -2,9 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import * as colors from 'styles/colors';
 import {amiri} from 'styles/fonts';
+import PropTypes from 'prop-types';
 
 const LoadingPage = (props) => {
   const {loadingText} = props;
+ 
   return (
     <StyledLoadingContainer>
       <StyledLoader></StyledLoader>
@@ -13,6 +15,13 @@ const LoadingPage = (props) => {
   );
 };
 
+LoadingPage.propTypes = {
+  loadingText: PropTypes.string,
+}
+LoadingPage.defaultProps = {
+  loadingText: 'Loading...',
+}
+
 export default LoadingPage;
 
 const StyledLoadingContainer = styled.div`
@@ -20,7 +29,7 @@ const StyledLoadingContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 24px;
+  margin-top: 70px;
 
 `
 
@@ -35,13 +44,14 @@ const StyledLoader = styled.div`
   100% { transform: rotate(360deg); }
 }
 
-  border: 16px solid ${colors.cream};
+  border: 16px solid ${colors.palePeachPink};
   border-radius: 50%;
   border-top: 16px solid ${colors.navyBlue};
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+  transition: all 0.3s ease-in-out; 
 `
 
 const StyledText = styled.p`
