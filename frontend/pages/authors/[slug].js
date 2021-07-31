@@ -10,7 +10,7 @@ import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
 import qs from 'qs'
 import Link from 'next/link';
-
+import StyledLink from '@/components/shared/Link/StyledLink'
 
 
 
@@ -113,12 +113,17 @@ export default function Home(props) {
             <section>
               <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
               <StyledText>{author.biography}</StyledText>
+              <StyledLink href='https://9cc615d0-1255-4689-b262-e5224d896f89.filesusr.com/ugd/a8964a_5cc26c4bf53e44e998eb2330913d66fc.pdf' target='_blank'>Learn More about {author.name}</StyledLink>
             </section>
             <section>
               <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
               <StyledListContainer>
                 {author.lessonPlans.map(lp => (
-                  <li><a target='_blank' href={`/lesson-plans/${lp.slug}`}>{lp.title}</a></li>
+                  <li>
+                    <Link href={`/lesson-plans/${lp.slug}`} passHref>
+                      <StyledLink target='_blank' href={`/lesson-plans/${lp.slug}`}>{lp.title}</StyledLink>
+                    </Link>
+                  </li>
                 ))}
               </StyledListContainer>
             </section>

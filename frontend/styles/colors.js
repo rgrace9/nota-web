@@ -26,4 +26,8 @@ export const graySilver = '#DFDFDD';
 
 export const peachPink = '#DEB9AD'
 
-export const palePeachPink ='#F4E8E4'
+export const palePeachPink ='#F4E8E4';
+
+export const brightPink = '#fa0dc7';
+
+export const charcoalGray = '#1A1C1C';

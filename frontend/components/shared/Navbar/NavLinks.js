@@ -164,7 +164,7 @@ const NavLinksWrapper = styled.ul`
 export const NavLink = styled.a`
   position: relative;
   color: white;
-  text-decoration: none;
+  /* text-decoration: none; */
   cursor: pointer;
   text-transform: capitalize;
   color: var(--text);
