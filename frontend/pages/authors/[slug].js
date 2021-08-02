@@ -11,7 +11,7 @@ import * as colors from 'styles/colors';
 import qs from 'qs'
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
-
+import { useEffect, useState } from 'react';
 
 
 const RelatedContentContainer = styled.aside`
@@ -70,32 +70,40 @@ const StyledListContainer = styled.ul`
   padding-left: 40px;
 `
 export default function Home(props) {
-
+  const storage = globalThis?.sessionStorage?.currentPath;
   const { author, relatedAuthors } = props;
-  // console.log({ author })
-  const BREADCRUMBS_LIST = [
-    {
-      href: "/",
-      title: "Home",
-    },
-    {
-      href: "/authors",
-      title: "Authors",
-      isCurrentPage: false,
-    },
-    {
-      href: "/authors",
-      title: author.name,
-      isCurrentPage: true,
-    },
-  ];
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   const { t } = useTranslation('home')
+  useEffect(() => {
+    const currentPageIsPreviousPage = globalThis.sessionStorage.currentIsPrev === "true"
+    const BREADCRUMBS_LIST = [
+      {
+        href: "/",
+        title: "Home",
+      },
+      {
+        href: currentPageIsPreviousPage ? '/authors' : globalThis.sessionStorage.prevPath,
+ 
+        // href: `/${document.referrer}`,
+        title: "Authors",
+        isCurrentPage: false,
+      },
+      {
+        href: globalThis.sessionStorage.currentPath,
+        title: author.name,
+        isCurrentPage: true,
+      },
+    ]
+    setBreadcrumbs(BREADCRUMBS_LIST)
+
+  }, [])
+
 
   return (
     <Layout
       pageTitle={`${author.name} | Project Nota`}
-      breadcrumbsList={BREADCRUMBS_LIST}
+      breadcrumbsList={breadcrumbs}
     >
 
 
@@ -105,7 +113,16 @@ export default function Home(props) {
             <section>
               <StyledPrimaryHeading>{author.name}</StyledPrimaryHeading>
               <p>{author.timePeriod && author.timePeriod.name}</p>
-              <p>{author.location && author.location.name}</p>
+              <p>{author.location && 
+              
+              ( 
+              <Link href={`/authors?location.id_eq=${author.location.id}`} passHref>
+              <StyledLink target='_blank' >
+                  {author.location.name}
+                </StyledLink>
+              </Link>
+              )}
+              </p>
             </section>
 
 
@@ -135,13 +152,13 @@ export default function Home(props) {
           </StyledMainContentWrapper>
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
-            <ul>
+            <ul role='list'>
               {relatedAuthors.map(relatedAuthor => (
                 <li key={relatedAuthor.id}>
-                  <Link href={`/authors/${relatedAuthor.id}`}>
-                    <a>
+                  <Link href={`/authors/${relatedAuthor.id}`} passHref>
+                    <StyledLink>
                       {relatedAuthor.name}
-                    </a>
+                    </StyledLink>
                   </Link>
                 </li>
               ))}
