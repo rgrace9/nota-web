@@ -79,9 +79,10 @@ const Authors = (props) => {
   const { pathname, query } = router;
   // console.log(typeof JSON.stringify(query))
   const queryParams = useMemo(() => qs.parse(query), [query]);
-  // console.log(query)
+  console.log(query)
+ 
   const queryString = JSON.stringify(query);
-  // console.log(queryParams)
+  console.log('pathname', pathname)
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -112,13 +113,16 @@ const Authors = (props) => {
         const authors = await STRAPI_CLIENT.fetchAPI("authors");
         const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
         const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
-        setAuthorResults(authors)
+        
         if (isMounted) {
+      
           setSearchQuery(queryParams)
           bindAuthorName.onChange(queryParams['id_eq'] || 'all');
           
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+          // onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq'])
+          
           setData(prevState => {
             return {
               ...prevState,
@@ -171,7 +175,6 @@ const Authors = (props) => {
 
   };
 
-  // console.log('selectedAuthor', selectedAuthor)
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">
