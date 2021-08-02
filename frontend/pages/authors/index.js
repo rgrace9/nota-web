@@ -79,8 +79,9 @@ const Authors = (props) => {
   const { pathname, query } = router;
   // console.log(typeof JSON.stringify(query))
   const queryParams = useMemo(() => qs.parse(query), [query]);
-
+  // console.log(query)
   const queryString = JSON.stringify(query);
+  // console.log(queryParams)
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -100,7 +101,7 @@ const Authors = (props) => {
   useEffect(() => {
 
     const fetchPageData = async () => {
-      console.log(queryString)
+
       try {
         setData(prevState => {
           return {
@@ -115,6 +116,7 @@ const Authors = (props) => {
         if (isMounted) {
           setSearchQuery(queryParams)
           bindAuthorName.onChange(queryParams['id_eq'] || 'all');
+          
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
           setData(prevState => {
@@ -138,7 +140,7 @@ const Authors = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [])
+  }, [queryParams])
 
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
@@ -169,7 +171,7 @@ const Authors = (props) => {
 
   };
 
-  console.log(authors, authorResults)
+  // console.log('selectedAuthor', selectedAuthor)
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors">

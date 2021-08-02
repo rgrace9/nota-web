@@ -7,14 +7,14 @@ const ResultsList = props => {
   const {results, loading} = props;
   if (loading) {
     return (
-      <section aria-live="polite" aria-busy="true">
-  LOADING!
-</section>
+      <StyledSection aria-live="polite" aria-busy="true">
+        LOADING!
+      </StyledSection>
     )
   }
   return (
 
-      <section aria-live="polite" aria-busy="false">
+      <StyledSection aria-live="polite" aria-busy="false">
         <ResourcesListContainer>
           {results.map(r => (
             <ResourceItem key={r.id}>
@@ -24,7 +24,7 @@ const ResultsList = props => {
           ))}
           
         </ResourcesListContainer>
-      </section>
+      </StyledSection>
  
   );
 };
@@ -33,6 +33,9 @@ ResultsList.propTypes = {
   
 };
 
+const StyledSection = styled.section`
+  width: 100%;
+`
 const ResourcesListContainer = styled.ul`
   display: flex;
   /* justify-content: space-between;
