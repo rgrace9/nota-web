@@ -77,12 +77,10 @@ const Authors = (props) => {
     authors, locations, timePeriods
   } = data;
   const { pathname, query } = router;
-  // console.log(typeof JSON.stringify(query))
   const queryParams = useMemo(() => qs.parse(query), [query]);
-  console.log(query)
  
   const queryString = JSON.stringify(query);
-  console.log('pathname', pathname)
+
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
@@ -121,7 +119,7 @@ const Authors = (props) => {
           
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
-          // onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq'])
+          onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq'])
           
           setData(prevState => {
             return {
@@ -144,8 +142,8 @@ const Authors = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [queryParams])
-
+  }, [queryString])
+  
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
     try {
