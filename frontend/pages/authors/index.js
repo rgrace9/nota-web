@@ -100,18 +100,7 @@ const Authors = (props) => {
   useEffect(() => {
 
     const fetchPageData = async () => {
-
       try {
-        setData(prevState => {
-          return {
-            ...prevState,
-            isLoading: true
-          }
-        })
-        const authors = await STRAPI_CLIENT.fetchAPI("authors");
-        const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
-        const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
-        
         if (isMounted) {
       
           setSearchQuery(queryParams)
@@ -119,17 +108,8 @@ const Authors = (props) => {
           
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
-          onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq'])
-          
-          setData(prevState => {
-            return {
-              ...prevState,
-              isLoading: false,
-              authors,
-              locations,
-              timePeriods
-            }
-          })
+          onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
+
         }
       } catch (err) {
 
@@ -143,6 +123,41 @@ const Authors = (props) => {
       isMounted = false;
     };
   }, [queryString])
+
+  useEffect(() => {
+
+    const fetchPageData = async () => {
+
+      try {
+        setData(prevState => {
+          return {
+            ...prevState,
+            isLoading: true
+          }
+        })
+        const authors = await STRAPI_CLIENT.fetchAPI("authors");
+        const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
+        const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
+        
+          setData(prevState => {
+            return {
+              ...prevState,
+              isLoading: false,
+              authors,
+              locations,
+              timePeriods
+            }
+          })
+      } catch (err) {
+
+        throw err;
+      }
+    }
+
+    fetchPageData();
+
+  }, [])
+
   
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
