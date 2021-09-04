@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchFiltersContainer } from "@/components/shared/SearchFilters";
@@ -69,7 +69,6 @@ const Authors = (props) => {
   const [loadingResults, setLoadingResults] = useState(false)
   const [searchQuery, setSearchQuery] = useState({});
   const [data, setData] = useState(INITIAL_DATA)
-
   const {
     router
   } = props;
@@ -170,20 +169,19 @@ const Authors = (props) => {
       const formattedSearchQuery = formatQuery(searchParams)
       const newURL = `authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
-      router.push(newURL)
+      router.push(newURL, undefined, { shallow: true })
 
       setAuthorResults(res)
       setLoadingResults(false)
-
     } catch (err) {
       setAuthorResults([])
       setLoadingResults(false)
       throw err
     }
-
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    
     onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
 
   };

@@ -5,25 +5,23 @@ import { Global, css } from '@emotion/react'
 import ResourceTile from './AuthorTile';
 const ResultsList = props => {
   const {results, loading} = props;
-  if (loading) {
-    return (
-      <StyledSection aria-live="polite" aria-busy="true">
-        LOADING!
-      </StyledSection>
-    )
-  }
+
   return (
 
-      <StyledSection aria-live="polite" aria-busy="false">
-        <ResourcesListContainer>
-          {results.map(r => (
-            <ResourceItem key={r.id}>
-              
-              <ResourceTile key={r} data={r}/>
-            </ResourceItem>
-          ))}
-          
-        </ResourcesListContainer>
+      <StyledSection aria-live="polite" aria-busy={loading ? "true" : "false"}>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <ResourcesListContainer>
+            {results.map(r => (
+              <ResourceItem key={r.id}>
+                
+                <ResourceTile key={r} data={r}/>
+              </ResourceItem>
+            ))}
+            
+          </ResourcesListContainer>
+        )}
       </StyledSection>
  
   );
