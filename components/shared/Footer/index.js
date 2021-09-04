@@ -17,6 +17,7 @@ const Footer = () => {
 
 
       <div >
+        <p>Project Nota</p>
         <p>
         Project Nota is a group dedicated to drawing attention
 to the Latin letters and works of famous women by focusing on the digitization of
@@ -33,6 +34,11 @@ academic journals, and multiple positions in professional organizations.
         </p>
       </div>
 
+      <div>
+      <p>
+          Connect with Us
+        </p>
+      </div>
     </StyledFooter>
   );
 };

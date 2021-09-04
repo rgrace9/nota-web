@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
     min-height: 100vh;
 `
 const StyledMain = styled.main`
-  padding-bottom: 100px;
+  padding-bottom: 400px;
 `
 
 

@@ -76,14 +76,14 @@ export default function Home(props) {
 
   const { t } = useTranslation('home')
   useEffect(() => {
-    const currentPageIsPreviousPage = globalThis.sessionStorage.currentIsPrev === "true"
+    const previousPageIsSearchPage = globalThis.sessionStorage.prevPath.includes('?');
     const BREADCRUMBS_LIST = [
       {
         href: "/",
         title: "Home",
       },
       {
-        href: currentPageIsPreviousPage ? '/authors' : globalThis.sessionStorage.prevPath,
+        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/authors',
         title: "Authors",
         isCurrentPage: false,
       },
