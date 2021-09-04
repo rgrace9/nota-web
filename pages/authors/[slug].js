@@ -84,8 +84,6 @@ export default function Home(props) {
       },
       {
         href: currentPageIsPreviousPage ? '/authors' : globalThis.sessionStorage.prevPath,
- 
-        // href: `/${document.referrer}`,
         title: "Authors",
         isCurrentPage: false,
       },
@@ -156,7 +154,7 @@ export default function Home(props) {
               {relatedAuthors.map(relatedAuthor => (
                 <li key={relatedAuthor.id}>
                   <Link href={`/authors/${relatedAuthor.id}`} passHref>
-                    <StyledLink>
+                    <StyledLink href={`/authors/${relatedAuthor.id}`}>
                       {relatedAuthor.name}
                     </StyledLink>
                   </Link>

@@ -17,7 +17,7 @@ const DesktopNavbar = () => {
       <DesktopNav aria-label='Menu'>
         <div className="home-link-container">
         <Link href="/">
-          <a className='home-link'>
+          <a>
           <img
             alt='Project Nota'
       
@@ -69,15 +69,8 @@ const DesktopNav = styled.nav`
   }
   .home-link-container {
     flex: 2;
-    /* color: var(--text);
-    font-size: 32px; */
   }
-  .home-link {
-    &:focus {
-  
-    outline: 1px solid var(--text);
-    }
-  }
+
   .logo {
     width: 200px;
 

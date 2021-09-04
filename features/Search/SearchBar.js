@@ -51,13 +51,11 @@ const SearchBarContainer = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   max-width: 800px;
-  
   border: 3px solid var(--text-dark);
   border-right: none;
   padding: 5px;
   height: 42px;
   border-radius: 5px 0 0 5px;
-  outline: none;
   color: var(--text-dark);
   font-size: 24px;
 `

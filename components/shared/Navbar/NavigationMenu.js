@@ -175,33 +175,7 @@ const StyledMenu = styled.div`
   cursor: pointer;
   text-transform: capitalize;
   color: var(--text-dark);
-  white-space: nowrap;
-
-  /* &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 0;
-    background: var(--text);
-    transition: width 150ms linear;
-  } */
-  /* outline: none; */
-  /* &:focus::before {
-      outline: none;
-      width: 100%;
-    
-    } */
-  /* &:focus {
-    outline: 1px solid white;
-  }
-  &:hover::before {
-    width: 100%;
-  } */
-
-  
+  white-space: nowrap;  
 }
 
 `
