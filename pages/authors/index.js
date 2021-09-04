@@ -79,13 +79,10 @@ const Authors = (props) => {
     locationOptions,
     timePeriodOptions
   } = props;
-  const {
-    authors, locations, timePeriods
-  } = data;
-  const { pathname, query } = router;
+
+  const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
- 
 
   const {
     value: selectedAuthor,
@@ -112,7 +109,7 @@ const Authors = (props) => {
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
           
-          onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
+          onInitialSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
 
         }
       } catch (err) {
@@ -128,9 +125,29 @@ const Authors = (props) => {
     };
   }, [queryString])
 
-  console.log(queryParams, query)
- 
-  
+
+  // const searchCallback = () => {
+
+  // }
+
+  const onInitialSearch = async (authorValue, locationValue, timeValue) => {
+    try {
+      const searchParams = {
+        ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
+        ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
+        ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
+      setAuthorResults(res)
+      setLoadingResults(false)
+    } catch (err) {
+      setAuthorResults([])
+      setLoadingResults(false)
+      throw err
+    }
+  };
+
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
     try {
@@ -139,12 +156,14 @@ const Authors = (props) => {
         ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
         ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
       }
-      const formattedSearchQuery = formatQuery(searchParams)
-      // const newURL = `authors?${formattedSearchQuery}`;
+      const formattedSearchQuery = formatQuery(searchParams);
+      const newURL = `/authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
-      // router.push(newURL, undefined, { shallow: true })
-
       setAuthorResults(res)
+      // if (newURL !== asPath) {
+      //   console.log('yo')
+      // }
+      router.replace(newURL, undefined, { shallow: true })
       setLoadingResults(false)
     } catch (err) {
       setAuthorResults([])
@@ -154,7 +173,6 @@ const Authors = (props) => {
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log({selectedAuthor, authorLocation, selectedTimePeriod})
     onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
   };
 
