@@ -42,7 +42,11 @@ const StyledSelectContainer = styled.div`
 `;
 
 const StyledBtnContainer = styled.div`
-  text-align: center;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const BREADCRUMBS_LIST = [
@@ -70,15 +74,18 @@ const Authors = (props) => {
   const [searchQuery, setSearchQuery] = useState({});
   const [data, setData] = useState(INITIAL_DATA)
   const {
-    router
+    router,
+    authorOptions,
+    locationOptions,
+    timePeriodOptions
   } = props;
   const {
     authors, locations, timePeriods
   } = data;
   const { pathname, query } = router;
-  const queryParams = useMemo(() => qs.parse(query), [query]);
- 
   const queryString = JSON.stringify(query);
+  const queryParams = useMemo(() => qs.parse(query), [queryString]);
+ 
 
   const {
     value: selectedAuthor,
@@ -101,12 +108,10 @@ const Authors = (props) => {
     const fetchPageData = async () => {
       try {
         if (isMounted) {
-      
-          setSearchQuery(queryParams)
           bindAuthorName.onChange(queryParams['id_eq'] || 'all');
-          
           bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
           bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+          
           onSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
 
         }
@@ -123,40 +128,8 @@ const Authors = (props) => {
     };
   }, [queryString])
 
-  useEffect(() => {
-
-    const fetchPageData = async () => {
-
-      try {
-        setData(prevState => {
-          return {
-            ...prevState,
-            isLoading: true
-          }
-        })
-        const authors = await STRAPI_CLIENT.fetchAPI("authors");
-        const locations = await STRAPI_CLIENT.fetchAPI("author-locations");
-        const timePeriods = await STRAPI_CLIENT.fetchAPI('time-periods');
-        
-          setData(prevState => {
-            return {
-              ...prevState,
-              isLoading: false,
-              authors,
-              locations,
-              timePeriods
-            }
-          })
-      } catch (err) {
-
-        throw err;
-      }
-    }
-
-    fetchPageData();
-
-  }, [])
-
+  console.log(queryParams, query)
+ 
   
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
@@ -167,9 +140,9 @@ const Authors = (props) => {
         ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
       }
       const formattedSearchQuery = formatQuery(searchParams)
-      const newURL = `authors?${formattedSearchQuery}`;
+      // const newURL = `authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
-      router.push(newURL, undefined, { shallow: true })
+      // router.push(newURL, undefined, { shallow: true })
 
       setAuthorResults(res)
       setLoadingResults(false)
@@ -181,10 +154,15 @@ const Authors = (props) => {
   }
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    
+    console.log({selectedAuthor, authorLocation, selectedTimePeriod})
     onSearch(selectedAuthor, authorLocation, selectedTimePeriod)
-
   };
+
+  const handleReset = () => {
+    resetAuthorName();
+    resetAuthorLocation();
+    resetSelectedTimePeriod();
+  }
 
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
@@ -198,7 +176,7 @@ const Authors = (props) => {
                   allObject={{ name: "All Authors", id: "all" }}
                   labelText="Author"
                   labelValue="author"
-                  options={authors}
+                  options={authorOptions}
                   value={selectedAuthor}
                   {...bindAuthorName}
                 />
@@ -209,7 +187,7 @@ const Authors = (props) => {
                   allObject={{ name: "All Locations", id: "all" }}
                   labelText="Location"
                   labelValue="author-location"
-                  options={locations}
+                  options={locationOptions}
                   value={authorLocation}
                   {...bindAuthorLocation}
 
@@ -221,7 +199,7 @@ const Authors = (props) => {
                   allObject={{ name: "All Periods", id: "all" }}
                   labelText="Period"
                   labelValue="author-period"
-                  options={timePeriods}
+                  options={timePeriodOptions}
                   value={selectedTimePeriod}
                   {...bindSelectedTimePeriod}
 
@@ -230,6 +208,7 @@ const Authors = (props) => {
             </StyledFieldsContainer>
             <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
+              <PrimaryButton type="reset" text="Clear Fields" onClick={handleReset} />
             </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
@@ -247,10 +226,16 @@ export default withRouter(Authors);
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
-
+ 
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+  const locationOptions = await STRAPI_CLIENT.fetchAPI("author-locations");
+  const timePeriodOptions = await STRAPI_CLIENT.fetchAPI('time-periods');
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
+      authorOptions,
+      locationOptions,
+      timePeriodOptions
     },
   };
 };

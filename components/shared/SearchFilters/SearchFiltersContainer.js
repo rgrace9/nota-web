@@ -8,7 +8,7 @@ const SearchFiltersContainer = props => {
   return (
     <Container justifyContent='center'>
       <StyledContainer>
-        <h2>Search Filters</h2>
+        <StyledSubheading>{title}</StyledSubheading>
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -20,9 +20,11 @@ const SearchFiltersContainer = props => {
     </Container>
   );
 };
-
+SearchFiltersContainer.defaultProps = {
+  title: 'Search Filters'
+}
 SearchFiltersContainer.propTypes = {
-  
+  title: PropTypes.string
 };
 
 export default SearchFiltersContainer;
@@ -32,5 +34,8 @@ const StyledContainer = styled.div`
   width: 100%;
   padding: 20px;
   color: ${woodSmoke};
-  background-color: ${white}
+  background-color: ${white};
+`
+const StyledSubheading = styled.h2`
+  font-size: 28px;
 `

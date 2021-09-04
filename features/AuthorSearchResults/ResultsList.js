@@ -33,6 +33,7 @@ ResultsList.propTypes = {
 
 const StyledSection = styled.section`
   width: 100%;
+  padding-bottom: 200px;
 `
 const ResourcesListContainer = styled.ul`
   display: flex;

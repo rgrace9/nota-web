@@ -6,7 +6,7 @@ export const useListBox = initialValue => {
   return {
     value,
     setValue,
-    reset: () => setValue(""),
+    reset: () => setValue("all"),
     bind: {
       value,
       onChange: val => {
