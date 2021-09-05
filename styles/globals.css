@@ -18,6 +18,13 @@ a {
 * {
   box-sizing: border-box;
 }
+li {
+  list-style-type: none;
+}
+
+li:before {
+  content: "\200B";
+}
 
 :root {
   --text: #fff;

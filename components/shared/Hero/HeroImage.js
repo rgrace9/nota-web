@@ -63,6 +63,7 @@ const HeroTextContainer = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+  font-size: 1.6rem;
   .hero-link {
     position: relative;
   color: white;
@@ -72,37 +73,19 @@ const HeroTextContainer = styled.div`
   color: var(--text-dark);
   white-space: nowrap;
   padding: 2px;
-  /* &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 100%auto;
-    background: var(--text-dark);
-    transition: width 150ms linear;
-  } */
-  outline: 1px solid var(--text-dark);
-
-  &:focus {
-    outline: 2px solid var(--text-dark);
-  }
-  &:hover {
-    outline: 2px solid black;
-
-  }
+  border: 1px solid var(--text-dark);
+  
   }
   
 `
 const HeroTitle = styled.h1`
   color: var(--text-dark);
-  font-size: 42px;
+  font-size: 4.2rem;
 `
 
 const HeroSubtitle = styled.p`
   color: var(--text-dark);
-  font-size: 24px;
+  font-size: 2.4rem;
   
 `
 

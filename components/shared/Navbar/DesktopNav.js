@@ -16,19 +16,15 @@ const DesktopNavbar = () => {
    
       <DesktopNav aria-label='Menu'>
         <div className="home-link-container">
-        <Link href="/">
-          <a>
-          <img
-            alt='Project Nota'
-      
-            className='logo'
-        
-          src='/project-nota-lupercal-logo.png'
-          />
-
-          </a>
-        </Link>
-
+          <Link href="/">
+            <a>
+              <img
+                alt='Project Nota'
+                className='logo'
+                src='/project-nota-lupercal-logo.png'
+              />
+            </a>
+          </Link>
         </div>
         <NavLinks />
         <Hamburger toggled={isMenuOpen} toggle={toggleMenu} duration={0} />
