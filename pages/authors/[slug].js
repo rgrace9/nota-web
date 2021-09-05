@@ -2,9 +2,7 @@ import Layout from '../../components/Layout';
 import Container from '../../components/shared/Container';
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { Search, FeaturedResources } from '../../features';
-import { HeroImage } from '../../components/shared/Hero'
-import { STRAPI_CLIENT, fetchStrapiApi } from "@/lib/StrapiClient";
+import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
@@ -31,7 +29,6 @@ const RelatedContentContainer = styled.aside`
   }
   @media ${device.desktop} {
     flex: 0 0 20em;
-    /* min-height: 50vh; */
   }
 `
 
@@ -134,7 +131,9 @@ export default function Home(props) {
               <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
               <StyledListContainer>
                 {author.lessonPlans.map(lp => (
-                  <li>
+                  <li
+                    key={lp.slug}
+                  >
                     <Link href={`/lesson-plans/${lp.slug}`} passHref>
                       <StyledLink target='_blank' href={`/lesson-plans/${lp.slug}`}>{lp.title}</StyledLink>
                     </Link>
@@ -150,7 +149,7 @@ export default function Home(props) {
           </StyledMainContentWrapper>
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
-            <ul role='list'>
+            <ul>
               {relatedAuthors.map(relatedAuthor => (
                 <li key={relatedAuthor.id}>
                   <Link href={`/authors/${relatedAuthor.id}`} passHref>
@@ -167,7 +166,7 @@ export default function Home(props) {
       </Container>
     </Layout>
   );
-};
+}
 
 export async function getStaticPaths() {
   const authors = await fetchStrapiApi("authors");
