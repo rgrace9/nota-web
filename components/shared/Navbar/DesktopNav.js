@@ -47,12 +47,6 @@ const DesktopNav = styled.nav`
   -webkit-transition: background-color 1000ms linear;
     -ms-transition: background-color 1000ms linear;
     transition: background-color 1000ms linear;
-  /* ${(props) =>
-    props.isScrolled &&
-    css`
-      background: var(--headerBg);
-      box-shadow: var(--headerBoxShadow);
-    `} */
   position: fixed;
   top: 0;
   left: 0;

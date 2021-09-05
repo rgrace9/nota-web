@@ -9,6 +9,7 @@ const StyledPrimaryButton = styled.button`
   background-color: white;
   border-radius: 15px;
   min-height: 30px;
+  font-size: 1.6rem;
   &:hover {
     background-color: ${burgundy};
     color: ${white};

@@ -67,10 +67,10 @@ const DesktopNavLinks = () => {
         }
       ]
     },
-    {
-      title: t("donate"),
-      link: 'donate',
-    }
+    // {
+    //   title: t("donate"),
+    //   link: 'donate',
+    // }
   ];
 
   const onLanguageChange = (selectedLocale) => {
@@ -88,13 +88,6 @@ const DesktopNavLinks = () => {
           <Menu link={link.link} links={link.links} href={link.link} title={link.title} />
         </li>
       ))}
-      {/* <li>
-        <Link href='/search'>
-        <a aria-label='search' className='nav-search'>
-          <SearchIcon />
-        </a>
-        </Link>
-      </li> */}
       <li>
         <span className='language-selector'>
           <Select 
@@ -137,10 +130,7 @@ const NavLinksWrapper = styled.ul`
   }
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    li {
-      padding: 12px;
-      margin: 0 !important;
-    }
+
   }
   .nav-search {
     position: relative;
