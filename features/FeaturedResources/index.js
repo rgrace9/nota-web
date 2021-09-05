@@ -4,7 +4,7 @@ import {ResourcesList} from 'components/shared/Resources';
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
-  font-size: 32px;
+  font-size: 3.2rem;
 `
 const FeaturedContainer = styled.div`
   display: flex;

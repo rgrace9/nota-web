@@ -14,6 +14,9 @@ import styled from '@emotion/styled';
 import { Select } from "@chakra-ui/react"
 const StyledContainer = styled.div`
 
+label {
+  font-size: 1.6rem;
+}
 [data-reach-listbox-arrow]  {
   margin-left: auto;
 }
@@ -21,7 +24,7 @@ const StyledContainer = styled.div`
 [data-reach-listbox-button] {
   /* max-width: 300px; */
   overflow: hidden;
-    white-space: nowrap;
+  white-space: nowrap;
   width: 100%;
   background: white;
   height: 30px;
@@ -36,11 +39,12 @@ width: 100%;
 const StyledListBox = styled(ListboxInput)`
   min-height: 50px;
   width: 100%;
+  font-size: 1.6rem;
 `
 
 const StyledList = styled(ListboxList)`
   color: black;
-
+  font-size: 1.6rem;
 `
 
 const ListBoxContainer = props => {

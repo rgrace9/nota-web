@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SearchFiltersContainer } from "@/components/shared/SearchFilters";
@@ -6,14 +6,13 @@ import styled from "@emotion/styled";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { AUTHOR_OPTIONS, AUTHOR_LOCATIONS } from "@/constants/index";
 import { PrimaryButton } from "@/components/shared/Button";
 import StrapiClient from "@/lib/StrapiClient";
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
 import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
-import { createQueryString, formatQuery } from 'utils/queryString';
-import { useRouter, withRouter } from 'next/router'
+import { formatQuery } from 'utils/queryString';
+import { withRouter } from 'next/router'
 import qs from 'qs'
 import Container from '@/components/shared/Container'
 
@@ -25,10 +24,7 @@ const StyledFieldsContainer = styled.div`
   flex-direction: column;
   @media ${device.tablet} {
     justify-content: space-between;
-    /* flex-direction: row; */
   }
-  /* padding: 5px;
-    margin: 10px; */
 `;
 
 const StyledSelectContainer = styled.div`
@@ -36,8 +32,6 @@ const StyledSelectContainer = styled.div`
   margin: 0px;
   width: 100%;
   @media ${device.tablet} {
-    /* width: 50%; */
-    /* margin: 15px; */
   }
 `;
 

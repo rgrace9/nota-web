@@ -23,6 +23,6 @@ const StyledContainer = styled.div`
   padding: 0px 60px;
 `
 const StyledHeading = styled.h1`
-  font-size: 36px;
+  font-size: 3.6rem;
   color: var(--text-dark)
 `

@@ -29,11 +29,11 @@ const Breadcrumbs = (props) => {
     <BreadcrumbContainer>
       {breadcrumbsList.map(b => (
         <BreadcrumbItem key={b.href}>
-        <Link href={b.href} isCurrentPage={Boolean(b.isCurrentPage)}>
+        <StyledLink href={b.href} isCurrentPage={Boolean(b.isCurrentPage)} passHref>
                       <a>
                         {b.title}
                       </a>
-                    </Link>
+                    </StyledLink>
         </BreadcrumbItem>
       ))}
     </BreadcrumbContainer>
@@ -49,6 +49,13 @@ Breadcrumbs.propTypes = {
 Breadcrumbs.defaultProps = {
   breadcrumbsList: []
 }
+
+const StyledLink = styled(Link)`
+ 
+  a {
+    font-size: 1.6rem;
+  }
+`
 const StyledListItem = styled.li`
     &:not(:first-of-type) {
     &::before {
@@ -64,10 +71,9 @@ const StyledListItem = styled.li`
   text-decoration: underline;
 }
 a {
+  
   padding: 2px 5px;
-  &:focus {
-  outline: 1px solid currentColor;
-}
+
 }
 
 &:only-child {

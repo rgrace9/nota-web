@@ -38,7 +38,7 @@ const LabelStyled = styled.label`
 `
 
 const SelectStyled = styled.select`
-  font-size: 16px;
+  font-size: 1.6rem;
   color: black;
 `
 const Select = (props) => {

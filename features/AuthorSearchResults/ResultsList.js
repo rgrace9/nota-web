@@ -42,13 +42,8 @@ const StyledSection = styled.section`
 `
 const ResourcesListContainer = styled.ul`
   display: flex;
-  /* justify-content: space-between;
-  flex-wrap: wrap; */
-  display: flex;
   flex-wrap: wrap;
   list-style: none;
-  /* margin: 0; */
-  /* margin: 0 -1rem; */
   padding: 0;
   width: 100%;
 `

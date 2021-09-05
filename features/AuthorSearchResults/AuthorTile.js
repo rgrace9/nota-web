@@ -52,7 +52,7 @@ export default ResourceTile;
 const StyledTitle = styled.h3`
   font-weight: 500;
   padding-top: 10px;
-  font-size: 20px;
+  font-size: 2rem;
   text-decoration: underline;
   margin-bottom: 20px;
 `
@@ -62,7 +62,7 @@ const TileContent = styled.div`
   flex-direction: column;
   color: var(--text-dark);
   height: 120px;
-  /* font-size: 1.6rem; */
+  font-size: 1.6rem;
   position: relative;
   line-height: 1;
 
@@ -75,15 +75,12 @@ const TileContent = styled.div`
     right: 0;
     bottom: 0;
   }
-    /* &:focus {
-    outline: 2px solid var(--text-dark);
-  } */
-  }
-`
+}`
+
 const TileImage = styled.div`
   background-image: url('/images/pompeii_fresco.jpeg');
-height: auto;
-background-position: center center;
+  height: auto;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   display: none;

@@ -108,15 +108,13 @@ NavMenu.defaultProps = {
 }
 
 const StyledNavLink = styled.a`
-    color: white;
-  /* border: none; */
-  /* outline: inherit; */
-  font-size: 18px;
+  color: white;
+  font-size: 1.8rem;
   padding: 2px 5px;
   font-family: 'Nunito Sans', sans-serif;
-  &:focus {
+  /* &:focus {
     outline: 1px solid var(--text);
-  }
+  } */
 `
 
 const StyledBtn = styled.button`
@@ -126,11 +124,12 @@ const StyledBtn = styled.button`
   color: var(--text);
   border: none;
   outline: inherit;
-  font-size: 18px;
+  font-size: 1.8rem;
   padding: 2px 5px;
   font-family: 'Nunito Sans', sans-serif;
-  &:focus {
-    outline: 1px solid var(--text);
+  &:focus-visible {
+    outline: 5px auto Highlight;
+    outline: 5px auto -webkit-focus-ring-color;
   }
   p {
     white-space: nowrap;
@@ -142,6 +141,7 @@ const StyledMenu = styled.div`
 .link {
   padding: 10px 20px;
   color: var(--text-dark);
+  font-size: 1.6rem;
   &:focus {
     color:  var(--headerBg);
     outline: 1px solid var(--text-dark);
@@ -164,10 +164,6 @@ const StyledMenu = styled.div`
 }
 .menu-item {
   background-color: white;
-    /* &:focus {
-      outline: 1px solid white;
-    
-    } */
   position: relative;
   color: black;
   text-decoration: none;
@@ -176,16 +172,5 @@ const StyledMenu = styled.div`
   text-transform: capitalize;
   color: var(--text-dark);
   white-space: nowrap;  
-}
-
-`
-
-
-
-
-const StyledMenuItem = styled.div`
-
-
-`
-
+}`
 

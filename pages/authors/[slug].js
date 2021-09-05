@@ -46,16 +46,16 @@ const PageWrapper = styled.div`
 `
 
 const StyledPrimaryHeading = styled.h1`
-  font-size: 28px;
+  font-size: 2.8rem;
   font-weight: 500;
 `
 const StyledSecondaryHeading = styled.h1`
-  font-size: 24px;
+  font-size: 2.4rem;
 `
 
 const StyledText = styled.p`
   line-height: 1.5;
-  font-size: 16px;
+  font-size: 1.6rem;
 `
 
 const StyledMainContentWrapper = styled.div`
