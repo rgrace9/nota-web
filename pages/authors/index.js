@@ -15,7 +15,6 @@ import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
 import qs from 'qs'
 import Container from '@/components/shared/Container'
-
 const STRAPI_CLIENT = new StrapiClient();
 
 const StyledFieldsContainer = styled.div`
@@ -242,6 +241,8 @@ export const getStaticProps = async (props) => {
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
   const locationOptions = await STRAPI_CLIENT.fetchAPI("author-locations");
   const timePeriodOptions = await STRAPI_CLIENT.fetchAPI('time-periods');
+
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),

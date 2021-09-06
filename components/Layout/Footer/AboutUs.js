@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link'
 import styled from "@emotion/styled";
+import {StyledUnorderedList} from 'components/shared/List';
 
 const ABOUT_US_LINK = [
   {
@@ -32,7 +33,7 @@ const StyledListItem = styled.li`
 
 const AboutUs = () => {
   return (
-    <ul>
+    <StyledUnorderedList bulletPoints={false}>
       {ABOUT_US_LINK.map(link => (
         <StyledListItem key={link.title}>
           <Link href={link.href} passHref>
@@ -42,7 +43,7 @@ const AboutUs = () => {
           </Link>
         </StyledListItem>
       ))}
-    </ul>
+    </StyledUnorderedList>
   );
 };
 

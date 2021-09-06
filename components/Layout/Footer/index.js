@@ -12,6 +12,7 @@ const StyledFooter = styled.footer`
   bottom: 0;
   width: 100%;
   font-size: 1.6rem;
+  flex-grow: 0;
 `
 const StyledContent = styled.footer`
   display: flex;

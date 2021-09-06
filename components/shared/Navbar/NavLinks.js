@@ -64,13 +64,17 @@ const DesktopNavLinks = () => {
         {
           title: t("contact"), 
           href: 'contact'
+        },
+        {
+          title: 'Mission Statement',
+          href: 'about/mission-statement'
         }
       ]
     },
-    // {
-    //   title: t("donate"),
-    //   link: 'donate',
-    // }
+    {
+      title: t("donate"),
+      link: 'donate',
+    }
   ];
 
   const onLanguageChange = (selectedLocale) => {

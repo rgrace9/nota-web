@@ -5,18 +5,19 @@ import PropTypes from 'prop-types';
 import Breadcrumb from '@/components/shared/Breadcrumb'
 import React from 'react';
 import { LoadingPage } from 'components/shared/Loading';
-import Footer from 'components/shared/Footer';
+import Footer from '@/components/Layout/Footer';
 import styled from '@emotion/styled';
 
 const StyledContainer = styled.div`
   position: relative;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 const StyledMain = styled.main`
-
+  flex-grow: 1;
+  margin-bottom: 50px;
 `
 
 
