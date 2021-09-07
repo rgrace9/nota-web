@@ -31,7 +31,7 @@ const ResourceTile = props => {
       <h3>
         <a target='_blank' href="https://www.google.com">Card title here</a>
       </h3>
-
+ 
       <p>Some text, just a line to make up some description&hellip;</p>
       </TileContent>
 
@@ -52,16 +52,18 @@ const TileContent = styled.div`
   padding: 1rem;
   color: var(--text-dark);
   height: 120px;
+  font-size: 1.6rem !important;
+
   a {
     &:focus {
-    outline: 2px solid var(--text-dark);
+    outline: 0;
   }
   }
 `
 const TileImage = styled.div`
   background-image: url('/images/pompeii_fresco.jpeg');
-height: auto;
-background-position: center center;
+  height: auto;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   border-top-left-radius: 0.25rem;
@@ -94,9 +96,12 @@ const ResourceTileContainer = styled.div`
   overflow: hidden;
   background: white;
   cursor: pointer;
-  &:hover {
-    box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
+  &:hover, &:focus-within {
+    box-shadow: 0 0 0 0.25rem;
   }
+  /* &:focus-within {
+    border: 2px solid black;
+  } */
 
 `
 

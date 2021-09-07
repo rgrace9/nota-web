@@ -39,7 +39,7 @@ const StyledTrademark = styled.div`
 `
 const Footer = () => {
   return (
-    <StyledFooter>
+    <StyledFooter id='footer'>
       <StyledContent>
         <StyledSection>
           <StyledHeading>Project Nota</StyledHeading>

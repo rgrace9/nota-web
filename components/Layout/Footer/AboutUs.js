@@ -14,7 +14,7 @@ const ABOUT_US_LINK = [
   },
   {
     title: 'Mission Statement',
-    href: '#',
+    href: '/about/mission-statement',
   }
 ]
 

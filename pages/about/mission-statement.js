@@ -31,16 +31,16 @@ MissionStatement.propTypes = {
 export const getStaticProps = async (props) => {
   const { locale } = props;
 
-  const res = await STRAPI_CLIENT.fetchAPI('mission-statement');
+  const res = await STRAPI_CLIENT.fetchAPI('articles/6');
 
-  const description = parseMarkdown(res.description)
+  const description = parseMarkdown(res.body)
   console.log(res)
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
       description,
-      title: res.pageTitle
+      title: res.title
     }
   }
 }
