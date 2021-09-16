@@ -9,7 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const STRAPI_CLIENT = new StrapiClient();
 
-const MissionStatement = props => {
+const MeetOurTeam = props => {
   const [description, setDescription] = useState('')
   useEffect(() => {
     // console.log()
@@ -24,16 +24,17 @@ const MissionStatement = props => {
   );
 };
 
-MissionStatement.propTypes = {
+MeetOurTeam.propTypes = {
   
 };
 
 export const getStaticProps = async (props) => {
   const { locale } = props;
 
-  const res = await STRAPI_CLIENT.fetchAPI('posts/1');
+  const res = await STRAPI_CLIENT.fetchAPI('posts/2');
 
   const description = parseMarkdown(res.body)
+  console.log(res)
 
   return {
     props: {
@@ -44,4 +45,4 @@ export const getStaticProps = async (props) => {
   }
 }
 
-export default MissionStatement;
+export default MeetOurTeam;

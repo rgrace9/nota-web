@@ -10,7 +10,7 @@ const ABOUT_US_LINK = [
   },
   {
     title: 'Meet Our Team',
-    href: '#',
+    href: '/about/meet-our-team',
   },
   {
     title: 'Mission Statement',

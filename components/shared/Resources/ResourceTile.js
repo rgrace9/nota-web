@@ -51,8 +51,6 @@ const ResourceTile = props => {
  
       <ResourceTileDescription>
         {data.description}
-        {data.description}
-        {data.description}
       </ResourceTileDescription>
       </TileContent>
 
@@ -73,11 +71,11 @@ export default ResourceTile;
 
 const TileContent = styled.div`
   display: flex;
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   flex-direction: column;
   padding: 1rem;
   color: var(--text-dark);
-  height: 350px;
+  height: 275px;
   font-size: 1.6rem !important;
   overflow: hidden;
   text-overflow: ellipsis;
