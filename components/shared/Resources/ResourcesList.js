@@ -24,33 +24,24 @@ ResourcesList.propTypes = {
   resources: PropTypes.array
 };
 ResourcesList.defaultProps = {
-  resources: [1, 2, 3]
+  resources: []
 };
 
 export default ResourcesList;
 
 
 const ResourcesListContainer = styled.ul`
-  display: flex;
-  /* justify-content: space-between;
-  flex-wrap: wrap; */
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  /* margin: 0; */
-  margin: 0 -1rem;
-  padding: 0;
+  display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
 
 `
 
 const ResourceItem = styled.li`
-  display: flex;
-  padding: 1rem;
-  @media(min-width: 40rem) {
-    width: 50%;
-  }
-  @media(min-width: 56rem) {
-    width: 33.3333%;
-  }
-
+    /* border: 1px solid; */
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 `

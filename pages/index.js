@@ -2,13 +2,19 @@ import Layout from '../components/Layout';
 import Container from '../components/shared/Container';
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import StrapiClient from "@/lib/StrapiClient";
 import {Search, FeaturedResources} from '../features';
 import Head from 'next/head';
 import {HeroImage} from '../components/shared/Hero'
-export default function Home() {
+
+const STRAPI_CLIENT = new StrapiClient();
+
+export default function Home(props) {
 
   const { t } = useTranslation('home')
+  const {featuredResources} = props;
 
+  console.log('featuredResources', featuredResources)
   return (
     <Layout>
             <Head>
@@ -23,15 +29,20 @@ export default function Home() {
       />
 
         <Container bgColor='#B67C58'>
-        <FeaturedResources />
+        <FeaturedResources resources={featuredResources} />
 
         </Container>
     </Layout>
   );
 };
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-  },
-})
+export const getStaticProps = async ({ locale }) => {
+  const featuredResources = await STRAPI_CLIENT.fetchAPI("featured-resources");
+
+  return {
+    props: {
+      ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
+      featuredResources
+    }
+  }
+}

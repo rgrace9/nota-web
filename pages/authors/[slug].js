@@ -202,7 +202,6 @@ export const getStaticProps = async ({ locale, params }) => {
   } catch (err) {
     return {
       props: {
-        ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
         author,
         relatedAuthors: []
       }

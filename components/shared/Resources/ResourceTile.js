@@ -5,8 +5,19 @@ import { Global, css } from '@emotion/react'
 
 
 const ResourceTile = props => {
-  const [isMounted, setIsMounted] = useState(false);
+  
+  const TitleImageContainer = styled.div`
+  
+  `
 
+  const TileImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  `
+
+  const [isMounted, setIsMounted] = useState(false);
+  const {data} = props;
   const handleTileClick = (e) => {
     const link = document.querySelector('h3 a');
     if (link && isMounted) {
@@ -21,18 +32,20 @@ const ResourceTile = props => {
     setIsMounted(true)
 
   }, []);
-
+  console.log(data)
   return (
     <ResourceTileContainer onClick={handleTileClick}>
-      <TileImage  src="/images/pompeii_fresco.jpeg" alt="" loading="lazy" width="500" height="200" />
+      <TitleImageContainer>
+        <TileImage  src={`https://nota-database.herokuapp.com${data.image.name}`} alt="" loading="lazy" width="500" height="200" />
+      </TitleImageContainer>
 
       <TileContent>
 
-      <h3>
-        <a target='_blank' href="https://www.google.com">Card title here</a>
-      </h3>
+      <StyledHeading>
+        <a target='_blank' href={data.url}>{data.title}</a>
+      </StyledHeading>
  
-      <p>Some text, just a line to make up some description&hellip;</p>
+      <p>{data.description}</p>
       </TileContent>
 
   </ResourceTileContainer>
@@ -60,30 +73,7 @@ const TileContent = styled.div`
   }
   }
 `
-const TileImage = styled.div`
-  background-image: url('/images/pompeii_fresco.jpeg');
-  height: auto;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
- 
-  overflow: hidden;
-  position: relative;
-  transition: filter 0.5s cubic-bezier(.43,.41,.22,.91);;
-  &::before {
-    content: "";
-	  display: block;
-    padding-top: 56.25%; // 16:9 aspect ratio
-  }
-  @media(min-width: 40rem) {
-    &::before {
-      padding-top: 66.6%; // 3:2 aspect ratio
-    }
-  }
 
-`
 const ResourceTileContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
@@ -99,10 +89,8 @@ const ResourceTileContainer = styled.div`
   &:hover, &:focus-within {
     box-shadow: 0 0 0 0.25rem;
   }
-  /* &:focus-within {
-    border: 2px solid black;
-  } */
-
 `
-
-
+const StyledHeading = styled.h3`
+  font-size: 2.4rem;
+  font-weight: bold;
+`

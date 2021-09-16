@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import {ResourcesList} from 'components/shared/Resources';
+import PropTypes from "prop-types";
+
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
@@ -12,13 +14,20 @@ const FeaturedContainer = styled.div`
 `
 
 
-const FeaturedResources = () => {
+const FeaturedResources = ({ resources }) => {
   return (
       <FeaturedContainer>
         <HeadingStyle>Featured Resources</HeadingStyle>
-        <ResourcesList />
+        <ResourcesList resources={resources} />
       </FeaturedContainer>
   );
 };
+
+PropTypes.defaultProps = {
+  resources: []
+}
+PropTypes.propTypes = {
+  resources: PropTypes.array
+}
 
 export default FeaturedResources;

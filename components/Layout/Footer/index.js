@@ -24,6 +24,11 @@ const StyledContent = styled.footer`
   }
 `
 
+const StyledSectionMain = styled.div`
+  padding: 0 20px;
+  flex: 1;
+`
+
 const StyledSection = styled.div`
   padding: 0 20px;
   flex: 1;
