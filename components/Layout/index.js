@@ -10,10 +10,11 @@ import styled from '@emotion/styled';
 
 const StyledContainer = styled.div`
   position: relative;
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
+  margin: 0;
 `
 const StyledMain = styled.main`
   flex-grow: 1;

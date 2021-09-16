@@ -14,6 +14,7 @@ const ResourceTile = props => {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    height: 200px;
   `
 
   const [isMounted, setIsMounted] = useState(false);
@@ -36,16 +37,23 @@ const ResourceTile = props => {
   return (
     <ResourceTileContainer onClick={handleTileClick}>
       <TitleImageContainer>
-        <TileImage  src={`https://nota-database.herokuapp.com${data.image.name}`} alt="" loading="lazy" width="500" height="200" />
+        {data.image ? (
+          <TileImage  src={`${data.image.url}`} alt={data.image.alternativeText} loading="lazy"/>
+
+        ) : <p>hey</p>}
       </TitleImageContainer>
 
       <TileContent>
 
       <StyledHeading>
-        <a target='_blank' href={data.url}>{data.title}</a>
+        <a target='_blank' rel="noreferrer" href={data.url}>{data.title}</a>
       </StyledHeading>
  
-      <p>{data.description}</p>
+      <ResourceTileDescription>
+        {data.description}
+        {data.description}
+        {data.description}
+      </ResourceTileDescription>
       </TileContent>
 
   </ResourceTileContainer>
@@ -53,7 +61,12 @@ const ResourceTile = props => {
 };
 
 ResourceTile.propTypes = {
-  
+  data: PropTypes.shape({
+    image: PropTypes.object,
+    description: PropTypes.string,
+    title: PropTypes.string,
+    url: PropTypes.string
+  })
 };
 
 export default ResourceTile;
@@ -64,14 +77,18 @@ const TileContent = styled.div`
   flex-direction: column;
   padding: 1rem;
   color: var(--text-dark);
-  height: 120px;
+  height: 350px;
   font-size: 1.6rem !important;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
   a {
     &:focus {
     outline: 0;
   }
   }
+`
+const ResourceTileDescription = styled.p`
+  /* text-overflow: ellipsis; */
 `
 
 const ResourceTileContainer = styled.div`

@@ -6,18 +6,19 @@ import SocialMedia from './SocialMedia';
 import AboutUs from './AboutUs';
 
 const StyledFooter = styled.footer`
-  background-color: #DEB9AD;
-  min-height: 100px;
   padding: 20px;
   bottom: 0;
   width: 100%;
   font-size: 1.6rem;
   flex-grow: 0;
+  background-color: #DEB9AD;
+
 `
-const StyledContent = styled.footer`
+const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  
   @media ${device.tablet} {
     flex-direction: row;
     flex-wrap: wrap;

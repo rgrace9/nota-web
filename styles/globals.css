@@ -9,6 +9,11 @@ body {
   position: initial !important;
   font-size: 62.5%;
 }
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
 
 a {
   color: inherit;
@@ -19,6 +24,10 @@ a {
   box-sizing: border-box;
 }
 
+#__next {
+  height: 100%;
+  margin: 0;
+}
 :root {
   --text: #fff;
   --text-dark: #24261b;
