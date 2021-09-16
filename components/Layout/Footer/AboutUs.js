@@ -6,7 +6,7 @@ import {StyledUnorderedList} from 'components/shared/List';
 const ABOUT_US_LINK = [
   {
     title: 'Our Story',
-    href: '#',
+    href: '/about/our-story',
   },
   {
     title: 'Meet Our Team',

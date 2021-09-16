@@ -64,6 +64,7 @@ const HeroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  width: 60%;
   .hero-link {
     position: relative;
   color: white;

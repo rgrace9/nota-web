@@ -36,7 +36,7 @@ const ResourceTile = props => {
         </Link>
       </StyledTitle>
 
-      <p>Some text, just a line to make up some description&hellip;</p>
+      <p>{data.shortBio}</p>
       </TileContent>
 
   </ResourceTileContainer>

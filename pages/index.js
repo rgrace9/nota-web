@@ -6,29 +6,37 @@ import StrapiClient from "@/lib/StrapiClient";
 import {Search, FeaturedResources} from '../features';
 import Head from 'next/head';
 import {HeroImage} from '../components/shared/Hero'
+import Homepage from '@/features/Homepage';
+import image from 'next/image';
 
 const STRAPI_CLIENT = new StrapiClient();
 
 export default function Home(props) {
 
   const { t } = useTranslation('home')
-  const {featuredResources} = props;
+  const {
+    featuredResources,
+    homePage
+  } = props;
 
-  console.log('featuredResources', featuredResources)
+  console.log('homePage', homePage)
   return (
-    <Layout>
-            <Head>
+    <Layout
+      showBreadcrumbs={false}
+    >
+      <Head>
         <title>Project Nota | Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <HeroImage
-        heroTitle='Project Nota'
-        heroSubtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        heroTitle={homePage.title}
+        heroSubtitle={homePage.description}
         linkTitle='Learn More'
-        href='/about'
+        href='/about/mission-statement'
+        imageUrl={homePage?.image.url}
       />
 
-        <Container bgColor='#B67C58'>
+        <Container bgColor='white'>
         <FeaturedResources resources={featuredResources} />
 
         </Container>
@@ -38,11 +46,13 @@ export default function Home(props) {
 
 export const getStaticProps = async ({ locale }) => {
   const featuredResources = await STRAPI_CLIENT.fetchAPI("featured-resources");
+  const homePage = await STRAPI_CLIENT.fetchAPI("home");
 
   return {
     props: {
       ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-      featuredResources
+      featuredResources,
+      homePage
     }
   }
 }

@@ -18,20 +18,20 @@ const StyledContainer = styled.div`
 `
 const StyledMain = styled.main`
   flex-grow: 1;
-  margin-bottom: 50px;
 `
 
 
-const Layout = ({ pageTitle, children, breadcrumbsList, loadingText, loading }) => (
+const Layout = ({ pageTitle, children, breadcrumbsList, loadingText, loading, showBreadcrumbs }) => (
   <StyledContainer>
     <Head>
       <title>{pageTitle}</title>
     </Head>
 
     <Navbar />
+    {showBreadcrumbs && (
+      <Breadcrumb breadcrumbsList={breadcrumbsList} />
+    )}
 
-
-    <Breadcrumb breadcrumbsList={breadcrumbsList} />
 
 
     <StyledMain>
@@ -49,9 +49,11 @@ const Layout = ({ pageTitle, children, breadcrumbsList, loadingText, loading }) 
 Layout.propTypes = {
   pageTitle: PropTypes.string,
   breadcrumbsList: PropTypes.array,
+  showBreadcrumbs: PropTypes.bool
 }
 Layout.defaultProps = {
   pageTitle: 'Project Nota',
-  breadcrumbsList: []
+  breadcrumbsList: [],
+  showBreadcrumbs: true
 }
 export default Layout;

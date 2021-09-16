@@ -55,11 +55,11 @@ const DesktopNavLinks = () => {
       links: [
         {
           title: 'Our Story',
-          href: 'our-story'
+          href: 'about/our-story'
         },
         {
           title: 'Meet Our Team', 
-          href: 'meet-our-team'
+          href: 'about/meet-our-team'
         },
         {
           title: t("contact"), 
