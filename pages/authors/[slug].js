@@ -24,11 +24,11 @@ const RelatedContentContainer = styled.aside`
   overflow-y: scroll;
   overflow-x: hidden;
   @media ${device.tablet} {
-    flex: 0 0 20em;
+    flex: 0 0 250px;
     
   }
   @media ${device.desktop} {
-    flex: 0 0 20em;
+    flex: 0 0 250px;
   }
 `
 
@@ -107,8 +107,16 @@ export default function Home(props) {
           <StyledMainContentWrapper>
             <section>
               <StyledPrimaryHeading>{author.name}</StyledPrimaryHeading>
-              <p>{author.timePeriod && author.timePeriod.name}</p>
-              <p>{author.location && 
+              <div>
+                {author.timePeriod && (
+                  <Link href={`/authors?timePeriod.id_eq=${author.timePeriod.id}`} passHref>
+                    <StyledLink target='_blank' >
+                      {author.timePeriod.name}
+                    </StyledLink>
+                  </Link>
+                )}
+              </div>
+              {author.location && 
               
               ( 
               <Link href={`/authors?location.id_eq=${author.location.id}`} passHref>
@@ -117,7 +125,7 @@ export default function Home(props) {
                 </StyledLink>
               </Link>
               )}
-              </p>
+              
             </section>
 
 
