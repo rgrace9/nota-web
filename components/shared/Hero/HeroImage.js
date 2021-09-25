@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
 import Link from 'next/link';
-
+import SearchBar from '@/features/Search/SearchBar'
 const HeroImage = props => {
   const {
     imageUrl,
@@ -15,17 +15,27 @@ const HeroImage = props => {
   return (
     <HeroImageContainer imageUrl={imageUrl}>
       <HeroTextContainer>
-        <HeroTitle>{heroTitle}</HeroTitle>
-        <HeroSubtitle>{heroSubtitle}</HeroSubtitle>
+        {/* <HeroTitle>Search Projec</HeroTitle> */}
+        <SearchBar />
+        <div style={{marginTop: '30px', marginBottom: '30px'}}>
+        <hr />  
 
-        {(href && linkTitle) ? (
-          <section>
+        </div>
+        <div>
+        {/* <HeroSubtitle>{heroSubtitle}</HeroSubtitle> */}
+        <HeroSubtitle>Project Nota draws attention (nota bene!) to the letters and works (nota) of famous women (notarum) by focusing on the digitization of texts, translating these texts into English, and increasing their overall accessibility.</HeroSubtitle>
+          
 
-          <Link href={href}>
-          <a className='hero-link'>{linkTitle}</a>
-          </Link>
-          </section>
-        ) : null}
+          {(href && linkTitle) ? (
+            <section>
+
+            <Link href={href}>
+            <a className='hero-link'>{linkTitle}</a>
+            </Link>
+            </section>
+          ) : null}
+
+        </div>
       </HeroTextContainer>
     </HeroImageContainer>
   );
@@ -51,6 +61,7 @@ const HeroImageContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  
 `
 
 const HeroTextContainer = styled.div`
@@ -64,7 +75,8 @@ const HeroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  width: 60%;
+  max-width: 700px;
+
   .hero-link {
     position: relative;
   color: white;
@@ -86,7 +98,7 @@ const HeroTitle = styled.h1`
 
 const HeroSubtitle = styled.p`
   color: var(--text-dark);
-  font-size: 2.4rem;
+  font-size: 2rem;
   
 `
 

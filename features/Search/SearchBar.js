@@ -11,7 +11,7 @@ const SearchBar = props => {
   }
   return (
     <SearchContainer>
-      <HeadingStyle>Search</HeadingStyle>
+      <HeadingStyle>Search transcriptions, translations, and lesson plans of women's Latin</HeadingStyle>
       <form onSubmit={onSearch} className="search-box">
         <SearchBarContainer>
           <SearchInput type="search" placeholder="Type here to search..." />
@@ -33,8 +33,8 @@ export default SearchBar;
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
-  font-size: 32px;
-
+  font-size: 3.6rem;
+  font-weight: bold;
 `
 
 const SearchContainer = styled.div`
@@ -50,7 +50,7 @@ const SearchBarContainer = styled.div`
 
 const SearchInput = styled.input`
   width: 100%;
-  max-width: 800px;
+
   border: 3px solid var(--text-dark);
   border-right: none;
   padding: 5px;

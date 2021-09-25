@@ -15,6 +15,9 @@ import { withRouter } from 'next/router'
 import qs from 'qs'
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
+import LessonPlansSearchResults from "@/features/LessonPlansSearchResults";
+
+
 const STRAPI_CLIENT = new StrapiClient();
 
 const LessonPlans = (props) => {
@@ -54,6 +57,7 @@ const LessonPlans = (props) => {
             </div>
           </form>
         </SearchFiltersContainer>
+        <LessonPlansSearchResults results={lessonPlans} />
       </ContentLayout>
     </Layout>
   );
