@@ -22,7 +22,22 @@ const StyledContainer = styled.div`
   margin-top: 20px;
   padding: 0px 60px;
 `
+// const StyledHeading = styled.h1`
+//   font-size: 3.6rem;
+//   color: var(--text-dark)
+// `
 const StyledHeading = styled.h1`
   font-size: 3.6rem;
-  color: var(--text-dark)
+  color: var(--text-dark);
+  display: inline-block;
+  margin-bottom: 20px;
+  &::after {
+    height: 5px;
+    display: block;
+    /* width: 100%; */
+    background: var(--headerBg);
+    border-right: 1px white;
+    content: '';
+}
+
 `

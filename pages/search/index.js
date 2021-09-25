@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import Layout from '@/components/Layout';
 import ContentLayout from '@/components/Layout/ContentLayout';
-const LessonPlans = props => {
+const Search = props => {
   return (
     <Layout
       pageTitle='Project Nota | Search'
@@ -18,11 +18,11 @@ const LessonPlans = props => {
   );
 };
 
-LessonPlans.propTypes = {
+Search.propTypes = {
   
 };
 
-export default LessonPlans;
+export default Search;
 
 export const getStaticProps = async ({ locale }) => ({
   props: {

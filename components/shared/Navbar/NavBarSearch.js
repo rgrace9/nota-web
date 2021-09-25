@@ -22,12 +22,15 @@ const NavBarSearch = props => {
       inputRef.current.focus();
     }
   }, [isEditing, isOn]);
-  
+
   const handleInput = (e) => {
     setSearchText(e.target.value)
   }
 
-  const handleSearchClick = () => {
+  const handleSearchClick = (e) => {
+    if (e && 'preventDefault' in e) {
+      e.preventDefault()
+    }
     toggleIsOn();
     toggleEditing()
     if (isOn && searchText) {
@@ -38,8 +41,11 @@ const NavBarSearch = props => {
   return (
     <StyledContainer>
       <div className={`searchbar`}>
+        <form onSubmit={handleSearchClick}>
+          <StyledInput ref={inputRef} value={searchText} onChange={handleInput} visible={isOn} type="text" placeholder="Search" />
         <SearchButton visible={isOn} onClick={handleSearchClick}> <SearchIcon /></SearchButton>
-        <StyledInput ref={inputRef} value={searchText} onChange={handleInput} visible={isOn} type="text" placeholder="search" />
+
+        </form>
       </div>
     </StyledContainer>
   );
@@ -58,13 +64,14 @@ const StyledInput = styled.input`
   height: 35px;
   border-radius: 3px;
   transition: all 0.3s ease;
+  color: black;
+  font-size: 1.6rem;
   ${props => props.visible && css`
   display: block;
   width: 250px;
   padding: 0 10px;
   transition: all 0.5s 0.2s ease;
-  color: black;
-    font-size: 1.6rem;
+
   `};
 `
 const SearchButton = styled.button`
@@ -75,9 +82,7 @@ const SearchButton = styled.button`
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
-  text-align: center;
-  transition: background 250ms ease-in-out, 
-              transform 150ms ease;
+
   -webkit-appearance: none;
   -moz-appearance: none;
   position: absolute;
@@ -86,18 +91,12 @@ const SearchButton = styled.button`
 
   height: 100%;
 
+  transition: all 0.3s ease;
   border-radius: 3px;
   ${props => props.visible && css`
     background: #062333;
-    transition: all 0.3s ease;
-    position: absolute;
-    top: 0;
-    right: 0;
-  
-    height: 100%;
     padding: 5px;
     border-radius: 3px;
-
     transition: all 0.5s 0.3s ease;
   `}
 `;

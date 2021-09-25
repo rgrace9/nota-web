@@ -19,7 +19,6 @@ export default function Home(props) {
     homePage
   } = props;
 
-  console.log('homePage', homePage)
   return (
     <Layout
       showBreadcrumbs={false}
