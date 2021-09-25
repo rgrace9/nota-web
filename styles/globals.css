@@ -50,3 +50,12 @@ body.light {
   --headerBg: #380606;
   --headerBoxShadow: rgba(0, 0, 0, 0.8) 0 1px 4px;
 }
+
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

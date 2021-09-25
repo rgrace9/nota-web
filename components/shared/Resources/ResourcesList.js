@@ -7,10 +7,11 @@ import { Global, css } from '@emotion/react'
 
 const ResourcesList = props => {
   const {resources} = props;
+
   return (
     <ResourcesListContainer>
       {resources.map(r => (
-        <ResourceItem key={r}>
+        <ResourceItem key={r.id}>
           
           <ResourceTile key={r} data={r}/>
         </ResourceItem>
@@ -32,9 +33,9 @@ export default ResourcesList;
 
 const ResourcesListContainer = styled.ul`
   display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 
 `
 

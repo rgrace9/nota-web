@@ -12,15 +12,16 @@ const SearchBar = props => {
   return (
     <SearchContainer>
       <HeadingStyle>Search transcriptions, translations, and lesson plans of women's Latin</HeadingStyle>
-      <form onSubmit={onSearch} className="search-box">
-        <SearchBarContainer>
-          <SearchInput type="search" placeholder="Type here to search..." />
+      
+        <SearchBarForm onSubmit={onSearch} className="search-box">
+          <label className='sr-only' htmlFor='search-bar'>Search transcriptions, translations, and lesson plans of women&#39;s Latin</label>
+          <SearchInput id='search-bar' type="search" placeholder="Type here to search..." />
           <SearchBtn aria-label='Search' type="submit">
         <SearchIcon />
      </SearchBtn>
 
-        </SearchBarContainer>
-    </form>
+        </SearchBarForm>
+  
     </SearchContainer>
   );
 };
@@ -42,7 +43,7 @@ const SearchContainer = styled.div`
 
 `
 
-const SearchBarContainer = styled.div`
+const SearchBarForm = styled.form`
     position: relative;
   display: flex;
   flex-grow: 1;
@@ -57,7 +58,12 @@ const SearchInput = styled.input`
   height: 42px;
   border-radius: 5px 0 0 5px;
   color: var(--text-dark);
-  font-size: 24px;
+  font-size: 2.4rem;
+
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  appearance: none;
+  }
 `
 
 const SearchBtn = styled.button`

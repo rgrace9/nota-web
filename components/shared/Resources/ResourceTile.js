@@ -6,10 +6,6 @@ import { Global, css } from '@emotion/react'
 
 const ResourceTile = props => {
   
-  const TitleImageContainer = styled.div`
-  
-  `
-
   const TileImage = styled.img`
     width: 100%;
     height: 100%;
@@ -17,36 +13,22 @@ const ResourceTile = props => {
     height: 200px;
   `
 
-  const [isMounted, setIsMounted] = useState(false);
   const {data} = props;
-  const handleTileClick = (e) => {
-    const link = document.querySelector('h3 a');
-    if (link && isMounted) {
-      link.click();
-    }
-  }
-
   
-  useEffect(() => {
-    // window is accessible here.
-    // console.log("window.innerHeight", window.innerHeight);
-    setIsMounted(true)
-
-  }, []);
-  
+ 
   return (
-    <ResourceTileContainer onClick={handleTileClick}>
-      <TitleImageContainer>
-        {data.image ? (
+    <ResourceTileContainer>
+      <div>
+        {data.image && (
           <TileImage  src={`${data.image.url}`} alt={data.image.alternativeText} loading="lazy"/>
 
-        ) : <p>hey</p>}
-      </TitleImageContainer>
+        )}
+      </div>
 
       <TileContent>
 
       <StyledHeading>
-        <a target='_blank' rel="noreferrer" href={data.url}>{data.title}</a>
+        <StyledLink target='_blank' rel="noopener" href={data.url}>{data.title}</StyledLink>
       </StyledHeading>
  
       <ResourceTileDescription>
@@ -68,6 +50,18 @@ ResourceTile.propTypes = {
 };
 
 export default ResourceTile;
+
+const StyledLink = styled.a`
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }  
+`
+
 
 const TileContent = styled.div`
   display: flex;
@@ -101,6 +95,7 @@ const ResourceTileContainer = styled.div`
   overflow: hidden;
   background: white;
   cursor: pointer;
+  position: relative;
   &:hover, &:focus-within {
     box-shadow: 0 0 0 0.25rem;
   }
