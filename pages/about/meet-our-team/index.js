@@ -10,11 +10,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const STRAPI_CLIENT = new StrapiClient();
 
 const MeetOurTeam = props => {
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState('');
+
+  const { departments } = props;
+
   useEffect(() => {
     // console.log()
     setDescription(sanitizeHtmlString(props.description))
   }, [])
+
+  console.log('departments', departments);
+  
   return (
     <Layout pageTitle={props.title}>
       <ArticleLayout title={props.title}>
@@ -34,12 +40,14 @@ export const getStaticProps = async (props) => {
   const res = await STRAPI_CLIENT.fetchAPI('posts/2');
 
   const description = parseMarkdown(res.body)
+  const departments = await STRAPI_CLIENT.fetchAPI(`departments`);
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
       description,
-      title: res.title
+      title: res.title,
+      departments
     }
   }
 }

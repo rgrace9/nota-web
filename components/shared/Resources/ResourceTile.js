@@ -33,7 +33,7 @@ const ResourceTile = props => {
     setIsMounted(true)
 
   }, []);
-  console.log(data)
+  
   return (
     <ResourceTileContainer onClick={handleTileClick}>
       <TitleImageContainer>

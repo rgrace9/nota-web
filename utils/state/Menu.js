@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { useToggle } from "../hooks";
+import useToggle from 'utils/hooks/useToggle';
+
 
 const initialState = {
   isMenuOpen: false,

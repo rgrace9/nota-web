@@ -4,6 +4,7 @@ import StyledLink from '@/components/shared/Link/StyledLink'
 import { device } from "@/styles/screenSizes";
 import SocialMedia from './SocialMedia';
 import AboutUs from './AboutUs';
+import LanguageSelector from './LanguageSelector';
 
 const StyledFooter = styled.footer`
   padding: 20px;
@@ -57,6 +58,7 @@ const Footer = () => {
               many years of teaching experience, seven advanced degrees, many publications in
               academic journals, and multiple positions in professional organizations.
             </p>
+            <LanguageSelector />
         </StyledSection>
 
         <StyledSection>  
@@ -69,6 +71,7 @@ const Footer = () => {
           <SocialMedia />
       
         </StyledSection>
+       
       </StyledContent>
       <StyledTrademark>Project Nota &copy; 2021</StyledTrademark>
     </StyledFooter>

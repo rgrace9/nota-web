@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from 'next/link'
 import styled from '@emotion/styled';
 import { useMenuContext } from "../../../utils/state";
@@ -7,11 +7,14 @@ import NavLinks from "./NavLinks";
 import { useScroll } from "../../../utils/hooks";
 import { Global, css } from '@emotion/react'
 import Image from 'next/image';
+import NavBarSearch from './NavBarSearch';
 
 const DesktopNavbar = () => {
   const { isMenuOpen, toggleMenu } = useMenuContext();
 
-  
+  const [isOpen, setOpen] = useState(false);
+
+
   return (
    
       <DesktopNav aria-label='Menu'>
@@ -25,9 +28,14 @@ const DesktopNavbar = () => {
               />
             </a>
           </Link>
+         
         </div>
         <NavLinks />
-        <Hamburger toggled={isMenuOpen} toggle={toggleMenu} duration={0} />
+
+        <NavBarSearch />
+        <button onClick={() => setOpen(!isOpen)}>
+          <Hamburger toggled={isOpen} duration={0} />
+        </button>
       </DesktopNav>
   
   );
@@ -40,6 +48,7 @@ const DesktopNav = styled.nav`
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
+  height: 70px;
   background: var(--headerBg);
   box-shadow: var(--headerBoxShadow);
   color: var(--text);
@@ -58,7 +67,9 @@ const DesktopNav = styled.nav`
     padding: 0 30px;
   }
   .home-link-container {
-    flex: 2;
+    /* flex: 2; */
+    display: flex;
+    flex-direction: row;
   }
 
   .logo {

@@ -4,9 +4,7 @@ import Link from 'next/link'
 import { useMenuContext } from "../../../utils/state";
 import { useTheme } from "../../../utils/hooks";
 import Icon from "../Icon";
-import Select from '../dataEntry/Select'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router';
 import Menu from './NavigationMenu';
 import SearchIcon from '@/components/shared/Icon/ThinSearchIcon';
 const DesktopNavLinks = () => {
@@ -14,7 +12,6 @@ const DesktopNavLinks = () => {
 
   
   const { t } = useTranslation('nav')
-  const router = useRouter()
   
   const links = [
     {
@@ -77,11 +74,7 @@ const DesktopNavLinks = () => {
     }
   ];
 
-  const onLanguageChange = (selectedLocale) => {
-    if (router.locales.includes(selectedLocale)) {
-      router.push(router.pathname, router.pathname, { locale: selectedLocale })
-    }
-  }
+
   return (
     <React.Fragment>
       
@@ -93,17 +86,6 @@ const DesktopNavLinks = () => {
         </li>
       ))}
       <li>
-        <span className='language-selector'>
-          <Select 
-            labelFor='language'
-            labelTitle='Language'
-            isScreenReaderOnly
-            onChange={onLanguageChange}
-            defaultValue={router.locale}
-          />
-
-        </span>
-       
       </li>
     </NavLinksWrapper>
     </React.Fragment>
@@ -124,14 +106,7 @@ const NavLinksWrapper = styled.ul`
   li:last-child {
     margin-left: auto;
   }
-  .language-selector {
-    background: transparent;
-    display: flex;
-    align-items: center;
-    svg {
-      margin-right: 4px;
-    }
-  }
+
   @media screen and (max-width: 768px) {
     flex-direction: column;
 
