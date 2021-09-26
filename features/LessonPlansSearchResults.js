@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import  {StyledUnorderedList} from '@/components/shared/List';
-import StyledContainer from '@/components/shared/Container/style';
+// import  {StyledUnorderedList} from '@/components/shared/List';
 import styled from '@emotion/styled';
-
+import {woodSmoke, white} from '@/styles/colors';
+import Container from '@/components/shared/Container'
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
 
   return (
-    <StyledContainer justifyContent='center'>
-  
-      <StyledUnorderedList >
-        {results.map(result => (
-            <ResourceTileContainer key={result.id}>
-              
-            <StyledTitle>{result.title}</StyledTitle>
-            <StyledDescription>{result.description}</StyledDescription>
-            </ResourceTileContainer>
-        ))}
-        </StyledUnorderedList>
-    
+    <StyledContainer>
+      
+        <StyledUnorderedList >
+          {results.map(result => (
+              <ResourceTileContainer key={result.id}>
+                
+              <StyledTitle>{result.title}</StyledTitle>
+              <StyledDescription>{result.description}</StyledDescription>
+              </ResourceTileContainer>
+          ))}
+          </StyledUnorderedList>
+
     </StyledContainer>
   );
 };
@@ -30,6 +30,20 @@ LessonPlansSearchResults.propTypes = {
 };
 
 export default LessonPlansSearchResults;
+
+const StyledContainer = styled.div`
+  /* border: 2px solid ${woodSmoke}; */
+  display: flex;
+  width: 100%;
+  margin: 30px;
+  max-width: 1500px;
+  width: 100%;
+  flex-direction
+  /* padding: 20px; */
+  /* color: ${woodSmoke};
+  background-color: ${white}; */
+  justify-content: center;
+`
 
 const StyledTitle = styled.h3`
   font-size: 1.8rem;
@@ -60,3 +74,34 @@ const ResourceTileContainer = styled.div`
   }
 
 `
+
+const StyledUnorderedList = styled.ul`
+  display: flex;
+  width: 100%;
+  margin: 30px;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    /* screen width is less than 768px (medium) */
+    /* margin: 100px  ; */
+    padding: 10px 20px;
+  }
+  @media (min-width: 1024px) {
+    /* margin: 0  auto; */
+    padding: 10px 20px;
+  }
+  @media (min-width: 1200px) {
+    /* margin: 0  auto; */
+    margin: 0px 100px;
+
+  }
+li {
+  list-style-type: ${(props = true) =>
+    props.bulletPoints ? 'initial' :  'none'};
+  &:before {
+    content: ${(props) =>
+    props.bulletPoints ? 'initial' :  '\\200B'};
+  };
+  margin-left: ${(props) =>
+    props.indent ? props.indent :  '0'};
+}`
+
