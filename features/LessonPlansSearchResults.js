@@ -38,10 +38,7 @@ const StyledContainer = styled.div`
   margin: 30px;
   max-width: 1500px;
   width: 100%;
-  flex-direction
-  /* padding: 20px; */
-  /* color: ${woodSmoke};
-  background-color: ${white}; */
+  flex-direction: column;
   justify-content: center;
 `
 
