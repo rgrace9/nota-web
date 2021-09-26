@@ -8,20 +8,19 @@ const LessonPlansSearchResults = props => {
   const {results, loading } = props;
 
   return (
-    <>
-      {/* <StyledTitle>Search Results</StyledTitle> */}
+    <StyledContainer justifyContent='center'>
   
+      <StyledUnorderedList >
         {results.map(result => (
-          <StyledUnorderedList key={result.id}>
-            <ResourceTileContainer>
+            <ResourceTileContainer key={result.id}>
               
             <StyledTitle>{result.title}</StyledTitle>
             <StyledDescription>{result.description}</StyledDescription>
             </ResourceTileContainer>
-          </StyledUnorderedList>
         ))}
+        </StyledUnorderedList>
     
-    </>
+    </StyledContainer>
   );
 };
 
@@ -54,6 +53,8 @@ const ResourceTileContainer = styled.div`
   width: 100%;
   border: solid 2px black;
   padding: 10px 30px;
+  width: 100%;
+  padding: 20px;
   &:hover {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
   }

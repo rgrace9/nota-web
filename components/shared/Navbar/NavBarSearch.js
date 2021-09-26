@@ -42,8 +42,13 @@ const NavBarSearch = props => {
     <StyledContainer>
       <div className={`searchbar`}>
         <form onSubmit={handleSearchClick}>
-          <StyledInput ref={inputRef} value={searchText} onChange={handleInput} visible={isOn} type="text" placeholder="Search" />
-        <SearchButton visible={isOn} onClick={handleSearchClick}> <SearchIcon /></SearchButton>
+          <label htmlFor='nav-bar-search' className='sr-only'>Search</label>
+          <StyledInput htmlFor='nav-bar-search' ref={inputRef} value={searchText} onChange={handleInput} visible={isOn} type="text" placeholder="Search" />
+        <SearchButton visible={isOn} onClick={handleSearchClick}>
+          <span className='sr-only'>Search Site</span>
+           <SearchIcon />
+           
+           </SearchButton>
 
         </form>
       </div>
