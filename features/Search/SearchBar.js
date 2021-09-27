@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import SearchIcon from '../../components/shared/Icon/ThinSearchIcon';
+import {device} from '@/styles/screenSizes';
 
 const SearchBar = props => {
 
@@ -34,8 +35,11 @@ export default SearchBar;
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
-  font-size: 3.6rem;
   font-weight: bold;
+  font-size: 2.8rem;
+  @media ${device.tablet} {
+    font-size: 3.6rem;
+  }
 `
 
 const SearchContainer = styled.div`

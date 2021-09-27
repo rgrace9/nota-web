@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
 import Link from 'next/link';
-import SearchBar from '@/features/Search/SearchBar'
+import SearchBar from '@/features/Search/SearchBar';
+import {device} from '@/styles/screenSizes';
+
 const HeroImage = props => {
   const {
     imageUrl,
@@ -17,12 +19,11 @@ const HeroImage = props => {
       <HeroTextContainer>
         {/* <HeroTitle>Search Projec</HeroTitle> */}
         <SearchBar />
-        <div style={{marginTop: '30px', marginBottom: '30px'}}>
-        <hr />  
+        <HeroSecondaryInfo>
+          <div style={{marginTop: '30px', marginBottom: '30px'}}>
+          <hr />  
 
-        </div>
-        <div>
-        {/* <HeroSubtitle>{heroSubtitle}</HeroSubtitle> */}
+          </div>
         <HeroSubtitle>Project Nota draws attention (nota bene!) to the letters and works (nota) of famous women (notarum) by focusing on the digitization of texts, translating these texts into English, and increasing their overall accessibility.</HeroSubtitle>
           
 
@@ -35,7 +36,7 @@ const HeroImage = props => {
             </section>
           ) : null}
 
-        </div>
+        </HeroSecondaryInfo>
       </HeroTextContainer>
     </HeroImageContainer>
   );
@@ -61,7 +62,7 @@ const HeroImageContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  
+  overflow-y: scroll;
 `
 
 const HeroTextContainer = styled.div`
@@ -75,7 +76,11 @@ const HeroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  max-width: 700px;
+  width: 100%;
+  
+  @media ${device.tablet} {
+    max-width: 700px;
+  }
 
   .hero-link {
     position: relative;
@@ -104,4 +109,11 @@ const HeroSubtitle = styled.p`
 
 const HeroLink = styled.a`
 
+`
+
+const HeroSecondaryInfo = styled.div`
+  display: none;
+  @media ${device.tablet} {
+    display: block;
+  }
 `

@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import SearchIcon from '@/components/shared/Icon/ThinSearchIcon';
 import useToggle from 'utils/hooks/useToggle';
 import router from 'next/router';
+import {algoliaIndex} from '@/lib/AlgoliaClient';
 
 const NavBarSearch = props => {
 
@@ -25,6 +26,10 @@ const NavBarSearch = props => {
 
   const handleInput = (e) => {
     setSearchText(e.target.value)
+    console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID)
+    // algoliaIndex.search('query string').then(({ hits }) => {
+    //   console.log(hits);
+    // });
   }
 
   const handleSearchClick = (e) => {
