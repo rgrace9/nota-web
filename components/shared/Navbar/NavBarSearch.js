@@ -26,8 +26,8 @@ const NavBarSearch = props => {
 
   const handleInput = (e) => {
     setSearchText(e.target.value)
-    console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID)
-    // algoliaIndex.search('query string').then(({ hits }) => {
+    // console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID)
+    // algoliaIndex.search(e.target.value).then(({ hits }) => {
     //   console.log(hits);
     // });
   }
