@@ -17,7 +17,6 @@ const HeroImage = props => {
   return (
     <HeroImageContainer imageUrl={imageUrl}>
       <HeroTextContainer>
-        {/* <HeroTitle>Search Projec</HeroTitle> */}
         <SearchBar />
         <HeroSecondaryInfo>
           <div style={{marginTop: '30px', marginBottom: '30px'}}>
@@ -77,9 +76,10 @@ const HeroTextContainer = styled.div`
   flex-direction: column;
   font-size: 1.6rem;
   width: 100%;
-  
+  overflow-x: hidden;
   @media ${device.tablet} {
     max-width: 700px;
+    
   }
 
   .hero-link {

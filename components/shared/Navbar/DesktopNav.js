@@ -8,6 +8,7 @@ import { useScroll } from "../../../utils/hooks";
 import { Global, css } from '@emotion/react'
 import Image from 'next/image';
 import NavBarSearch from './NavBarSearch';
+import {woodSmoke} from '@/styles/colors';
 
 const DesktopNavbar = () => {
   const { isMenuOpen, toggleMenu } = useMenuContext();
@@ -50,7 +51,7 @@ const DesktopNav = styled.nav`
   justify-content: space-around;
   align-items: center;
   height: 70px;
-  background: var(--headerBg);
+  background: ${woodSmoke};
   box-shadow: var(--headerBoxShadow);
   color: var(--text);
   transition: all 150ms linear;

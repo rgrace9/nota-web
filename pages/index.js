@@ -41,7 +41,7 @@ export default function Home(props) {
         </Container>
     </Layout>
   );
-};
+}
 
 export const getStaticProps = async ({ locale }) => {
   const featuredResources = await STRAPI_CLIENT.fetchAPI("featured-resources");

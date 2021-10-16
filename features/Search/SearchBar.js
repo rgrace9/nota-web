@@ -4,6 +4,9 @@ import styled from '@emotion/styled';
 import keys from '@/constants/keyCodes';
 import SearchIcon from '../../components/shared/Icon/ThinSearchIcon';
 import {device} from '@/styles/screenSizes';
+import router from 'next/router';
+import {algoliaIndex} from '@/lib/AlgoliaClient';
+import * as colors from '@/styles/colors';
 
 
 const EXAMPLE_DATA = [
@@ -43,6 +46,10 @@ const Autocomplete = () => {
       case keys.rightArrow:
       case keys.space:
       case keys.enter:
+        // if (textBoxRef.current.value) {
+        //   router.push(`/search?query=${textBoxRef.current.value}`);
+        // }
+        break;
       case keys.tab:
       case keys.shift:
         // ignore otherwise the menu will show
@@ -60,6 +67,7 @@ const Autocomplete = () => {
   }
 
   const buildMenu = (options) => {
+    console.log('options', options)
     setResults(options)
     setResultsCount(options.length)
   }
@@ -68,6 +76,10 @@ const Autocomplete = () => {
     setIsMenuVisible(false);
     setResults([])
     setResultsCount(0)
+    document.getElementsByTagName("html")[0].style.height = "initial";
+    document.getElementsByTagName("html")[0].style.height = "initial";
+    document.getElementsByTagName("body")[0].style.height = "initial";
+    document.getElementsByTagName("body")[0].style.overflow = "initial";
   }
 
   const getOptionById = (id) => {
@@ -75,10 +87,13 @@ const Autocomplete = () => {
   }
 
 
+  const getOptionIndex = (optionId) => {
+    return results.findIndex(i => i.id === optionId)
+  }
   const highlightOption = (optionId) => {
     // if there’s a currently selected option
     const currentOption = getOptionById(optionId);
-    
+
     if(activeOptionId) {
   
       // get the option
@@ -97,92 +112,64 @@ const Autocomplete = () => {
   }
 
   const isExactMatch = (userInput) => {
-    EXAMPLE_DATA.find(d => d.name.toLowerCase() === userInput.toLowerCase())
+    // EXAMPLE_DATA.find(d => d.name.toLowerCase() === userInput.toLowerCase())
   }
 
   const getAllOptions = () => {
-    return EXAMPLE_DATA;
+    return [];
   }
   const onTextBoxDownPressed = (event) => {
     let option;
-    let options;
+    let options = [];
   
-    /*
-      When the value is empty or if it exactly
-      matches an option show the entire menu
-    */
-    if(text.length === 0 || isExactMatch(text)) {
-  
-      // get options based on the value
-      options = getAllOptions();
-  
+    if (text) {
+      options = getOptions(text);
+    }
+
+    // if there are options
+    if(options.length > 0) {
+
       // build the menu based on the options
       buildMenu(options);
-  
+
       // show the menu
       showMenu();
-  
+      // debugger;
       // retrieve the first option in the menu
       option = getFirstOption();
-  
-  
+
       // highlight the first option
-      console.log('HERE OPTION 136', option)
-      highlightOption(option);
-  
-    /*
-      When there’s a value that doesn’t have
-      an exact match show the matching options
-    */
-    } else {
-  
-      // get options based on the value
-      options = getOptions(text);
-  
-      // if there are options
-      if(options.length > 0) {
-  
-        // build the menu based on the options
-        buildMenu(options);
-  
-        // show the menu
-        showMenu();
-        // debugger;
-        // retrieve the first option in the menu
-        option = getFirstOption();
-  
-        // highlight the first option
-        console.log('HERE OPTION 161', option)
-        highlightOption(option.id);
-      }
+      console.log('HERE OPTION 161', option)
+      highlightOption(option.id);
     }
   }
 
-  const getOptions = (userInput) => {
+  const fetchSearchResults = async (userInput) => {
+    try {
+      const res = await algoliaIndex.search(userInput).then(function(result){
+        return result.hits;
+        })
 
-    let matches = [];
-  
-    // Loop through each of the option elements
-    EXAMPLE_DATA.forEach(function(i, el) {
-  
-      // if the option has a value and the option’s text node matches the user-typed value
-      if(i.name.trim().length > 0 && i.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1) {
-  
-        // push an object representation to the matches array
-        matches.push({ name: i.name, id: i.id });
-      }
-    });
-  
-    return matches;
+      return res;
+
+    } catch(err) {
+
+      console.error(err);
+      return []
+    }
+  }
+  const getOptions =  async (userInput) => {
+
+    return await fetchSearchResults(userInput);
   };
 
-  const onTextBoxType = (event) => {
+  const onTextBoxType = async (event) => {
       // only show options if user typed something
       // console.log(textBoxRef.current)
     if (text.length > 0) {
       // get options based on value
-      const options = getOptions(text.toLowerCase());
-      console.log(options)
+      const options = await getOptions(text.toLowerCase());
+
       setResults(options);
       // build the menu based on the options
       buildMenu(options);
@@ -217,17 +204,43 @@ const Autocomplete = () => {
 
   const onOptionClick = (e) => {
     selectOption(e.target);
+    // e.currentTarget.dataset.optionValue
   };
 
 
   const onMenuKeyDown = (event, optionId) => {
     const currentElement = event.target;
-    console.log('focus?', currentElement.matches(':focus'))
+
     switch (event.key) {
       case keys.upArrow:
+        if (getOptionIndex(optionId) === 0) {
+          focusTextBox();
+        }
+        
+        if (getOptionIndex(optionId) > 0) {
+          const selectOptions = document.querySelectorAll('li.selection')
+          // overflow: hidden;
+          // height: 100%;
+          // document.getElementsByTagName("html")[0].style.height = "hidden";
+          // document.getElementsByTagName("html")[0].style.height = "100%";
+          // document.getElementsByTagName("body")[0].style.height = "100%";
+          // document.getElementsByTagName("body")[0].style.overflow = "hidden";
+          const prevElement = selectOptions[getOptionIndex(optionId) - 1];
+          prevElement.focus()
+        }
         break;
       case keys.downArrow:
-        highlightOption(optionId);
+        if (getOptionIndex(optionId) < results.length - 1) {
+          const selectOptions = document.querySelectorAll('li.selection')
+          // overflow: hidden;
+          // height: 100%;
+          document.getElementsByTagName("html")[0].style.height = "hidden";
+          document.getElementsByTagName("html")[0].style.height = "100%";
+          document.getElementsByTagName("body")[0].style.height = "100%";
+          document.getElementsByTagName("body")[0].style.overflow = "hidden";
+          const nextElement = selectOptions[getOptionIndex(optionId) + 1];
+          nextElement.focus()
+        }
         break
       case keys.leftArrow:
       case keys.rightArrow:
@@ -275,8 +288,10 @@ const Autocomplete = () => {
 
   const onSearch = (e) => {
     e.preventDefault();
-    console.log('search')
+    router.push(`/search?query=${textBoxRef.current.value}`);
   }
+
+  console.log('results', results)
 
   return (
     <SearchContainer>
@@ -302,7 +317,7 @@ const Autocomplete = () => {
                 onChange={handleOnTexBoxChange}
                 onKeyDown={onTextBoxKeyDown}
               />
-              <SearchBtn aria-label='Search' type="submit">
+              <SearchBtn aria-label='Search' type="submit" onClick={onSearch}>
                 <SearchIcon />
               </SearchBtn>
 
@@ -311,9 +326,9 @@ const Autocomplete = () => {
 
       </SearchBarForm>
       {isVisible && (
-      <ul id="autocomplete-options--destination" role="listbox" className="hidden">
+      <StyledMenu id="autocomplete-options--destination" role="listbox" className="hidden">
         {results.map((d) => (
-          <li
+          <StyledOption
             key={d.id}
             role="option"
             tabIndex={-1}
@@ -325,9 +340,9 @@ const Autocomplete = () => {
             onKeyDown={(event) => {onMenuKeyDown(event, d.id)}}
         >
           {d.name}
-        </li>
+        </StyledOption>
         ))}
-      </ul>
+      </StyledMenu>
     )}
       <div aria-live="polite" role="status" className="sr-only">
       {resultsCount || 'No'} result{resultsCount !== 1 ? 's' : '' } available.
@@ -363,7 +378,7 @@ const StyledSearchContainer = styled.span`
 
 const SearchContainer = styled.div`
   width: 100%;
-
+  position: relative;
 `
 
 const SearchBarForm = styled.form`
@@ -374,7 +389,7 @@ const SearchBarForm = styled.form`
 
 const SearchInput = styled.input`
   width: 100%;
-
+  position: relative;
   border: 3px solid var(--text-dark);
   border-right: none;
   padding: 5px;
@@ -403,4 +418,41 @@ const SearchBtn = styled.button`
   font-size: 20px;
 
 
+`
+
+const StyledMenu = styled.ul`
+  position: absolute;
+  overflow-y: auto;
+  margin: 0;
+  max-height: 12em;
+  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  font-size: 1.6rem;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  background-color: #f7fafc;
+  border-radius: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  z-index: 2;
+  border: 2px solid #718096;
+`
+
+const StyledOption = styled.li`
+  background-color: white;
+  padding: 10px 5px;
+  width: 100%;
+  line-height: 22px;
+  padding: .5em;
+  display: block;
+  border-bottom: 2px solid #718096;
+  margin: 0;
+    &:hover {
+      cursor: pointer;
+      background-color: ${colors.palePeachPink}
+    }
 `

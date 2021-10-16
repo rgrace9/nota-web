@@ -13,6 +13,7 @@ const ResultsList = props => {
           <p>Loading...</p>
         ) : (
           <ResourcesListContainer>
+            {<h2>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</h2>}
             {results.length ? (results.map(r => (
               <ResourceItem key={r.id}>
                 
