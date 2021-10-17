@@ -220,9 +220,9 @@ const Authors = (props) => {
             </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
-        <Container>
+      
           <AuthorSearchResults loading={loadingResults} results={authorResults} />
-        </Container>
+       
       </ContentLayout>
     </Layout>
   );

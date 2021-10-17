@@ -12,18 +12,19 @@ const ResultsList = props => {
         {(loading && !results.length) ? (
           <p>Loading...</p>
         ) : (
-          <ResourcesListContainer>
-            {<h2>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</h2>}
-            {results.length ? (results.map(r => (
-              <ResourceItem key={r.id}>
-                
-                <ResourceTile key={r} data={r}/>
-              </ResourceItem>
-            ))) : (
-              <p>{noResultsMessage}</p>
+          <>
+            {<StyledTitle>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledTitle>}
+            {results.length && (
+              <ResourcesListContainer>
+                {results.map(r => (
+                  <ResourceItem key={r.id}>
+                    
+                    <ResourceTile key={r} data={r}/>
+                  </ResourceItem>
+                ))}
+              </ResourcesListContainer>
             )}
-            
-          </ResourcesListContainer>
+          </>
         )}
       </StyledSection>
  
@@ -36,6 +37,12 @@ ResultsList.defaultProps = {
 ResultsList.propTypes = {
   noResultsMessage: PropTypes.string
 };
+
+const StyledTitle = styled.h2`
+  font-size: 2.4rem;
+  text-align: center;
+  width: 100%;
+`
 
 const StyledSection = styled.section`
   width: 100%;
@@ -51,7 +58,6 @@ const ResourcesListContainer = styled.ul`
 
 const ResourceItem = styled.li`
   display: flex;
-  padding: 1rem;
   width: 100%;
 `
 

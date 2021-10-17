@@ -6,7 +6,7 @@ import Container from '../Container';
 const SearchFiltersContainer = props => {
   const {title, children, loading} = props;
   return (
-    <Container justifyContent='center'>
+  
       <StyledContainer>
         <StyledSubheading>{title}</StyledSubheading>
         {loading ? (
@@ -17,7 +17,6 @@ const SearchFiltersContainer = props => {
         </div>
         )}
       </StyledContainer>
-    </Container>
   );
 };
 SearchFiltersContainer.defaultProps = {
