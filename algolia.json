@@ -1,0 +1,64 @@
+[
+  {
+      "type": "authors",
+      "location": "Italy",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Caterina Imperiale Lercari Pallavicini, Marchioness of Mombaruzzo (fl. 1721)",
+      "id": 2
+  },
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Renaissance",
+      "shortBiography": null,
+      "date": null,
+      "name": "Johanna Otho (c. 1549 - 1621)",
+      "id": 3
+  },
+  {
+      "type": "authors",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Maria Hutchenson",
+      "id": 4
+  },
+  {
+      "type": "authors",
+      "location": "Italy",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Martha Marchina (1600-1642)",
+      "id": 14
+  },
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Margareta van Godewijck (1627-77)",
+      "id": 13
+  },
+  {
+      "type": "authors",
+      "location": "France",
+      "period": "Renaissance",
+      "shortBiography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna \n",
+      "date": null,
+      "name": "Camille de Morel",
+      "id": 6
+  },
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Anna Memorata",
+      "id": 5
+  }
+]

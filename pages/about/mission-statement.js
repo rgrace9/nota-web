@@ -12,7 +12,6 @@ const STRAPI_CLIENT = new StrapiClient();
 const MissionStatement = props => {
   const [description, setDescription] = useState('')
   useEffect(() => {
-    // console.log()
     setDescription(sanitizeHtmlString(props.description))
   }, [])
   return (

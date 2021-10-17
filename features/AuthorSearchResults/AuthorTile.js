@@ -18,8 +18,6 @@ const ResourceTile = props => {
 
   
   useEffect(() => {
-    // window is accessible here.
-    // console.log("window.innerHeight", window.innerHeight);
     setIsMounted(true)
 
   }, []);

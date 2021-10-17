@@ -25,11 +25,7 @@ const NavBarSearch = props => {
   }, [isEditing, isOn]);
 
   const handleInput = (e) => {
-    setSearchText(e.target.value)
-    console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID)
-    algoliaIndex.search(e.target.value).then(({ hits }) => {
-      console.log(hits);
-    });
+    setSearchText(e.target.value);
   }
 
   const handleSearchClick = (e) => {

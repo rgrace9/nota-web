@@ -18,12 +18,6 @@ const Search = props => {
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  console.log({
-    query,
-    queryParams,
-    queryString
-  })
-
   return (
     <Layout
       pageTitle='Project Nota | Search'

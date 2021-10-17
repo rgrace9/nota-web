@@ -31,7 +31,6 @@ const SearchPage = props => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    // console.log(searchValue)
     setSearchText(searchValue)
   }, [searchValue])
 

@@ -30,7 +30,6 @@ const LessonPlans = (props) => {
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  console.log('lessonPlans', lessonPlans)
   const handleLessonPlansSearch = () => {
     // e.preventDefault();
   };

@@ -15,11 +15,8 @@ const MeetOurTeam = props => {
   const { departments } = props;
 
   useEffect(() => {
-    // console.log()
     setDescription(sanitizeHtmlString(props.description))
   }, [])
-
-  console.log('departments', departments);
   
   return (
     <Layout pageTitle={props.title}>

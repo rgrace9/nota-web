@@ -7,7 +7,6 @@ import { fetchStrapiApi } from "@/lib/StrapiClient";
 const Department = props => {
   const {department} = props;
 
-  console.log(department)
   return (
     <div>
       

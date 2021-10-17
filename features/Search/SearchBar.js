@@ -1,32 +1,10 @@
 import React, {useRef, useState, KeyboardEvent} from 'react';
-import { Global, css } from '@emotion/react'
 import styled from '@emotion/styled';
 import keys from '@/constants/keyCodes';
-import SearchIcon from '../../components/shared/Icon/ThinSearchIcon';
 import {device} from '@/styles/screenSizes';
 import router from 'next/router';
-import {algoliaIndex} from '@/lib/AlgoliaClient';
+import {algoliaSearchIndex, algoliaIndex} from '@/lib/AlgoliaClient';
 import * as colors from '@/styles/colors';
-
-
-const EXAMPLE_DATA = [
-  {
-    name: 'America',
-    id: '1'
-  },
-  {
-    name: 'Spain',
-    id: '2'
-  },
-  {
-    name: 'France',
-    id: '3'
-  },
-  {
-    name: 'Germany',
-    id: '4'
-  },
-]
 
 const Autocomplete = () => {
 
@@ -38,6 +16,12 @@ const Autocomplete = () => {
 
   const textBoxRef = useRef();
 
+  const resetBodyAndHtml = () => {
+    document.getElementsByTagName("html")[0].style.height = "initial";
+    document.getElementsByTagName("html")[0].style.height = "initial";
+    document.getElementsByTagName("body")[0].style.height = "initial";
+    document.getElementsByTagName("body")[0].style.overflow = "initial";
+  }
   const onTextBoxKeyUp = (event) => {
     switch (event.key) {
       case keys.esc:
@@ -51,6 +35,8 @@ const Autocomplete = () => {
         // }
         break;
       case keys.tab:
+        hideMenu();
+        break;
       case keys.shift:
         // ignore otherwise the menu will show
         break;
@@ -67,7 +53,6 @@ const Autocomplete = () => {
   }
 
   const buildMenu = (options) => {
-    console.log('options', options)
     setResults(options)
     setResultsCount(options.length)
   }
@@ -76,10 +61,7 @@ const Autocomplete = () => {
     setIsMenuVisible(false);
     setResults([])
     setResultsCount(0)
-    document.getElementsByTagName("html")[0].style.height = "initial";
-    document.getElementsByTagName("html")[0].style.height = "initial";
-    document.getElementsByTagName("body")[0].style.height = "initial";
-    document.getElementsByTagName("body")[0].style.overflow = "initial";
+    resetBodyAndHtml()
   }
 
   const getOptionById = (id) => {
@@ -118,12 +100,12 @@ const Autocomplete = () => {
   const getAllOptions = () => {
     return [];
   }
-  const onTextBoxDownPressed = (event) => {
+  const onTextBoxDownPressed = async (event) => {
     let option;
     let options = [];
   
     if (text) {
-      options = getOptions(text);
+      options = await getOptions(text);
     }
 
     // if there are options
@@ -139,14 +121,13 @@ const Autocomplete = () => {
       option = getFirstOption();
 
       // highlight the first option
-      console.log('HERE OPTION 161', option)
       highlightOption(option.id);
     }
   }
 
   const fetchSearchResults = async (userInput) => {
     try {
-      const res = await algoliaIndex.search(userInput).then(function(result){
+      const res = await algoliaSearchIndex.search(userInput).then(function(result){
         return result.hits;
         })
 
@@ -165,7 +146,6 @@ const Autocomplete = () => {
 
   const onTextBoxType = async (event) => {
       // only show options if user typed something
-      // console.log(textBoxRef.current)
     if (text.length > 0) {
       // get options based on value
       const options = await getOptions(text.toLowerCase());
@@ -232,8 +212,6 @@ const Autocomplete = () => {
       case keys.downArrow:
         if (getOptionIndex(optionId) < results.length - 1) {
           const selectOptions = document.querySelectorAll('li.selection')
-          // overflow: hidden;
-          // height: 100%;
           document.getElementsByTagName("html")[0].style.height = "hidden";
           document.getElementsByTagName("html")[0].style.height = "100%";
           document.getElementsByTagName("body")[0].style.height = "100%";
@@ -258,57 +236,38 @@ const Autocomplete = () => {
         onTextBoxType(event);
     }
   };
-
-  const onOptionKeyPress = (e) => {
-    const {key} = e;
-    if (key === keys.enter || key === keys.space) {
-      selectOption(e.target);
-    } else {
-
-    }
-  }
-
-  const createMenu = () => {
-
-  }
   
   const focusTextBox = () => {
-    textBoxRef.current.focus()
+    textBoxRef.current.focus();
+    resetBodyAndHtml()
   }
 
   const setTextBoxValue = (dataValue) => {
     textBoxRef.current.value = dataValue
   }
   const selectOption = (option) => {
-    const textValue = option.innerText
+    const textValue = option.innerText;
+    const selectedAuthorId = option.dataset.optionId;
+    const selectedAuthorType = option.dataset.optionType;
+    router.push(`/${selectedAuthorType}/${selectedAuthorId}`);
     setTextBoxValue(textValue);
     hideMenu();
     focusTextBox();
   }
 
-  const onSearch = (e) => {
-    e.preventDefault();
-    router.push(`/search?query=${textBoxRef.current.value}`);
-  }
-
-  console.log('results', results)
-
   return (
     <SearchContainer>
-    
-      <SearchBarForm onSubmit={onSearch} className="search-box">
-
+      <SearchBarForm className="search-box">
         <StyledFormItem>
           <StyledLabel htmlFor='search-bar'>Search transcriptions, translations, and lesson plans of women's Latin</StyledLabel>
             <StyledSearchContainer>
               <SearchInput
                 id='search-bar'
-                // type="search"
+                type="search"
                 ref={textBoxRef}
                 placeholder="Type here to search..."
                 aria-controls="autocomplete-options--destination"
                 autoCapitalize="none"
-                type="text"
                 autoComplete="off" 
                 aria-autocomplete="list"
                 role="combobox"
@@ -317,9 +276,9 @@ const Autocomplete = () => {
                 onChange={handleOnTexBoxChange}
                 onKeyDown={onTextBoxKeyDown}
               />
-              <SearchBtn aria-label='Search' type="submit" onClick={onSearch}>
+              {/* <SearchBtn aria-label='Search' type="submit" onClick={onSearch}>
                 <SearchIcon />
-              </SearchBtn>
+              </SearchBtn> */}
 
             </StyledSearchContainer>
           </StyledFormItem>
@@ -334,6 +293,8 @@ const Autocomplete = () => {
             tabIndex={-1}
             aria-selected="false"
             data-option-value={d.name}
+            data-option-id={d.id}
+            data-option-type={d.type}
             id={`autocomplete_${d.id}`}
             className='selection'
             onClick={(event) => {onOptionClick(event, d.id)}}
@@ -381,7 +342,7 @@ const SearchContainer = styled.div`
   position: relative;
 `
 
-const SearchBarForm = styled.form`
+const SearchBarForm = styled.div`
     position: relative;
   display: flex;
   flex-grow: 1;
@@ -391,16 +352,15 @@ const SearchInput = styled.input`
   width: 100%;
   position: relative;
   border: 3px solid var(--text-dark);
-  border-right: none;
   padding: 5px;
   height: 42px;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px;
   color: var(--text-dark);
   font-size: 2.4rem;
 
   &::-webkit-search-cancel-button {
     -webkit-appearance: none;
-  appearance: none;
+    appearance: none;
   }
 `
 

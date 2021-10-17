@@ -153,9 +153,6 @@ const Authors = (props) => {
       const newURL = `/authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
       setAuthorResults(res)
-      // if (newURL !== asPath) {
-      //   console.log('yo')
-      // }
       router.replace(newURL, undefined, { shallow: true })
       setLoadingResults(false)
     } catch (err) {
