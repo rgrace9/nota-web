@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from '@emotion/styled';
 import keys from '@/constants/keyCodes';
 import {device} from '@/styles/screenSizes';
 import router from 'next/router';
 import {algoliaSearchIndex} from '@/lib/AlgoliaClient';
 import * as colors from '@/styles/colors';
+import useMouseOutside from '@/utils/hooks/useMouseOutside';
 
 const Autocomplete = () => {
 
@@ -13,9 +14,11 @@ const Autocomplete = () => {
   const [text, setText] = useState('')
   const [resultsCount, setResultsCount] = useState(0)
   const [activeOptionId, setActiveOptionId] = useState(null);
+  const [activeElement, setActiveElement] = useState(null);
 
   const textBoxRef = useRef();
-
+  const searchContainerRef = useRef();
+  
   const resetBodyAndHtml = () => {
     document.getElementsByTagName("html")[0].style.height = "initial";
     document.getElementsByTagName("html")[0].style.height = "initial";
@@ -63,6 +66,8 @@ const Autocomplete = () => {
     setResultsCount(0)
     resetBodyAndHtml()
   }
+
+  useMouseOutside(searchContainerRef, isVisible, hideMenu)
 
   const getOptionById = (id) => {
     return document.getElementById(`autocomplete_${id}`);
@@ -251,7 +256,7 @@ const Autocomplete = () => {
 
   return (
     <SearchContainer>
-      <SearchBarForm className="search-box">
+      <SearchBarForm className="search-box" ref={searchContainerRef}>
         <StyledFormItem>
           <StyledLabel htmlFor='search-bar'>Search transcriptions, translations, and lesson plans of women's Latin</StyledLabel>
             <StyledSearchContainer>
