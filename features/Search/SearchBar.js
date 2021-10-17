@@ -1,9 +1,9 @@
-import React, {useRef, useState, KeyboardEvent} from 'react';
+import React, {useRef, useState} from 'react';
 import styled from '@emotion/styled';
 import keys from '@/constants/keyCodes';
 import {device} from '@/styles/screenSizes';
 import router from 'next/router';
-import {algoliaSearchIndex, algoliaIndex} from '@/lib/AlgoliaClient';
+import {algoliaSearchIndex} from '@/lib/AlgoliaClient';
 import * as colors from '@/styles/colors';
 
 const Autocomplete = () => {
@@ -93,13 +93,7 @@ const Autocomplete = () => {
     return results[0];
   }
 
-  const isExactMatch = (userInput) => {
-    // EXAMPLE_DATA.find(d => d.name.toLowerCase() === userInput.toLowerCase())
-  }
 
-  const getAllOptions = () => {
-    return [];
-  }
   const onTextBoxDownPressed = async (event) => {
     let option;
     let options = [];
