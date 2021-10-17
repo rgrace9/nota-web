@@ -6,6 +6,7 @@ import router from 'next/router';
 import {algoliaSearchIndex} from '@/lib/AlgoliaClient';
 import * as colors from '@/styles/colors';
 import useMouseOutside from '@/utils/hooks/useMouseOutside';
+import {AuthorRow} from './ResultRow';
 
 const Autocomplete = () => {
 
@@ -299,7 +300,7 @@ const Autocomplete = () => {
             onClick={(event) => {onOptionClick(event, d.id)}}
             onKeyDown={(event) => {onMenuKeyDown(event, d.id)}}
         >
-          {d.name}
+          <AuthorRow author={d['_highlightResult']} />
         </StyledOption>
         ))}
       </StyledMenu>
