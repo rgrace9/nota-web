@@ -9,6 +9,268 @@ import useMouseOutside from '@/utils/hooks/useMouseOutside';
 import {AuthorRow} from './ResultRow';
 import { Global, css } from '@emotion/react'
 
+const MOCK_DATA =       [
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Anna Memorata",
+      "id": 5,
+      "objectID": "1e9e15741c4adc_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "Northern <em>a</em>nd Central Europe",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "period": {
+              "value": "Early Modern Period",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "<em>A</em>nna Memorata",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "location": "Italy",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Martha Marchina (1600-1642)",
+      "id": 14,
+      "objectID": "85ce656fa5a5e_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "Italy",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "period": {
+              "value": "Early Modern Period",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "Martha Marchina (1600-1642)",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Maria Hutchenson",
+      "id": 4,
+      "objectID": "f6f1cca81e657_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "period": {
+              "value": "Early Modern Period",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "Maria Hutchenson",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Margareta van Godewijck (1627-77)",
+      "id": 13,
+      "objectID": "1de5c468421560_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "Northern <em>a</em>nd Central Europe",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "period": {
+              "value": "Early Modern Period",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "Margareta van Godewijck (1627-77)",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "location": "Northern and Central Europe",
+      "period": "Renaissance",
+      "shortBiography": null,
+      "date": null,
+      "name": "Johanna Otho (c. 1549 - 1621)",
+      "id": 3,
+      "objectID": "15b73c944744d_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "Northern <em>a</em>nd Central Europe",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "period": {
+              "value": "Renaissance",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "Johanna Otho (c. 1549 - 1621)",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "location": "Italy",
+      "period": "Early Modern Period",
+      "shortBiography": null,
+      "date": null,
+      "name": "Caterina Imperiale Lercari Pallavicini, Marchioness of Mombaruzzo (fl. 1721)",
+      "id": 2,
+      "objectID": "a874dfbd3401_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "Italy",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "period": {
+              "value": "Early Modern Period",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "name": {
+              "value": "Caterina Imperiale Lercari Pallavicini, Marchioness of Mombaruzzo (fl. 1721)",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  },
+  {
+      "type": "authors",
+      "location": "France",
+      "period": "Renaissance",
+      "shortBiography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna \n",
+      "date": null,
+      "name": "Camille de Morel",
+      "id": 6,
+      "objectID": "17aa479b08fc36_dashboard_generated_id",
+      "_highlightResult": {
+          "type": {
+              "value": "<em>a</em>uthors",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "location": {
+              "value": "France",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "period": {
+              "value": "Renaissance",
+              "matchLevel": "none",
+              "matchedWords": []
+          },
+          "shortBiography": {
+              "value": "Lorem ipsum dolor sit <em>a</em>met, consectetur <em>a</em>dipiscing elit,Lorem ipsum dolor sit <em>a</em>met, consectetur <em>a</em>dipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna \n",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": [
+                  "a"
+              ]
+          },
+          "name": {
+              "value": "Camille de Morel",
+              "matchLevel": "none",
+              "matchedWords": []
+          }
+      }
+  }
+]
+
 const Autocomplete = () => {
 
   const [isVisible, setIsMenuVisible] = useState(false);
@@ -64,11 +326,14 @@ const Autocomplete = () => {
 
   const hideMenu = () => {
     setIsMenuVisible(false);
-    setResults([])
-    setResultsCount(0)
     resetBodyAndHtml()
   }
 
+  const onTextBoxFocus = (event) => {
+    if (text && resultsCount) {
+      showMenu()
+    }
+  }
   useMouseOutside(searchContainerRef, isVisible, hideMenu)
 
   const getOptionById = (id) => {
@@ -143,269 +408,8 @@ const Autocomplete = () => {
   const getOptions =  async (userInput) => {
 
     // return await fetchSearchResults(userInput);
-    return (
-      [
-        {
-            "type": "authors",
-            "location": "Northern and Central Europe",
-            "period": "Early Modern Period",
-            "shortBiography": null,
-            "date": null,
-            "name": "Anna Memorata",
-            "id": 5,
-            "objectID": "1e9e15741c4adc_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "Northern <em>a</em>nd Central Europe",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "period": {
-                    "value": "Early Modern Period",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "<em>A</em>nna Memorata",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "location": "Italy",
-            "period": "Early Modern Period",
-            "shortBiography": null,
-            "date": null,
-            "name": "Martha Marchina (1600-1642)",
-            "id": 14,
-            "objectID": "85ce656fa5a5e_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "Italy",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "period": {
-                    "value": "Early Modern Period",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "Martha Marchina (1600-1642)",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "period": "Early Modern Period",
-            "shortBiography": null,
-            "date": null,
-            "name": "Maria Hutchenson",
-            "id": 4,
-            "objectID": "f6f1cca81e657_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "period": {
-                    "value": "Early Modern Period",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "Maria Hutchenson",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "location": "Northern and Central Europe",
-            "period": "Early Modern Period",
-            "shortBiography": null,
-            "date": null,
-            "name": "Margareta van Godewijck (1627-77)",
-            "id": 13,
-            "objectID": "1de5c468421560_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "Northern <em>a</em>nd Central Europe",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "period": {
-                    "value": "Early Modern Period",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "Margareta van Godewijck (1627-77)",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "location": "Northern and Central Europe",
-            "period": "Renaissance",
-            "shortBiography": null,
-            "date": null,
-            "name": "Johanna Otho (c. 1549 - 1621)",
-            "id": 3,
-            "objectID": "15b73c944744d_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "Northern <em>a</em>nd Central Europe",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "period": {
-                    "value": "Renaissance",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "Johanna Otho (c. 1549 - 1621)",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "location": "Italy",
-            "period": "Early Modern Period",
-            "shortBiography": null,
-            "date": null,
-            "name": "Caterina Imperiale Lercari Pallavicini, Marchioness of Mombaruzzo (fl. 1721)",
-            "id": 2,
-            "objectID": "a874dfbd3401_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "Italy",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "period": {
-                    "value": "Early Modern Period",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "name": {
-                    "value": "Caterina Imperiale Lercari Pallavicini, Marchioness of Mombaruzzo (fl. 1721)",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        },
-        {
-            "type": "authors",
-            "location": "France",
-            "period": "Renaissance",
-            "shortBiography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna \n",
-            "date": null,
-            "name": "Camille de Morel",
-            "id": 6,
-            "objectID": "17aa479b08fc36_dashboard_generated_id",
-            "_highlightResult": {
-                "type": {
-                    "value": "<em>a</em>uthors",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "location": {
-                    "value": "France",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "period": {
-                    "value": "Renaissance",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                },
-                "shortBiography": {
-                    "value": "Lorem ipsum dolor sit <em>a</em>met, consectetur <em>a</em>dipiscing elit,Lorem ipsum dolor sit <em>a</em>met, consectetur <em>a</em>dipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna \n",
-                    "matchLevel": "full",
-                    "fullyHighlighted": false,
-                    "matchedWords": [
-                        "a"
-                    ]
-                },
-                "name": {
-                    "value": "Camille de Morel",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                }
-            }
-        }
-    ]
-    )
+    setResultsCount(MOCK_DATA.length)
+    return MOCK_DATA
   };
 
   const onTextBoxType = async (event) => {
@@ -538,6 +542,7 @@ const Autocomplete = () => {
                 onKeyUp={onTextBoxKeyUp}
                 onChange={handleOnTexBoxChange}
                 onKeyDown={onTextBoxKeyDown}
+                onFocus={onTextBoxFocus}
               />
               {/* <SearchBtn aria-label='Search' type="submit" onClick={onSearch}>
                 <SearchIcon />
