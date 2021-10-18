@@ -12,14 +12,12 @@ import StyledLink from '@/components/shared/Link/StyledLink'
 import { useEffect, useState } from 'react';
 
 
-const RelatedContentContainer = styled.aside`
-  background: ${colors.silver};
+const RelatedContentContainer = styled.section`
+  /* background: ${colors.silver}; */
   flex: 1;
   flex-direction: row;
-  padding: 10px;
-  max-width: 320px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  height: 50vh;
+  /* padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
   min-height: 500px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -67,7 +65,6 @@ const StyledListContainer = styled.ul`
   padding-left: 40px;
 `
 export default function Home(props) {
-  const storage = globalThis?.sessionStorage?.currentPath;
   const { author, relatedAuthors } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
@@ -133,31 +130,31 @@ export default function Home(props) {
             <section>
               <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
               <StyledText>{author.biography}</StyledText>
-              <StyledLink href='https://9cc615d0-1255-4689-b262-e5224d896f89.filesusr.com/ugd/a8964a_5cc26c4bf53e44e998eb2330913d66fc.pdf' target='_blank'>Learn More about {author.name}</StyledLink>
             </section>
             <section>
               <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
               <StyledListContainer>
                 {author.lessonPlans.map(lp => (
                   <li
-                    key={lp.slug}
+                    key={lp.id}
                   >
-                    <Link href={`/lesson-plans/${lp.slug}`} passHref>
-                      <StyledLink target='_blank' href={`/lesson-plans/${lp.slug}`}>{lp.title}</StyledLink>
-                    </Link>
+                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
                   </li>
                 ))}
               </StyledListContainer>
             </section>
             <section>
               <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-              {/* <StyledText>{author.biography}</StyledText> */}
+
+            </section>
+            <section>
+              <StyledSecondaryHeading>Translations</StyledSecondaryHeading>
+
             </section>
 
-          </StyledMainContentWrapper>
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
-            <ul>
+            <StyledListContainer>
               {relatedAuthors.map(relatedAuthor => (
                 <li key={relatedAuthor.id}>
                   <Link href={`/authors/${relatedAuthor.id}`} passHref>
@@ -167,8 +164,9 @@ export default function Home(props) {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </StyledListContainer>
           </RelatedContentContainer>
+          </StyledMainContentWrapper>
 
         </PageWrapper>
       </Container>

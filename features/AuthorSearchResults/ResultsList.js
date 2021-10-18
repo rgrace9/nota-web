@@ -42,6 +42,8 @@ const StyledTitle = styled.h2`
   font-size: 2.4rem;
   text-align: center;
   width: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `
 
 const StyledSection = styled.section`

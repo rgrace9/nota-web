@@ -447,8 +447,7 @@ const Autocomplete = () => {
 
 
   const onOptionClick = (e) => {
-    selectOption(e.target);
-    // e.currentTarget.dataset.optionValue
+    selectOption(e.currentTarget);
   };
 
 
@@ -520,8 +519,8 @@ const Autocomplete = () => {
   }
 
   return (
-    <SearchContainer>
-      <SearchBarForm className="search-box" ref={searchContainerRef}>
+    <SearchContainer ref={searchContainerRef}>
+      <SearchBarForm className="search-box">
         <StyledFormItem>
           <StyledLabel htmlFor='search-bar'>Search transcriptions, translations, and lesson plans of women's Latin</StyledLabel>
             <StyledSearchContainer>
