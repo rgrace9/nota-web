@@ -1,31 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from "@emotion/styled";
+import { Global, css } from '@emotion/react'
 
 const ContentLayout = props => {
-  const {title, children} = props;
+  const {title, children, maxWidth, backgroundColor} = props;
   return (
-    <StyledContainer>
-      <StyledHeading>{title}</StyledHeading>
-      {children}
+    <StyledContainer backgroundColor={backgroundColor}>
+      <StyledInnerContainer maxWidth={maxWidth}>
+        <StyledHeading>{title}</StyledHeading>
+        {children}
+      </StyledInnerContainer>
     </StyledContainer>
   );
 };
 
 ContentLayout.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  maxWidth: PropTypes.string,
+};
+ContentLayout.defaultProps = {
+  maxWidth: '1500px',
 };
 
 export default ContentLayout;
 
 const StyledContainer = styled.div`
-  margin-top: 20px;
-  padding: 0px 60px;
+  ${(props) => css`
+    background: ${props.backgroundColor};
+  `};
 `
-// const StyledHeading = styled.h1`
-//   font-size: 3.6rem;
-//   color: var(--text-dark)
-// `
+const StyledInnerContainer = styled.div`
+  margin: 20px auto;
+  ${(props) => css`
+    max-width: ${props.maxWidth};
+  `};
+`
+
 const StyledHeading = styled.h1`
   font-size: 3.6rem;
   color: var(--text-dark);
@@ -34,7 +45,6 @@ const StyledHeading = styled.h1`
   &::after {
     height: 5px;
     display: block;
-    /* width: 100%; */
     background: var(--headerBg);
     border-right: 1px white;
     content: '';

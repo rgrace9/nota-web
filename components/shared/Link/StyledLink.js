@@ -8,7 +8,7 @@ const StyledLink = styled.a`
   font-size: 1.6rem;
   &:hover {
     color: ${colors.lightCream};
-  background: ${colors.navyBlue};
+    background: ${colors.navyBlue};
     /* text-decoration-style: dashed; */
   }
 `

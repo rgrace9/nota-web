@@ -9,10 +9,12 @@ import {
   BreadcrumbSeparator,
 } from "@chakra-ui/react"
 import PropTypes from 'prop-types';
+import * as colors from 'styles/colors';
 
 
 const BreadcrumbContainer = styled(Breadcrumb)`
   padding: 5px 20px;
+  font-size: 1.8rem;
 `
 
 
@@ -51,7 +53,15 @@ Breadcrumbs.defaultProps = {
 }
 
 const StyledLink = styled.a`
- font-size: 1.6rem;
+ /* font-size: 1.6rem; */
+ text-decoration: underline;
+ padding: 2px 5px;
+ &:hover {
+    color: ${colors.lightCream};
+    background: ${colors.navyBlue};
+    /* text-decoration-style: dashed; */
+  }
+
 `
 const StyledListItem = styled.li`
     &:not(:first-of-type) {
@@ -64,14 +74,7 @@ const StyledListItem = styled.li`
       content: '';
   }
 }
-&:hover {
-  text-decoration: underline;
-}
-a {
-  
-  padding: 2px 5px;
 
-}
 
 &:only-child {
   &::before {
