@@ -66,14 +66,14 @@ const Footer = () => {
           <AboutUs />
         </StyledSection>
 
-        <StyledSection>
-          <StyledHeading>Connect with Us</StyledHeading>
-          <SocialMedia />
-      
-        </StyledSection>
+   
        
       </StyledContent>
+      <div>
+      <StyledHeading>Connect with Us</StyledHeading>
+          <SocialMedia />
       <StyledTrademark>Project Nota &copy; 2021</StyledTrademark>
+      </div>
     </StyledFooter>
   );
 };
