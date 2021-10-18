@@ -65,21 +65,21 @@ const HeroImageContainer = styled.div`
 `
 
 const HeroTextContainer = styled.div`
-  background-color: hsla(0, 0%, 100%, 0.55);
-  text-align: left;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 20px;
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
   width: 100%;
-  overflow-x: hidden;
+  background-color: hsla(0, 0%, 100%, 0.55);
+
   @media ${device.tablet} {
     max-width: 700px;
-    
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-x: hidden;
   }
 
   .hero-link {
