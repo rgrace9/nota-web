@@ -3,20 +3,20 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Layout from '@/components/Layout';
 import ContentLayout from '@/components/Layout/ContentLayout';
 
-const Digitizations = () => {
+const Transcriptions = () => {
   return (
     <Layout
-    pageTitle='Digitizations'
+    pageTitle='Transcriptions'
   >
     <ContentLayout
-      title='Digitizations'
+      title='Transcriptions'
     >
       </ContentLayout>
       </Layout>
   );
 };
 
-export default Digitizations;
+export default Transcriptions;
 
 export const getStaticProps = async ({ locale }) => ({
   props: {

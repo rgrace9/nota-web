@@ -23,12 +23,12 @@ const DesktopNavLinks = () => {
           href: 'authors'
         },
         {
-          title: 'Digitizations',
-          href: 'digitizations'
-        },
-        {
           title: 'Lesson Plans',
           href: 'lesson-plans',
+        },
+        {
+          title: 'Transcriptions',
+          href: 'transcriptions'
         },
         {
           title: 'Translations',
