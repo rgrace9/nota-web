@@ -11,6 +11,7 @@ const HeadingStyle = styled.h2`
 const FeaturedContainer = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 1500px;
 `
 
 

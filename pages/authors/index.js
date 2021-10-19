@@ -27,7 +27,7 @@ const StyledFieldsContainer = styled.div`
 `;
 
 const StyledSelectContainer = styled.div`
-  flex: 1 1 auto;
+  flex: 0 0 45%;
   margin: 0px;
   width: 100%;
   @media ${device.tablet} {
@@ -41,6 +41,13 @@ const StyledBtnContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+const StyledFormRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`
 
 const BREADCRUMBS_LIST = [
   {
@@ -174,45 +181,47 @@ const Authors = (props) => {
 
   return (
     <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
-      <ContentLayout title="Authors">
+      <ContentLayout title="Authors" maxWidth='1000px'>
         <SearchFiltersContainer loading={data.isLoading}>
           <form onSubmit={handleSubmit}>
             <StyledFieldsContainer>
-              <StyledSelectContainer>
-                <ListBox
-                  dataKey="name"
-                  allObject={{ name: "All Authors", id: "all" }}
-                  labelText="Author"
-                  labelValue="author"
-                  options={authorOptions}
-                  value={selectedAuthor}
-                  {...bindAuthorName}
-                />
-              </StyledSelectContainer>
-              <StyledSelectContainer>
-                <ListBox
-                  dataKey="name"
-                  allObject={{ name: "All Locations", id: "all" }}
-                  labelText="Location"
-                  labelValue="author-location"
-                  options={locationOptions}
-                  value={authorLocation}
-                  {...bindAuthorLocation}
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Authors", id: "all" }}
+                    labelText="Author"
+                    labelValue="author"
+                    options={authorOptions}
+                    value={selectedAuthor}
+                    {...bindAuthorName}
+                  />
+                </StyledSelectContainer>
+              <StyledFormRow>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Locations", id: "all" }}
+                    labelText="Location"
+                    labelValue="author-location"
+                    options={locationOptions}
+                    value={authorLocation}
+                    {...bindAuthorLocation}
 
-                />
-              </StyledSelectContainer>
-              <StyledSelectContainer>
-                <ListBox
-                  dataKey="name"
-                  allObject={{ name: "All Periods", id: "all" }}
-                  labelText="Period"
-                  labelValue="author-period"
-                  options={timePeriodOptions}
-                  value={selectedTimePeriod}
-                  {...bindSelectedTimePeriod}
+                  />
+                </StyledSelectContainer>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Periods", id: "all" }}
+                    labelText="Period"
+                    labelValue="author-period"
+                    options={timePeriodOptions}
+                    value={selectedTimePeriod}
+                    {...bindSelectedTimePeriod}
 
-                />
-              </StyledSelectContainer>
+                  />
+                </StyledSelectContainer>
+              </StyledFormRow>
             </StyledFieldsContainer>
             <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
