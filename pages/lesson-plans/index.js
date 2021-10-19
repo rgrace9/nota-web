@@ -38,6 +38,7 @@ const LessonPlans = (props) => {
       <ContentLayout title="Lesson Plans">
         <SearchFiltersContainer>
           <form onSubmit={handleLessonPlansSearch}>
+          <StyledFormRow>
             <ListBox
               allObject={{ name: "All Authors", id: "all" }}
               labelText="Author"
@@ -50,6 +51,8 @@ const LessonPlans = (props) => {
               labelValue="price"
               options={PRICES}
             />
+          </StyledFormRow>
+
             <div>
               <PrimaryButton type="submit" text="Search" />
             </div>
@@ -80,3 +83,10 @@ export const getStaticProps = async ({ locale }) => {
     },
   }
 };
+
+const StyledFormRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`

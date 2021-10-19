@@ -11,11 +11,12 @@ const LessonPlansSearchResults = props => {
     <StyledContainer>
       
         <StyledUnorderedList >
+        {<StyledResultsCount>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledResultsCount>}
           {results.map(result => (
               <ResourceTileContainer key={result.id}>
                 
               <StyledTitle>{result.title}</StyledTitle>
-              <StyledDescription>{result.description}</StyledDescription>
+                <StyledDescription>{result.description}</StyledDescription>
               </ResourceTileContainer>
           ))}
           </StyledUnorderedList>
@@ -32,14 +33,8 @@ LessonPlansSearchResults.propTypes = {
 export default LessonPlansSearchResults;
 
 const StyledContainer = styled.div`
-  /* border: 2px solid ${woodSmoke}; */
-  display: flex;
   width: 100%;
-  margin: 30px;
-  max-width: 1500px;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
+  padding-bottom: 200px;
 `
 
 const StyledTitle = styled.h3`
@@ -49,8 +44,9 @@ const StyledTitle = styled.h3`
 
 const StyledDescription = styled.p`
   font-size: 1.6rem;
+  padding-bottom: 30px;
 `
-const ResourceTileContainer = styled.div`
+const ResourceTileContainer = styled.li`
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   margin-bottom: 20px;
@@ -66,6 +62,11 @@ const ResourceTileContainer = styled.div`
   padding: 10px 30px;
   width: 100%;
   padding: 20px;
+  list-style-type: initial;
+  &:before {
+    content:  '\\200B';
+    margin-left: 0;
+  };
   &:hover {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
   }
@@ -74,31 +75,18 @@ const ResourceTileContainer = styled.div`
 
 const StyledUnorderedList = styled.ul`
   display: flex;
-  width: 100%;
-  margin: 30px;
+  /* flex-wrap: wrap; */
   flex-direction: column;
-  @media (min-width: 768px) {
-    /* screen width is less than 768px (medium) */
-    /* margin: 100px  ; */
-    padding: 10px 20px;
-  }
-  @media (min-width: 1024px) {
-    /* margin: 0  auto; */
-    padding: 10px 20px;
-  }
-  @media (min-width: 1200px) {
-    /* margin: 0  auto; */
-    margin: 0px 100px;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  margin-top: 40px;
+`
 
-  }
-li {
-  list-style-type: ${(props = true) =>
-    props.bulletPoints ? 'initial' :  'none'};
-  &:before {
-    content: ${(props) =>
-    props.bulletPoints ? 'initial' :  '\\200B'};
-  };
-  margin-left: ${(props) =>
-    props.indent ? props.indent :  '0'};
-}`
-
+const StyledResultsCount = styled.h2`
+  font-size: 2.4rem;
+  text-align: center;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+`
