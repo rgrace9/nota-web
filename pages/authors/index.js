@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { PrimaryButton } from "@/components/shared/Button";
+import { PrimaryButton, SecondaryButton } from "@/components/shared/Button";
 import StrapiClient from "@/lib/StrapiClient";
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
@@ -72,6 +72,8 @@ const Authors = (props) => {
   const [authorResults, setAuthorResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
   const [searchQuery, setSearchQuery] = useState({});
+
+
   const [data, setData] = useState(INITIAL_DATA)
   const {
     router,
@@ -103,18 +105,11 @@ const Authors = (props) => {
   useEffect(() => {
 
     const fetchPageData = async () => {
-      try {
-        if (isMounted) {
-          bindAuthorName.onChange(queryParams['id_eq'] || 'all');
-          bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
-          bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
-          
-          onInitialSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
-
-        }
-      } catch (err) {
-
-        throw err;
+      if (isMounted) {
+        bindAuthorName.onChange(queryParams['id_eq'] || 'all');
+        bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+        bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+        onInitialSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
       }
     }
     let isMounted = true;
@@ -125,11 +120,6 @@ const Authors = (props) => {
     };
   }, [queryString])
 
-
-  // const searchCallback = () => {
-
-  // }
-
   const onInitialSearch = async (authorValue, locationValue, timeValue) => {
     try {
       const searchParams = {
@@ -138,6 +128,7 @@ const Authors = (props) => {
         ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
       }
       const formattedSearchQuery = formatQuery(searchParams);
+      setLoadingResults(true)
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
       setAuthorResults(res)
       setLoadingResults(false)
@@ -225,7 +216,7 @@ const Authors = (props) => {
             </StyledFieldsContainer>
             <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
-              <PrimaryButton type="reset" text="Clear Fields" onClick={handleReset} />
+              <SecondaryButton type="reset" text="Clear Fields" onClick={handleReset} />
             </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>

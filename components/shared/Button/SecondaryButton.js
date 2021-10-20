@@ -3,41 +3,38 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {burgundy, white} from '@/styles/colors';
 
-const StyledPrimaryButton = styled.button`
+const StyledSecondaryButton = styled.button`
   padding: 10px 60px;
-  border: 2px solid black;
-  background-color: white;
   border-radius: 15px;
   min-height: 30px;
   font-size: 1.8rem;
-  background-color: ${burgundy};
-  color: ${white};
+  background-color: transparent;
+  color: black;
+  border: ${burgundy} 4px solid;
   font-weight: bold;
   &:hover {
     text-decoration: underline;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-
   }
 `
-const PrimaryButton = props => {
+const SecondaryButton = props => {
   const {type, text, onClick} = props;
   return (
-    <StyledPrimaryButton type={type} onClick={onClick}>
+    <StyledSecondaryButton type={type} onClick={onClick}>
       {text}
-    </StyledPrimaryButton>
+    </StyledSecondaryButton>
   );
 };
 
-PrimaryButton.propTypes = {
+SecondaryButton.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   text: PropTypes.string
 };
-PrimaryButton.defaultProps = {
+SecondaryButton.defaultProps = {
   onClick: () => {},
   type: 'button',
   text: ''
 };
 
 
-export default PrimaryButton;
+export default SecondaryButton;

@@ -49,6 +49,11 @@ const StyledPrimaryHeading = styled.h1`
 `
 const StyledSecondaryHeading = styled.h1`
   font-size: 2.4rem;
+  font-weight: bold;
+`
+const StyledSubtitle = styled.p`
+  font-size: 1.8rem;
+  font-style: italic;
 `
 
 const StyledText = styled.p`
@@ -154,6 +159,7 @@ export default function Home(props) {
 
           <RelatedContentContainer>
             <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
+            <StyledSubtitle>Authors from the same period and/or region</StyledSubtitle>
             <StyledListContainer>
               {relatedAuthors.map(relatedAuthor => (
                 <li key={relatedAuthor.id}>
