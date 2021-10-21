@@ -35,22 +35,26 @@ const LessonPlans = (props) => {
   };
   return (
     <Layout pageTitle="Lesson Plans">
-      <ContentLayout title="Lesson Plans">
+      <ContentLayout maxWidth='1000px' title="Lesson Plans">
         <SearchFiltersContainer>
           <form onSubmit={handleLessonPlansSearch}>
           <StyledFormRow>
-            <ListBox
-              allObject={{ name: "All Authors", id: "all" }}
-              labelText="Author"
-              labelValue="author"
-              options={AUTHOR_OPTIONS}
-            />
-            <ListBox
-              allObject={{ name: "All Prices", id: "all" }}
-              labelText="Price"
-              labelValue="price"
-              options={PRICES}
-            />
+            <StyledOptionContainer>
+              <ListBox
+                allObject={{ name: "All Authors", id: "all" }}
+                labelText="Author"
+                labelValue="author"
+                options={AUTHOR_OPTIONS}
+              />
+            </StyledOptionContainer>
+            <StyledOptionContainer>
+              <ListBox
+                allObject={{ name: "All Prices", id: "all" }}
+                labelText="Price"
+                labelValue="price"
+                options={PRICES}
+              />
+            </StyledOptionContainer>
           </StyledFormRow>
 
             <div>
@@ -89,4 +93,8 @@ const StyledFormRow = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`
+
+const StyledOptionContainer = styled.div`
+  width: 45%;
 `
