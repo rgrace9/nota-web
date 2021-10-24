@@ -17,12 +17,12 @@ const AuthorRow = props => {
         <QuillPenIcon />
       </StyledIconContainer>
       <div>
-        <StyledResult
+        <StyledTitle
           dangerouslySetInnerHTML={
             { __html: `${authorName}: ${authorLocation ? authorLocation : ''}${(authorLocation && authorPeriod) ? ';' : '' } ${authorPeriod ? authorPeriod : ''}` }
           }
         />
-        <div>
+        <div className='p-l-20'>
           <StyledShortBio dangerouslySetInnerHTML={{ __html: authorShortBio}}/>
         </div>
       </div>
@@ -35,14 +35,13 @@ AuthorRow.propTypes = {
   
 };
 
-const StyledResult = styled.span`
+const StyledTitle = styled.span`
   em {
     font-weight: 900;
   }
 
 `
 const StyledShortBio = styled.span`
-  /* color: #43516b; */
   color: #343a45;
   em {
     font-weight: 900;

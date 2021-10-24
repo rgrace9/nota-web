@@ -59,3 +59,28 @@ body.light {
   height: 1px;
   overflow: hidden;
 }
+
+$max: 50;
+$offset: 5;
+$unit: "px"; // Feel free to change the unit.
+@mixin spacing-options($className, $styleName) {
+  $i: 0;
+  @while $i <= $max {
+    #{$className + $i} {
+      #{$styleName}: #{$i + $unit};
+    }
+    $i: $i + $offset;
+  }
+}
+@include spacing-options(".p-l-", "padding-left");
+@include spacing-options(".m-t-", "margin-top");
+@include spacing-options(".m-r-", "margin-right");
+@include spacing-options(".m-b-", "margin-bottom");
+@include spacing-options(".m-l-", "margin-left");
+@include spacing-options(".m-x-", "margin");
+// Paddings
+@include spacing-options(".p-t-", "padding-top");
+@include spacing-options(".p-r-", "padding-right");
+@include spacing-options(".p-b-", "padding-bottom");
+@include spacing-options(".p-l-", "padding-left");
+@include spacing-options(".p-x-", "padding");
