@@ -19,36 +19,74 @@ import LessonPlansSearchResults from "@/features/LessonPlansSearchResults";
 
 const STRAPI_CLIENT = new StrapiClient();
 
-const Transcriptions = (props) => {
+const Translations = (props) => {
   const {
     router,
     authorOptions,
     lessonPlans
   } = props;
-
+  
   const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
   const handleLessonPlansSearch = () => {
     // e.preventDefault();
-  };  
+  };
   return (
-    <Layout
-    pageTitle='Transcriptions'
-  >
-    <ContentLayout
-      title='Transcriptions'
-    >
+    <Layout pageTitle="Transcriptions">
+      <ContentLayout maxWidth='1000px' title="Transcriptions">
+        <SearchFiltersContainer>
+          <form onSubmit={handleLessonPlansSearch}>
+          <StyledFormRow>
+            <StyledOptionContainer>
+              <ListBox
+                allObject={{ name: "All Authors", id: "all" }}
+                labelText="Author"
+                labelValue="author"
+                options={AUTHOR_OPTIONS}
+              />
+            </StyledOptionContainer>
+          </StyledFormRow>
+
+            <div>
+              <PrimaryButton type="submit" text="Search" />
+            </div>
+          </form>
+        </SearchFiltersContainer>
+          
+           
+            <LessonPlansSearchResults results={lessonPlans} />
+         
       </ContentLayout>
-      </Layout>
+    </Layout>
   );
 };
 
-export default Transcriptions;
+Translations.propTypes = {};
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-  },
-})
+export default withRouter(Translations);
+
+export const getStaticProps = async ({ locale }) => {
+  const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans");
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
+      lessonPlans,
+      authorOptions,
+    },
+  }
+};
+
+const StyledFormRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`
+
+const StyledOptionContainer = styled.div`
+  width: 45%;
+`
