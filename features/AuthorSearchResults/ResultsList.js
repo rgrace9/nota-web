@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react'
 import ResourceTile from './AuthorTile';
+import Loading from '@/components/shared/Loading/LoadingPage'
 const ResultsList = props => {
   const {results, loading, noResultsMessage} = props;
 
   return (
 
       <StyledSection aria-live="polite" aria-busy={loading ? "true" : "false"}>
-        {(loading && !results.length) ? (
-          <p>Loading...</p>
+        {(loading) ? (
+          <Loading />
         ) : (
           <>
             {<StyledTitle>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledTitle>}
