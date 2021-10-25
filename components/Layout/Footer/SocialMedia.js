@@ -14,6 +14,8 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  max-width: 400px;
+  margin: auto;
 `
 const StyledLink = styled.a`
   font-size: 2.0rem;
