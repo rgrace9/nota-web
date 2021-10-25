@@ -3,13 +3,8 @@ require('dotenv').config({path: __dirname + '/./../../.env'});
 const algoliasearch = require('algoliasearch');
 
 const DATA_TYPES = [
- {type: 'authors',
- path: 'authors'
-  },
-  {
-    type: 'lessonPlans',
-    path: 'lesson-plans'
-  }
+  'authors',
+  'lessonPlans'
 ]
 
 const algoliaSearchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
@@ -20,7 +15,7 @@ const algoliaIndex = algoliaSearchClient.initIndex(process.env.NEXT_PUBLIC_ALGOL
 
 const updateAlgoliaData = async (dataArray) => {
   try {
-    const res = await algoliaIndex.replaceAllObjects(dataArray, { autoGenerateObjectIDIfNotExist : true})
+    const res = await algoliaIndex.saveObjects(dataArray, { autoGenerateObjectIDIfNotExist : true})
     return res;
   } catch(err) {
     console.log('err', err)
@@ -42,27 +37,14 @@ const parseAuthor = (author) => {
   }
 }
 
-const parseLessonPlan = (lessonPlan) => {
-
-  return {
-    type: 'lessonPlans',
-    id: lessonPlan.id,
-    title: lessonPlan.title,
-    result: lessonPlan.result
-  }
-}
-
 const fetchStrapiApi = async (path) => {
-  let dataResponse = [];
-
   try {
-
     const requestUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path}`;
   const response = await axios({
     method: 'get',
     url: requestUrl,
   });
-  return response.data.map(datum => parseAuthor(datum));
+  return response.data;
   // return JSON.stringify(response.data.map(datum => parseAuthor(datum)));
   } catch(err) {
     console.log(err)
@@ -72,7 +54,7 @@ const fetchStrapiApi = async (path) => {
 
 const performRequest = async (endpoint) => {
 
-  const authorOptions = await fetchStrapiApi("authors");
+  const authorOptions = await fetchStrapiApi("lesson-plans");
   const updateRes = await updateAlgoliaData(authorOptions)
   console.log(authorOptions)
   console.log('updateRes', updateRes)
