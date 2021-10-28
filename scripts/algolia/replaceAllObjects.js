@@ -14,8 +14,6 @@ const DATA_TYPES = [
 
 const algoliaSearchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
 
-
-// const algoliaIndex = algoliaSearchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_API_KEY);
 const algoliaIndex = algoliaSearchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME);
 
 const updateAlgoliaData = async (dataArray) => {
@@ -28,16 +26,24 @@ const updateAlgoliaData = async (dataArray) => {
   }
 }
 
+const createAuthorTitle = (author) => {
+
+  let authorTitleValues = [];
+
+  author.location && authorTitleValues.push(author.location.name);
+  author.timePeriod && authorTitleValues.push(author.timePeriod.name);
+  author.date && authorTitleValues.push(author.date);
+  
+  return authorTitleValues.join(` | `)
+}
+
 const parseAuthor = (author) => {
-  const authorLocation = author.location ? author.location.name : '';
-  const authorTimePeriod = author.timePeriod ? author.timePeriod.name : '';
+
+
   return {
     type: 'authors',
-    location: authorLocation,
-    period: authorTimePeriod,
-    shortBiography: author.shortBiography,
-    date: author.date,
-    name: author.name,
+    title: createAuthorTitle(author),
+    description: author.shortBiography,
     id: author.id
   }
 }
@@ -48,34 +54,72 @@ const parseLessonPlan = (lessonPlan) => {
     type: 'lessonPlans',
     id: lessonPlan.id,
     title: lessonPlan.title,
-    result: lessonPlan.result
+    description: lessonPlan.description
+  }
+}
+
+const parseTranscription = (transcription) => {
+  return {
+    type: 'transcriptions',
+    id: transcription.id,
+    title: transcription.title,
+    description: transcription.description
+  }
+}
+
+const parseTranslation = (translation) => {
+  return {
+    type: 'translations',
+    id: translation.id,
+    title: translation.title,
+    description: translation.description
   }
 }
 
 const fetchStrapiApi = async (path) => {
-  let dataResponse = [];
-
   try {
-
     const requestUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path}`;
-  const response = await axios({
-    method: 'get',
-    url: requestUrl,
-  });
-  return response.data.map(datum => parseAuthor(datum));
-  // return JSON.stringify(response.data.map(datum => parseAuthor(datum)));
+    const response = await axios({
+      method: 'get',
+      url: requestUrl,
+    });
+
+    return response.data;
   } catch(err) {
     console.log(err)
   }
 }
 
 
-const performRequest = async (endpoint) => {
+const performRequest =  async () => {
+  let dataResponse = [];
 
-  const authorOptions = await fetchStrapiApi("authors");
-  const updateRes = await updateAlgoliaData(authorOptions)
-  console.log(authorOptions)
-  console.log('updateRes', updateRes)
+  DATA_TYPES.forEach(async (value) => {
+    const {type, path} = value;
+    const options = await fetchStrapiApi(path);
+
+    switch (type) {
+      case type === 'authors':
+        dataResponse.concat(options.map(datum => parseAuthor(datum)))
+        break;
+      case type === 'lessonPlans':
+        dataResponse.concat(options.map(option => parseLessonPlan(option)));
+        break;
+      case type === 'transcriptions':
+        dataResponse.concat(options.map(option => parseTranscription(option)));
+        break;
+      case type === 'translations':
+        dataResponse.concat(options.map(option => parseTranslation(option)));
+        break;
+      default:
+        break;
+    }
+
+  })
+  
+  const algoliaResponse = await updateAlgoliaData(dataResponse)
+
+  console.log('algoliaResponse', algoliaResponse)
 }
 
 module.exports = performRequest();
