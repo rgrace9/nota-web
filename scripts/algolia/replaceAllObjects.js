@@ -9,7 +9,15 @@ const DATA_TYPES = [
   {
     type: 'lessonPlans',
     path: 'lesson-plans'
-  }
+  },
+  {
+    type: 'transcriptions',
+    path: 'transcriptions'
+  },
+  {
+    type: 'translations',
+    path: 'translations'
+  },
 ]
 
 const algoliaSearchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
