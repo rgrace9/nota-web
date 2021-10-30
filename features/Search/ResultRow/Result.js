@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import ResultIcon from './ResultIcon';
 
 const LessonPlanRow = props => {
-  const {lessonPlan} = props;
 
   const {description, title, type} = props;
 
