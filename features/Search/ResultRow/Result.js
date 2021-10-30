@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import QuillPenIcon from '@/components/shared/Icon/QuillPenIcon';
-import ChalkboardUserIcon from '@/components/shared/Icon/ChalkboardUserIcon';
-import QuillPenIcon from '@/components/shared/Icon/QuillPenIcon';
+import ResultIcon from './ResultIcon';
 
 const LessonPlanRow = props => {
   const {lessonPlan} = props;
@@ -13,7 +11,7 @@ const LessonPlanRow = props => {
   return (
     <StyledLessonPlanRow>
       <StyledIconContainer>
-        <QuillPenIcon />
+        <ResultIcon type={type} />
       </StyledIconContainer>
       <div>
         <StyledTitle>
