@@ -50,8 +50,8 @@ const parseAuthor = (author) => {
 
   return {
     type: 'authors',
-    title: createAuthorTitle(author),
-    description: author.shortBiography,
+    title: author.name,
+    description: author.shortBiography ? author.shortBiography.substr(0, 200) : '',
     id: author.id
   }
 }
@@ -62,7 +62,7 @@ const parseLessonPlan = (lessonPlan) => {
     type: 'lessonPlans',
     id: lessonPlan.id,
     title: lessonPlan.title,
-    description: lessonPlan.description
+    description: lessonPlan.authors.map(author => author.name).join(', ')
   }
 }
 
@@ -98,36 +98,48 @@ const fetchStrapiApi = async (path) => {
   }
 }
 
+let dataResponse = [];
+async function* performRequest() {
+  
 
-const performRequest =  async () => {
-  let dataResponse = [];
-
-  DATA_TYPES.forEach(async (value) => {
+  yield Promise.all(DATA_TYPES.map(async (value) => {
     const {type, path} = value;
     const options = await fetchStrapiApi(path);
 
     switch (type) {
-      case type === 'authors':
-        dataResponse.concat(options.map(datum => parseAuthor(datum)))
+      case 'authors':
+        // console.log('AUTH', options.map(datum => parseAuthor(datum)))
+        dataResponse = dataResponse.concat(options.map(datum => parseAuthor(datum)))
+        // console.log('RES', dataResponse)
         break;
-      case type === 'lessonPlans':
-        dataResponse.concat(options.map(option => parseLessonPlan(option)));
+      case 'lessonPlans':
+        dataResponse = dataResponse.concat(options.map(option => parseLessonPlan(option)));
         break;
-      case type === 'transcriptions':
-        dataResponse.concat(options.map(option => parseTranscription(option)));
+      case 'transcriptions':
+        dataResponse = dataResponse.concat(options.map(option => parseTranscription(option)));
         break;
-      case type === 'translations':
-        dataResponse.concat(options.map(option => parseTranslation(option)));
+      case 'translations':
+        
+        dataResponse = dataResponse.concat(options.map(option => parseTranslation(option)));
         break;
       default:
         break;
     }
+  }))
 
-  })
+  // // console.log('yoooo')
+  console.log('yoooo', dataResponse)
   
-  const algoliaResponse = await updateAlgoliaData(dataResponse)
+  return dataResponse;
+  // const algoliaResponse = await updateAlgoliaData(dataResponse)
 
-  console.log('algoliaResponse', algoliaResponse)
+  // console.log('algoliaResponse', algoliaResponse)
 }
 
-module.exports = performRequest();
+async function initializeCalls() {
+  for await (let num of performRequest()) {
+    // console.log(num);
+  }
+}
+
+module.exports = initializeCalls();
