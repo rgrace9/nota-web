@@ -9,12 +9,12 @@ import { device } from "@/styles/screenSizes";
 const ResourceTile = props => {
   const [isMounted, setIsMounted] = useState(false);
   const {data} = props;
-  const handleTileClick = (e) => {
-    const link = document.querySelector('h3 a');
-    if (link && isMounted) {
-      link.click();
-    }
-  }
+  // const handleTileClick = (e) => {
+  //   const link = document.querySelector('h3 a');
+  //   if (link && isMounted) {
+  //     link.click();
+  //   }
+  // }
 
   
   useEffect(() => {
@@ -23,7 +23,7 @@ const ResourceTile = props => {
   }, []);
 
   return (
-    <ResourceTileContainer onClick={handleTileClick}>
+    <ResourceTileContainer>
       <TileImage  src="/images/pompeii_fresco.jpeg" alt="" loading="lazy" width="500" height="200" />
 
       <TileContent>

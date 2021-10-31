@@ -10,29 +10,11 @@ import qs from 'qs'
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import { useEffect, useState } from 'react';
-
-
-const RelatedContentContainer = styled.section`
-  /* background: ${colors.silver}; */
-  flex: 1;
-  flex-direction: row;
-  /* padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
-  min-height: 500px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  @media ${device.tablet} {
-    flex: 0 0 250px;
-    
-  }
-  @media ${device.desktop} {
-    flex: 0 0 250px;
-  }
-`
+import { withRouter } from 'next/router'
+import PropTypes from "prop-types";
 
 const PageWrapper = styled.div`
-    display: flex;
-    
+    display: flex;    
     flex-direction: column;
     justify-content: space-between;
     transition: ease all .5s;
@@ -51,10 +33,6 @@ const StyledSecondaryHeading = styled.h1`
   font-size: 2.4rem;
   font-weight: bold;
 `
-const StyledSubtitle = styled.p`
-  font-size: 1.8rem;
-  font-style: italic;
-`
 
 const StyledText = styled.p`
   line-height: 1.5;
@@ -69,13 +47,15 @@ const StyledMainContentWrapper = styled.div`
 const StyledListContainer = styled.ul`
   padding-left: 40px;
 `
-export default function Home(props) {
-  const { author, relatedAuthors } = props;
+const AuthorShow = (props) => {
+  const { author, relatedAuthors, router } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
+  const { asPath, query } = router;
   const { t } = useTranslation('home')
   useEffect(() => {
-    const previousPageIsSearchPage = globalThis.sessionStorage.prevPath.includes('?');
+  
+    const previousPageIsSearchPage = globalThis.sessionStorage?.prevPath?.includes('?') || '';
     const BREADCRUMBS_LIST = [
       {
         href: "/",
@@ -87,7 +67,7 @@ export default function Home(props) {
         isCurrentPage: false,
       },
       {
-        href: globalThis.sessionStorage.currentPath,
+        href: asPath,
         title: author.name,
         isCurrentPage: true,
       },
@@ -150,28 +130,24 @@ export default function Home(props) {
             </section>
             <section>
               <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-
+              {author.transcriptions.map(lp => (
+                  <li
+                    key={lp.id}
+                  >
+                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
+                  </li>
+                ))}
             </section>
             <section>
               <StyledSecondaryHeading>Translations</StyledSecondaryHeading>
-
+              {author.translations.map(lp => (
+                  <li
+                    key={lp.id}
+                  >
+                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
+                  </li>
+                ))}
             </section>
-
-          <RelatedContentContainer>
-            <StyledSecondaryHeading>Related Authors</StyledSecondaryHeading>
-            <StyledSubtitle>Authors from the same period and/or region</StyledSubtitle>
-            <StyledListContainer>
-              {relatedAuthors.map(relatedAuthor => (
-                <li key={relatedAuthor.id}>
-                  <Link href={`/authors/${relatedAuthor.id}`} passHref>
-                    <StyledLink href={`/authors/${relatedAuthor.id}`}>
-                      {relatedAuthor.name}
-                    </StyledLink>
-                  </Link>
-                </li>
-              ))}
-            </StyledListContainer>
-          </RelatedContentContainer>
           </StyledMainContentWrapper>
 
         </PageWrapper>
@@ -220,3 +196,9 @@ export const getStaticProps = async ({ locale, params }) => {
     }
   }
 }
+
+AuthorShow.propTypes = {
+  author: PropTypes.object
+};
+
+export default withRouter(AuthorShow)

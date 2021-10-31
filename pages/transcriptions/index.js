@@ -7,44 +7,71 @@ import StrapiClient from "@/lib/StrapiClient";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { AUTHOR_OPTIONS, PRICES } from "@/constants/index";
 import { PrimaryButton } from "@/components/shared/Button";
 import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
 import qs from 'qs'
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
-import LessonPlansSearchResults from "@/features/LessonPlansSearchResults";
+import TranscriptionsResults from "@/features/TranscriptionsSearch/SearchResults";
 
 
 const STRAPI_CLIENT = new StrapiClient();
 
-const Translations = (props) => {
+const Transcriptions = (props) => {
   const {
     router,
     authorOptions,
-    lessonPlans
+    transcriptions
   } = props;
   
+  const [transcriptionResults, setTranscriptionResults] = useState([])
+  const [loadingResults, setLoadingResults] = useState(false)
+
   const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  const handleLessonPlansSearch = () => {
+  console.log(queryString)
+  const {
+    value: selectedAuthor,
+    bind: bindAuthorName,
+    reset: resetAuthorName,
+  } = useListBox("all");
+
+  const handleTranscriptionsSearch = () => {
     // e.preventDefault();
   };
+  useEffect(() => {
+
+    const fetchPageData = async () => {
+      if (isMounted) {
+        bindAuthorName.onChange(queryParams['id_eq'] || 'all');
+        bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+        bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+        onInitialSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
+      }
+    }
+    let isMounted = true;
+
+    fetchPageData();
+    return () => {
+      isMounted = false;
+    };
+  }, [queryString])
+
   return (
     <Layout pageTitle="Transcriptions">
       <ContentLayout maxWidth='1000px' title="Transcriptions">
         <SearchFiltersContainer>
-          <form onSubmit={handleLessonPlansSearch}>
+          <form onSubmit={handleTranscriptionsSearch}>
           <StyledFormRow>
             <StyledOptionContainer>
               <ListBox
                 allObject={{ name: "All Authors", id: "all" }}
                 labelText="Author"
                 labelValue="author"
-                options={AUTHOR_OPTIONS}
+                options={authorOptions}
               />
             </StyledOptionContainer>
           </StyledFormRow>
@@ -56,25 +83,28 @@ const Translations = (props) => {
         </SearchFiltersContainer>
           
            
-            <LessonPlansSearchResults results={lessonPlans} />
+            <TranscriptionsResults results={transcriptions} />
          
       </ContentLayout>
     </Layout>
   );
 };
 
-Translations.propTypes = {};
+Transcriptions.propTypes = {
+  transcriptions: PropTypes.array,
+  authorOptions: PropTypes.array
+};
 
-export default withRouter(Translations);
+export default withRouter(Transcriptions);
 
 export const getStaticProps = async ({ locale }) => {
-  const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans");
+  const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions");
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
-      lessonPlans,
+      transcriptions,
       authorOptions,
     },
   }

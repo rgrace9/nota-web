@@ -8,6 +8,7 @@ import * as colors from '@/styles/colors';
 import useMouseOutside from '@/utils/hooks/useMouseOutside';
 import {AuthorRow} from './ResultRow';
 import { Global, css } from '@emotion/react'
+import Link from 'next/link'
 
 const MOCK_DATA =       [
   {
@@ -289,6 +290,13 @@ const Autocomplete = () => {
     document.getElementsByTagName("body")[0].style.height = "initial";
     document.getElementsByTagName("body")[0].style.overflow = "initial";
   }
+
+  const freezeBodyAndHtml = () => {
+    document.getElementsByTagName("html")[0].style.height = "hidden";
+    document.getElementsByTagName("html")[0].style.height = "100%";
+    document.getElementsByTagName("body")[0].style.height = "100%";
+    document.getElementsByTagName("body")[0].style.overflow = "hidden";
+  }
   const onTextBoxKeyUp = (event) => {
     switch (event.key) {
       case keys.esc:
@@ -468,23 +476,18 @@ const Autocomplete = () => {
           const selectOptions = document.querySelectorAll('li.selection')
           // overflow: hidden;
           // height: 100%;
-          // document.getElementsByTagName("html")[0].style.height = "hidden";
-          // document.getElementsByTagName("html")[0].style.height = "100%";
-          // document.getElementsByTagName("body")[0].style.height = "100%";
-          // document.getElementsByTagName("body")[0].style.overflow = "hidden";
-          const prevElement = selectOptions[getOptionIndex(optionId) - 1];
-          prevElement.focus()
+          freezeBodyAndHtml();
+          const prevElement = results[getOptionIndex(optionId) - 1];
+          highlightOption(prevElement.id)
         }
         break;
       case keys.downArrow:
         if (getOptionIndex(optionId) < results.length - 1) {
           const selectOptions = document.querySelectorAll('li.selection')
-          document.getElementsByTagName("html")[0].style.height = "hidden";
-          document.getElementsByTagName("html")[0].style.height = "100%";
-          document.getElementsByTagName("body")[0].style.height = "100%";
-          document.getElementsByTagName("body")[0].style.overflow = "hidden";
-          const nextElement = selectOptions[getOptionIndex(optionId) + 1];
-          nextElement.focus()
+          freezeBodyAndHtml()
+          const nextSelectOption = results[getOptionIndex(optionId) + 1];
+          highlightOption(nextSelectOption.id)
+
         }
         break
       case keys.leftArrow:
@@ -554,21 +557,24 @@ const Autocomplete = () => {
       </SearchBarForm>
       <StyledMenu isVisible={isVisible} id="autocomplete-options--destination" role="listbox" className="hidden">
         {results.map((d) => (
-          <StyledOption
-            key={d.id}
-            role="option"
-            tabIndex={-1}
-            aria-selected="false"
-            data-option-value={d.name}
-            data-option-id={d.id}
-            data-option-type={d.type}
-            id={`autocomplete_${d.id}`}
-            className='selection'
-            onClick={(event) => {onOptionClick(event, d.id)}}
-            onKeyDown={(event) => {onMenuKeyDown(event, d.id)}}
-        >
-          <AuthorRow author={d['_highlightResult']} />
-        </StyledOption>
+          <li key={d.id} className='selection'>
+            <Link href={`${d.type}/${d.id}`} passHref>
+              <StyledOption
+                tabIndex={-1}
+                aria-selected="false"
+                data-option-value={d.name}
+                data-option-id={d.id}
+                data-option-type={d.type}
+                id={`autocomplete_${d.id}`}
+                className='selection'
+                // onClick={(event) => {onOptionClick(event, d.id)}}
+                onKeyDown={(event) => {onMenuKeyDown(event, d.id)}}
+                href={`${d.type}/${d.id}`}
+            >
+              <AuthorRow author={d['_highlightResult']} />
+            </StyledOption>
+            </Link>
+          </li>
         ))}
       </StyledMenu>
    
@@ -674,7 +680,11 @@ const StyledMenu = styled.ul`
   `  }
 `
 
-const StyledOption = styled.li`
+const StyledListItem = styled.li`
+
+`
+
+const StyledOption = styled.a`
   background-color: white;
   padding: 10px 5px;
   width: 100%;
