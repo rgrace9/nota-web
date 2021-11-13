@@ -71,7 +71,7 @@ const parseTranscription = (transcription) => {
     type: 'transcriptions',
     id: transcription.id,
     title: transcription.title,
-    description: transcription.description
+    description: transcription.description ? transcription.description.substr(0, 200) : ''
   }
 }
 
@@ -80,7 +80,7 @@ const parseTranslation = (translation) => {
     type: 'translations',
     id: translation.id,
     title: translation.title,
-    description: translation.description
+    description: translation.description ? translation.description.substr(0, 200) : ''
   }
 }
 
@@ -105,7 +105,7 @@ async function* performRequest() {
   yield Promise.all(DATA_TYPES.map(async (value) => {
     const {type, path} = value;
     const options = await fetchStrapiApi(path);
-
+ 
     switch (type) {
       case 'authors':
         // console.log('AUTH', options.map(datum => parseAuthor(datum)))
@@ -117,10 +117,12 @@ async function* performRequest() {
         break;
       case 'transcriptions':
         dataResponse = dataResponse.concat(options.map(option => parseTranscription(option)));
+        // console.log('transcriptions', dataResponse)
         break;
       case 'translations':
         
         dataResponse = dataResponse.concat(options.map(option => parseTranslation(option)));
+        
         break;
       default:
         break;
@@ -128,10 +130,13 @@ async function* performRequest() {
   }))
 
   // // console.log('yoooo')
+  // console.log(dataResponse.length)
   console.log('yoooo', dataResponse)
   
+  const algoliaResponse = await updateAlgoliaData(dataResponse)
+
+  console.log('algoliaResponse', algoliaResponse)
   return dataResponse;
-  // const algoliaResponse = await updateAlgoliaData(dataResponse)
 
   // console.log('algoliaResponse', algoliaResponse)
 }
