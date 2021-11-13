@@ -34,6 +34,16 @@ const updateAlgoliaData = async (dataArray) => {
   }
 }
 
+// todo: create function for creating the truncate description
+
+const truncateString = (value, n = 200) => {
+  let str = value || '';
+
+  str = str.replace(/\r?\n|\r/g, " ");
+
+  return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+}
+
 const createAuthorTitle = (author) => {
 
   let authorTitleValues = [];
@@ -51,7 +61,7 @@ const parseAuthor = (author) => {
   return {
     type: 'authors',
     title: author.name,
-    description: author.shortBiography ? author.shortBiography.substr(0, 200) : '',
+    description: truncateString(author.shortBiography),
     id: author.id
   }
 }
@@ -71,7 +81,7 @@ const parseTranscription = (transcription) => {
     type: 'transcriptions',
     id: transcription.id,
     title: transcription.title,
-    description: transcription.description ? transcription.description.substr(0, 200) : ''
+    description: truncateString(transcription.description)
   }
 }
 
@@ -80,7 +90,7 @@ const parseTranslation = (translation) => {
     type: 'translations',
     id: translation.id,
     title: translation.title,
-    description: translation.description ? translation.description.substr(0, 200) : ''
+    description: truncateString(translation.description)
   }
 }
 
@@ -137,8 +147,6 @@ async function* performRequest() {
 
   console.log('algoliaResponse', algoliaResponse)
   return dataResponse;
-
-  // console.log('algoliaResponse', algoliaResponse)
 }
 
 async function initializeCalls() {
