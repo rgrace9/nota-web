@@ -57,7 +57,6 @@ const Transcriptions = (props) => {
 
   const handleTranscriptionsSearch = async(e) => {
     e.preventDefault();
-    console.log('selectedAuthor', selectedAuthor)
     try {
       setLoadingResults(true)
       const searchParams = {

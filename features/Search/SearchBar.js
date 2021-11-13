@@ -392,9 +392,6 @@ const Autocomplete = () => {
               onKeyDown={onTextBoxKeyDown}
               onFocus={onTextBoxFocus}
             />
-            {/* <SearchBtn aria-label='Search' type="submit" onClick={onSearch}>
-                <SearchIcon />
-              </SearchBtn> */}
           </StyledSearchContainer>
         </StyledFormItem>
       </SearchBarForm>

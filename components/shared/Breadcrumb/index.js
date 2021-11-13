@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import { truncateString } from '@/utils/truncateString';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -31,7 +32,7 @@ const Breadcrumbs = (props) => {
         <BreadcrumbItem key={b.href}>
         <Link href={b.href} passHref>
           <StyledLink isCurrentPage={b.isCurrentPage} aria-current={Boolean(b.isCurrentPage) && 'page'} >
-            {b.title}
+            {truncateString(b.title, 30)}
           </StyledLink>
         </Link>
         </BreadcrumbItem>

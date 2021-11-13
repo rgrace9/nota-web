@@ -12,6 +12,7 @@ import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
+import {StyledSecondaryHeading} from '@/components/shared/Heading/StyledHeadings';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 const Transcription = props => {
@@ -23,6 +24,10 @@ const Transcription = props => {
   } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
+  const StyledTranscription = styled.div`
+    white-space: pre-wrap;
+    font-size: 1.6rem;
+  `
   const { asPath, query } = router;
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const Transcription = props => {
         title: "Home",
       },
       {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/authors',
+        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/transcriptions',
         title: "Transcriptions",
         isCurrentPage: false,
       },
@@ -48,7 +53,6 @@ const Transcription = props => {
 
   }, [])
 
-  console.log('transcription', transcription)
   return (
     <Layout
     pageTitle={`${transcription.title} | Project Nota`}
@@ -60,7 +64,20 @@ const Transcription = props => {
 
           <StyledLink>{transcription.author.name}</StyledLink>
       </Link>
-      <DefaultText className='p-t-20'>{transcription.description}</DefaultText>
+      <div className='p-t-10'>
+        <StyledLink href={transcription.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
+
+      </div>
+      <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
+      <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
+      <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
+      <StyledTranscription
+          className='p-t-10'
+          dangerouslySetInnerHTML={
+            { __html: transcription.body }
+          }
+      />
+      <StyledSecondaryHeading className='p-t-20'>Translations</StyledSecondaryHeading>
       </PageContentWrapper>
     </Container>
     </Layout>
