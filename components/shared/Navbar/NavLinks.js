@@ -1,8 +1,8 @@
 import React from "react";
 import styled from '@emotion/styled';
 import Link from 'next/link'
-import { useMenuContext } from "../../../utils/state";
-import { useTheme } from "../../../utils/hooks";
+import { useMenuContext } from "@/utils/state";
+import { useTheme } from "@/utils/hooks";
 import Icon from "../Icon";
 import { useTranslation } from 'next-i18next'
 import Menu from './NavigationMenu';

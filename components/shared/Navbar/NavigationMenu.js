@@ -66,14 +66,14 @@ const NavMenu = (props) => {
         }
           menuItems={
             links.map(l => (
-              <React.Fragment>
+              <React.Fragment key={l.href}>
                 <Link
                 href={`/${l.href}`}
                 locale={router.locale || router.defaultLocale}
               >
-              <a className="link">
-                {l.title}
-              </a>
+                <a className="link">
+                  {l.title}
+                </a>
               </Link>
               <MenuSeparator />
               </React.Fragment>
@@ -130,6 +130,10 @@ const StyledBtn = styled.button`
   &:focus-visible {
     outline: 5px auto Highlight;
     outline: 5px auto -webkit-focus-ring-color;
+  }
+  &:hover {
+    color: var(--text-dark);
+    background-color: var(--text);
   }
   p {
     white-space: nowrap;

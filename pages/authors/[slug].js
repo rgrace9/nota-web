@@ -1,5 +1,5 @@
-import Layout from '../../components/Layout';
-import Container from '../../components/shared/Container';
+import Layout from '@/components/Layout';
+import Container from '@/components/shared/Container';
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
@@ -19,10 +19,6 @@ const PageWrapper = styled.div`
     justify-content: space-between;
     transition: ease all .5s;
     width: 100%;
-  @media ${device.tablet} {
-    flex: 1;
-    flex-direction: row;
-  }
 `
 
 const StyledPrimaryHeading = styled.h1`

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 // import  {StyledUnorderedList} from '@/components/shared/List';
 import styled from '@emotion/styled';
 import {woodSmoke, white} from '@/styles/colors';
-import Container from '@/components/shared/Container'
+import Container from '@/components/shared/Container';
+import Link from 'next/link';
+
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
 
+  console.log(results)
   return (
     <StyledContainer>
       
@@ -15,7 +18,11 @@ const LessonPlansSearchResults = props => {
           {results.map(result => (
               <ResourceTileContainer key={result.id}>
                 
-              <StyledTitle>{result.title}</StyledTitle>
+              <StyledTitle>
+                <Link href={`/lesson-plans/${result.id}`} passHref>
+                  <a>{result.title}</a>
+                </Link>
+                </StyledTitle>
                 <StyledDescription>{result.description}</StyledDescription>
               </ResourceTileContainer>
           ))}
@@ -40,6 +47,11 @@ const StyledContainer = styled.div`
 const StyledTitle = styled.h3`
   font-size: 1.8rem;
   font-weight: bold;
+  font-weight: 500;
+  padding-top: 10px;
+  font-size: 2rem;
+  text-decoration: underline;
+  margin-bottom: 20px;
 `
 
 const StyledDescription = styled.p`

@@ -13,13 +13,15 @@ const LessonPlanRow = props => {
         <ResultIcon type={type} />
       </StyledIconContainer>
       <div>
-        <StyledTitle>
-          {title}
+        <StyledTitle dangerouslySetInnerHTML={{__html: title}}>
         </StyledTitle>
         <div className='p-l-20'>
-          <StyledShortBio>
-            {description}
-          </StyledShortBio>
+          <StyledShortBio
+            dangerouslySetInnerHTML={
+              { __html: description }
+            }
+          />
+          
         </div>
       </div>
 
