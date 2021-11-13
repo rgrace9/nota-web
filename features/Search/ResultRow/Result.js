@@ -12,18 +12,18 @@ const LessonPlanRow = props => {
       <StyledIconContainer>
         <ResultIcon type={type} />
       </StyledIconContainer>
-      <div>
+      <p>
         <StyledTitle dangerouslySetInnerHTML={{__html: title}}>
         </StyledTitle>
-        <div className='p-l-20'>
+        
           <StyledShortBio
             dangerouslySetInnerHTML={
               { __html: description }
             }
           />
           
-        </div>
-      </div>
+        
+      </p>
 
     </StyledLessonPlanRow>
   );
@@ -33,13 +33,14 @@ LessonPlanRow.propTypes = {
   
 };
 
-const StyledTitle = styled.span`
+const StyledTitle = styled.div`
+  text-decoration: underline;
   em {
     font-weight: 900;
   }
 
 `
-const StyledShortBio = styled.span`
+const StyledShortBio = styled.div`
   color: #343a45;
   em {
     font-weight: 900;
@@ -49,7 +50,6 @@ const StyledShortBio = styled.span`
 
 const StyledLessonPlanRow = styled.div`
   display: flex;
-  align-items: center;
 `
 
 const StyledIconContainer = styled.div`

@@ -253,7 +253,7 @@ const Autocomplete = () => {
           return result.hits;
         });
       console.log("RES", res);
-      
+     
       return res;
     } catch (err) {
       console.error(err);
