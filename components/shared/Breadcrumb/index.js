@@ -5,8 +5,6 @@ import styled from '@emotion/styled';
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
 } from "@chakra-ui/react"
 import PropTypes from 'prop-types';
 import * as colors from 'styles/colors';
@@ -31,11 +29,11 @@ const Breadcrumbs = (props) => {
     <BreadcrumbContainer>
       {breadcrumbsList.map(b => (
         <BreadcrumbItem key={b.href}>
-        <Link href={b.href} isCurrentPage={Boolean(b.isCurrentPage)} passHref>
-                      <StyledLink>
-                        {b.title}
-                      </StyledLink>
-                    </Link>
+        <Link href={b.href} passHref>
+          <StyledLink isCurrentPage={b.isCurrentPage} aria-current={Boolean(b.isCurrentPage) && 'page'} >
+            {b.title}
+          </StyledLink>
+        </Link>
         </BreadcrumbItem>
       ))}
     </BreadcrumbContainer>
@@ -56,6 +54,7 @@ const StyledLink = styled.a`
  /* font-size: 1.6rem; */
  text-decoration: underline;
  padding: 2px 5px;
+ font-weight: ${props => props.isCurrentPage ? 'bold' : 'normal'};
  &:hover {
     color: ${colors.lightCream};
     background: ${colors.navyBlue};

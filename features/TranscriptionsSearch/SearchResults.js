@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import  {StyledUnorderedList} from '@/components/shared/List';
 import styled from '@emotion/styled';
+import Link from 'next/link';
+import Loading from '@/components/shared/Loading/LoadingPage'
 import {woodSmoke, white} from '@/styles/colors';
 import Container from '@/components/shared/Container'
 const LessonPlansSearchResults = props => {
@@ -9,17 +11,24 @@ const LessonPlansSearchResults = props => {
 
   return (
     <StyledContainer>
-      
-        <StyledUnorderedList >
-        {<StyledResultsCount>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledResultsCount>}
-          {results.map(result => (
-              <ResourceTileContainer key={result.id}>
-                
-              <StyledTitle>{result.title}</StyledTitle>
-                <StyledDescription>{result.description}</StyledDescription>
-              </ResourceTileContainer>
-          ))}
-          </StyledUnorderedList>
+         {(loading) ? (
+          <Loading />
+        ) : (
+          <StyledUnorderedList >
+          {<StyledResultsCount>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledResultsCount>}
+            {results.map(result => (
+                <ResourceTileContainer key={result.id}>
+                  
+                <StyledTitle>
+                  <Link href={`/transcriptions/${result.id}`}>
+                    <a>{result.title}</a>
+                  </Link>
+                 </StyledTitle>
+                  <StyledDescription>{result.description}</StyledDescription>
+                </ResourceTileContainer>
+            ))}
+            </StyledUnorderedList>
+        )}
 
     </StyledContainer>
   );
@@ -63,12 +72,23 @@ const ResourceTileContainer = styled.li`
   width: 100%;
   padding: 20px;
   list-style-type: initial;
+  position: relative;
   &:before {
     content:  '\\200B';
     margin-left: 0;
   };
   &:hover {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  a {
+    &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
   }
 
 `

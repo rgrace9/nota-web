@@ -168,26 +168,21 @@ export async function getStaticPaths() {
   }
 }
 export const getStaticProps = async ({ locale, params }) => {
-  const author = await fetchStrapiApi(`authors/${params.slug}`);
   try {
-    const authorLocation = author.location && author.location.id;
-    const authorTimePeriod = author.timePeriod && author.timePeriod.id;
-    const query = qs.stringify({ _where: { 'id_ne': author.id, _or: [{ 'timePeriod.id_eq': authorTimePeriod }, { 'location.id_eq': authorLocation }] } })
-    const relatedAuthors = await fetchStrapiApi(`authors?${query}`);
+    const author = await fetchStrapiApi(`authors/${params.slug}`);
 
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
         author,
-        relatedAuthors
       }
     }
 
   } catch (err) {
     return {
       props: {
-        author,
-        relatedAuthors: []
+
+        error: true
       }
     }
   }

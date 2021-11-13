@@ -32,30 +32,67 @@ const Transcriptions = (props) => {
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  console.log(queryString)
   const {
     value: selectedAuthor,
     bind: bindAuthorName,
     reset: resetAuthorName,
   } = useListBox("all");
 
-  const handleTranscriptionsSearch = () => {
-    // e.preventDefault();
+  const onInitialSearch = async (authorValue) => {
+    try {
+      const searchParams = {
+        ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      setLoadingResults(true)
+      const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+      setTranscriptionResults(res)
+      setLoadingResults(false)
+    } catch (err) {
+      setTranscriptionResults([])
+      setLoadingResults(false)
+      throw err
+    }
+  };
+
+  const handleTranscriptionsSearch = async(e) => {
+    e.preventDefault();
+    console.log('selectedAuthor', selectedAuthor)
+    try {
+      setLoadingResults(true)
+      const searchParams = {
+        ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
+
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      const newURL = `/transcriptions?${formattedSearchQuery}`;
+      const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+      setTranscriptionResults(res)
+      setLoadingResults(false)
+      router.replace(newURL, undefined, { shallow: true })
+
+    } catch(err) {
+      setTranscriptionResults([])
+      setLoadingResults(false)
+    }
+
   };
   useEffect(() => {
 
     const fetchPageData = async () => {
       if (isMounted) {
-        bindAuthorName.onChange(queryParams['id_eq'] || 'all');
-        bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
-        bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
-        onInitialSearch(queryParams['id_eq'], queryParams['location.id_eq'], queryParams['timePeriod.id_eq']);
+        setLoadingResults(true)
+        bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
+        // bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+        // bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+        onInitialSearch(queryParams['author.id_eq']);
       }
     }
     let isMounted = true;
 
     fetchPageData();
     return () => {
+      setLoadingResults(false)
       isMounted = false;
     };
   }, [queryString])
@@ -72,6 +109,8 @@ const Transcriptions = (props) => {
                 labelText="Author"
                 labelValue="author"
                 options={authorOptions}
+                value={selectedAuthor}
+                {...bindAuthorName}
               />
             </StyledOptionContainer>
           </StyledFormRow>
@@ -83,7 +122,7 @@ const Transcriptions = (props) => {
         </SearchFiltersContainer>
           
            
-            <TranscriptionsResults results={transcriptions} />
+            <TranscriptionsResults loading={loadingResults} results={transcriptionResults} />
          
       </ContentLayout>
     </Layout>

@@ -142,6 +142,7 @@ const Authors = (props) => {
   const onSearch = async (authorValue, locationValue, timeValue) => {
 
     try {
+      setLoadingResults(true)
       const searchParams = {
         ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
         ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),

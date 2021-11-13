@@ -7,20 +7,7 @@ import { device } from "@/styles/screenSizes";
 
 
 const ResourceTile = props => {
-  const [isMounted, setIsMounted] = useState(false);
   const {data} = props;
-  // const handleTileClick = (e) => {
-  //   const link = document.querySelector('h3 a');
-  //   if (link && isMounted) {
-  //     link.click();
-  //   }
-  // }
-
-  
-  useEffect(() => {
-    setIsMounted(true)
-
-  }, []);
 
   return (
     <ResourceTileContainer>
