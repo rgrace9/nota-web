@@ -8,10 +8,22 @@ import styled from "@emotion/styled";
 import Layout from '@/components/Layout';
 import Container from '@/components/shared/Container';
 import { useEffect, useState } from 'react';
+import StyledLink from '@/components/shared/Link/StyledLink'
 import { withRouter } from 'next/router'
-import PageContainer from '@/components/shared/Container/PageContentWrapper'
+import PageContainer from '@/components/shared/Container/PageContentWrapper';
+import {DefaultText} from '@/components/shared/Paragraph/StyledText';
+
+const StyledPdfContainer = styled.div`
+  height: 100%;
+`
+
+const StyledObject = styled.object`
+  width: 100%;
+  height: 800px;
+`
+
 const LessonPlan = props => {
-  const { lessonPlan, router } = props;
+  const { lessonPlan, router, hasPdf } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   const { asPath, query } = router;
@@ -48,9 +60,28 @@ const LessonPlan = props => {
 
     <Container>
       <PageContainer title={lessonPlan.title}>
-        <section>
-          <p>{lessonPlan.description}</p>
+        <section className='m-t-20'>
+          <DefaultText>{lessonPlan.description}</DefaultText>
+
         </section>
+        {hasPdf ? (
+        <>
+          <StyledLink className='m-t-10' href={lessonPlan.link}>Lesson Plan PDF</StyledLink>
+          <StyledPdfContainer>
+        
+            <StyledObject data={lessonPlan.link} type="application/pdf">
+              <div>No online PDF viewer installed</div>
+              <StyledLink className='m-t-10' href={lessonPlan.link}>Lesson Plan PDF</StyledLink>
+
+            </StyledObject>
+        
+          </StyledPdfContainer>
+        </>
+
+        ) : (
+          <StyledLink className='m-t-10' href={lessonPlan.link}>Lesson Plan Link</StyledLink>
+
+        )}
       </PageContainer>
     </Container>
     </Layout>
@@ -76,10 +107,13 @@ export const getStaticProps = async ({ locale, params }) => {
   try {
     const lessonPlan = await fetchStrapiApi(`lesson-plans/${params.slug}`);
 
+    const hasPdf = lessonPlan.link.toLowerCase().includes('.pdf')
+
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
         lessonPlan,
+        hasPdf
       }
     }
 
@@ -87,6 +121,7 @@ export const getStaticProps = async ({ locale, params }) => {
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
+        error: true
       }
     }
   }
@@ -96,6 +131,8 @@ LessonPlan.propTypes = {
   lessonPlan: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
+    hasPdf: PropTypes.bool,
+    router: PropTypes.object
   })
 };
 
