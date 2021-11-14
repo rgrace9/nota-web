@@ -9,7 +9,6 @@ import Link from 'next/link';
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
 
-  console.log(results)
   return (
     <StyledContainer>
       
@@ -23,7 +22,8 @@ const LessonPlansSearchResults = props => {
                   <a>{result.title}</a>
                 </Link>
                 </StyledTitle>
-                <StyledDescription>{result.description}</StyledDescription>
+                <StyledSubHeading>{result.authors.map(author => author.name).join(', ')}</StyledSubHeading>
+                <StyledDescription className='p-t-20'>{result.description}</StyledDescription>
               </ResourceTileContainer>
           ))}
           </StyledUnorderedList>
@@ -58,6 +58,10 @@ const StyledDescription = styled.p`
   font-size: 1.6rem;
   padding-bottom: 30px;
 `
+const StyledSubHeading = styled.p`
+  font-size: 1.6rem;
+  font-style: italic;
+`
 const ResourceTileContainer = styled.li`
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
@@ -75,14 +79,27 @@ const ResourceTileContainer = styled.li`
   width: 100%;
   padding: 20px;
   list-style-type: initial;
+  position: relative;
   &:before {
     content:  '\\200B';
     margin-left: 0;
   };
-  &:hover {
+  /* &:hover, &:focus-within {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
+  } */
+  &:hover, &:focus-within {
+    box-shadow: 0 0 0 0.25rem;
   }
-
+  a {
+    &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
 `
 
 const StyledUnorderedList = styled.ul`

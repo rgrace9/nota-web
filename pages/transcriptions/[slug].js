@@ -7,7 +7,7 @@ import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
-import qs from 'qs'
+import {StyledHeadingLinkContainer, StyledAnchorLink} from '@/components/shared/HeadingLink/StyledHeadingLink';
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React, { useEffect, useState } from 'react';
@@ -15,6 +15,7 @@ import { withRouter } from 'next/router';
 import {StyledSecondaryHeading} from '@/components/shared/Heading/StyledHeadings';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
+import ChainLink from '@/components/shared/Icon/ChainLink';
 const Transcription = props => {
 
   const {
@@ -29,6 +30,7 @@ const Transcription = props => {
     font-size: 1.6rem;
   `
   const { asPath, query } = router;
+  // todo - add links to the headings so that there is navigation within the page.
 
   useEffect(() => {
   
@@ -68,9 +70,13 @@ const Transcription = props => {
         <StyledLink href={transcription.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
 
       </div>
-      <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
+      <StyledSecondaryHeading id='description' className='p-t-20'>Description</StyledSecondaryHeading>
       <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
-      <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
+      
+      <StyledHeadingLinkContainer>
+        <StyledSecondaryHeading className='p-t-20' id='transcription'>Transcription</StyledSecondaryHeading>
+        <StyledAnchorLink href='#transcription'><ChainLink /></StyledAnchorLink>
+      </StyledHeadingLinkContainer>
       <StyledTranscription
           className='p-t-10'
           dangerouslySetInnerHTML={

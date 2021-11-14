@@ -33,6 +33,7 @@ const LessonPlans = (props) => {
   const handleLessonPlansSearch = () => {
     // e.preventDefault();
   };
+
   return (
     <Layout pageTitle="Lesson Plans">
       <ContentLayout maxWidth='1000px' title="Lesson Plans">
@@ -45,14 +46,6 @@ const LessonPlans = (props) => {
                 labelText="Author"
                 labelValue="author"
                 options={AUTHOR_OPTIONS}
-              />
-            </StyledOptionContainer>
-            <StyledOptionContainer>
-              <ListBox
-                allObject={{ name: "All Prices", id: "all" }}
-                labelText="Price"
-                labelValue="price"
-                options={PRICES}
               />
             </StyledOptionContainer>
           </StyledFormRow>

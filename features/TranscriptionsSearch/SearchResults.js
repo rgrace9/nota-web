@@ -90,6 +90,7 @@ const ResourceTileContainer = styled.li`
     right: 0;
     bottom: 0;
   }
+}
 
 `
 
