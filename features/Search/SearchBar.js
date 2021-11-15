@@ -367,6 +367,15 @@ const Autocomplete = () => {
     focusTextBox();
   };
 
+  const renderOptionUrl = (type, id) => {
+    switch(type) {
+      case 'lessonPlans':
+        return `lesson-plans/${id}`;
+      default:
+        return `${type}/${id}`
+    }
+  }
+
   return (
     <SearchContainer ref={searchContainerRef}>
       <SearchBarForm className="search-box">
@@ -403,7 +412,7 @@ const Autocomplete = () => {
       >
         {results.map((d) => (
           <li key={`${d.id}-${d.type}`} className="selection">
-            <Link href={`${d.type}/${d.id}`} passHref>
+            <Link href={renderOptionUrl(d.type, d.id)} passHref>
               <StyledOption
                 tabIndex={-1}
                 aria-selected="false"
@@ -416,7 +425,7 @@ const Autocomplete = () => {
                 onKeyDown={(event) => {
                   onMenuKeyDown(event, d.id);
                 }}
-                href={`${d.type}/${d.id}`}
+                // href={renderOptionUrl(d.type, d.id)}
               >
                 <ResultRow
                   description={d['_highlightResult'].description?.value}
