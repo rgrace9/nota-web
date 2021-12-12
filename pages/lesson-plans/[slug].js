@@ -20,6 +20,7 @@ const StyledPdfContainer = styled.div`
 const StyledObject = styled.object`
   width: 100%;
   height: 800px;
+  border: 1px solid black;
 `
 
 const LessonPlan = props => {

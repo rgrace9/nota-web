@@ -12,7 +12,6 @@ import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
-import {StyledSecondaryHeading} from '@/components/shared/Heading/StyledHeadings';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import ChainLink from '@/components/shared/Icon/ChainLink';
@@ -29,8 +28,16 @@ const Transcription = props => {
     white-space: pre-wrap;
     font-size: 1.6rem;
   `
+
+  const StyledSecondaryHeading = styled.h2`
+    font-size: 2rem;
+    font-weight: 500;
+    scroll-margin-top: 100px;
+  `
+
   const { asPath, query } = router;
   // todo - add links to the headings so that there is navigation within the page.
+
 
   useEffect(() => {
   
@@ -75,7 +82,11 @@ const Transcription = props => {
       
       <StyledHeadingLinkContainer>
         <StyledSecondaryHeading className='p-t-20' id='transcription'>Transcription</StyledSecondaryHeading>
-        <StyledAnchorLink href='#transcription'><ChainLink /></StyledAnchorLink>
+        <StyledAnchorLink href='#transcription'>
+          <a>
+          <ChainLink />
+          </a>
+         </StyledAnchorLink>
       </StyledHeadingLinkContainer>
       <StyledTranscription
           className='p-t-10'

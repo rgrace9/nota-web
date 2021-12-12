@@ -15,7 +15,7 @@ const DesktopNavLinks = () => {
   
   const links = [
     {
-      title:t('resources'),
+      title: t('resources'),
       link: 'resources',
       links: [
         {
@@ -33,16 +33,6 @@ const DesktopNavLinks = () => {
         {
           title: 'Translations',
           href: 'translations'
-        }
-      ]
-    },
-    {
-      title: t('events'),
-      link: 'events',
-      links: [
-        {
-          title: 'Transcribathons',
-          href: 'transcribathons'
         }
       ]
     },
@@ -68,10 +58,6 @@ const DesktopNavLinks = () => {
         }
       ]
     },
-    {
-      title: t("donate"),
-      link: 'donate',
-    }
   ];
 
 
@@ -159,3 +145,69 @@ export const NavLink = styled.a`
   }
 
 `;
+
+/*
+
+  const links = [
+    {
+      title:t('resources'),
+      link: 'resources',
+      links: [
+        {
+          title: 'Authors',
+          href: 'authors'
+        },
+        {
+          title: 'Lesson Plans',
+          href: 'lesson-plans',
+        },
+        {
+          title: 'Transcriptions',
+          href: 'transcriptions'
+        },
+        {
+          title: 'Translations',
+          href: 'translations'
+        }
+      ]
+    },
+    {
+      title: t('events'),
+      link: 'events',
+      links: [
+        {
+          title: 'Transcribathons',
+          href: 'transcribathons'
+        }
+      ]
+    },
+    {
+      title: t("about"),
+      link: 'about',
+      links: [
+        {
+          title: 'Our Story',
+          href: 'about/our-story'
+        },
+        {
+          title: 'Meet Our Team', 
+          href: 'about/meet-our-team'
+        },
+        {
+          title: t("contact"), 
+          href: 'contact'
+        },
+        {
+          title: 'Mission Statement',
+          href: 'about/mission-statement'
+        }
+      ]
+    },
+    {
+      title: t("donate"),
+      link: 'donate',
+    }
+  ];
+
+
+*/
