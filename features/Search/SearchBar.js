@@ -252,8 +252,7 @@ const Autocomplete = () => {
         .then(function (result) {
           return result.hits;
         });
-      console.log("RES", res);
-     
+      setResultsCount(res.length);
       return res;
     } catch (err) {
       console.error(err);
@@ -261,9 +260,9 @@ const Autocomplete = () => {
     }
   };
   const getOptions = async (userInput) => {
-    // return await fetchSearchResults(userInput);
-    setResultsCount(MOCK_DATA.length);
-    return MOCK_DATA;
+    // setResultsCount(MOCK_DATA.length);
+    return await fetchSearchResults(userInput);
+    // return MOCK_DATA;
   };
 
   const onTextBoxType = async (event) => {
@@ -429,7 +428,7 @@ const Autocomplete = () => {
               >
                 <ResultRow
                   description={d['_highlightResult'].description?.value}
-                  title={d['_highlightResult'].title.value}
+                  title={d['_highlightResult'].title?.value}
                   type={d['_highlightResult'].type.value}
                 />
               </StyledOption>

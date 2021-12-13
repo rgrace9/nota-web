@@ -14,7 +14,7 @@ import { withRouter } from 'next/router'
 import qs from 'qs'
 import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
-import LessonPlansSearchResults from "@/features/LessonPlansSearchResults";
+import TranslationsSearchResults from "@/features/TranslationsSearchResults";
 
 
 const STRAPI_CLIENT = new StrapiClient();
@@ -23,21 +23,22 @@ const Translations = (props) => {
   const {
     router,
     authorOptions,
-    lessonPlans
+    translations
   } = props;
   
   const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  const handleLessonPlansSearch = () => {
+  const handleTranslationsSearch = () => {
     // e.preventDefault();
   };
+
   return (
     <Layout pageTitle="Translations">
       <ContentLayout maxWidth='1000px' title="Translations">
         <SearchFiltersContainer>
-          <form onSubmit={handleLessonPlansSearch}>
+          <form onSubmit={handleTranslationsSearch}>
           <StyledFormRow>
             <StyledOptionContainer>
               <ListBox
@@ -56,7 +57,7 @@ const Translations = (props) => {
         </SearchFiltersContainer>
           
            
-            <LessonPlansSearchResults results={lessonPlans} />
+            <TranslationsSearchResults results={translations} />
          
       </ContentLayout>
     </Layout>
@@ -68,13 +69,13 @@ Translations.propTypes = {};
 export default withRouter(Translations);
 
 export const getStaticProps = async ({ locale }) => {
-  const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans");
+  const translations = await STRAPI_CLIENT.fetchAPI("translations");
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
-      lessonPlans,
+      translations,
       authorOptions,
     },
   }

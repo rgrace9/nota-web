@@ -25,6 +25,7 @@ const options = [
 const LabelStyled = styled.label`
   white-space: nowrap;
   margin-right: 4px;
+  font-style: italic;
   ${(props) =>
     props.isScreenReaderOnly &&
     css`
@@ -58,7 +59,7 @@ const Select = (props) => {
   }
   return (
     <>
-  <LabelStyled isScreenReaderOnly={isScreenReaderOnly} htmlFor={labelFor}>{labelTitle}</LabelStyled>
+  <LabelStyled isScreenReaderOnly={isScreenReaderOnly} htmlFor={labelFor}>{labelTitle}: </LabelStyled>
   <SelectStyled defaultValue={defaultValue} value={value} name={labelFor} id={labelFor} onChange={handleChange}>
     {options.map(opt => (
       <option key={opt.value} value={opt.value}>{opt.description}</option>

@@ -2,6 +2,7 @@ import QuillPenIcon from '@/components/shared/Icon/QuillPenIcon';
 import ChalkboardUserIcon from '@/components/shared/Icon/ChalkboardUserIcon';
 import React from 'react';
 import GlobeIcon from '@/components/shared/Icon/GlobeIcon';
+import BookOpenIcon from '@/components/shared/Icon/BookOpenIcon';
 import PropTypes from 'prop-types';
 
 const ResultIcon = props => {
@@ -22,6 +23,10 @@ const ResultIcon = props => {
        case 'translations':
         return (
           <GlobeIcon />
+        );
+       case 'transcriptions':
+        return (
+          <BookOpenIcon />
         );
        default:
         return (

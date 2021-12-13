@@ -11,9 +11,8 @@ const ResourceTile = props => {
 
   return (
     <ResourceTileContainer>
-      <TileImage  src="/images/pompeii_fresco.jpeg" alt="" loading="lazy" width="500" height="200" />
 
-      <TileContent>
+
 
       <StyledTitle>
         <Link href={`/authors/${data.id}`}>
@@ -21,9 +20,8 @@ const ResourceTile = props => {
         </Link>
       </StyledTitle>
 
-      <p>{data.shortBio}</p>
-      </TileContent>
-
+      <StyledDescription>{data.shortBio || data.biography}</StyledDescription>
+    
   </ResourceTileContainer>
   );
 };
@@ -33,6 +31,11 @@ ResourceTile.propTypes = {
 };
 
 export default ResourceTile;
+
+const StyledDescription = styled.p`
+  font-size: 1.6rem;
+  padding-bottom: 30px;
+`
 
 const StyledTitle = styled.h3`
   font-weight: 500;
@@ -92,22 +95,42 @@ const TileImage = styled.div`
     margin-right: 15px;
   }
 `
-const ResourceTileContainer = styled.div`
+const ResourceTileContainer = styled.li`
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   margin-bottom: 20px;
   background-color: white;
   box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow: hidden;
   background: white;
   cursor: pointer;
   width: 100%;
   border: solid 2px black;
+  padding: 10px 30px;
+  width: 100%;
+  padding: 20px;
+  list-style-type: initial;
+  position: relative;
+  &:before {
+    content:  '\\200B';
+    margin-left: 0;
+  };
   &:hover {
     box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
   }
+
+  a {
+    &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
 
 `
 

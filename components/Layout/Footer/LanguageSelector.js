@@ -19,7 +19,7 @@ const LanguageSelector = props => {
       <Select 
         labelFor='language'
         labelTitle='Language'
-        isScreenReaderOnly
+        // isScreenReaderOnly
         onChange={onLanguageChange}
         defaultValue={router.locale}
       />

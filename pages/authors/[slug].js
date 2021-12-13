@@ -72,7 +72,6 @@ const AuthorShow = (props) => {
 
   }, [])
 
-
   return (
     <Layout
       pageTitle={`${author.name} | Project Nota`}
@@ -112,37 +111,30 @@ const AuthorShow = (props) => {
               <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
               <StyledText>{author.biography}</StyledText>
             </section>
-            <section>
-              <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
-              <StyledListContainer>
-                {author.lessonPlans.map(lp => (
-                  <li
-                    key={lp.id}
-                  >
-                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
-                  </li>
-                ))}
-              </StyledListContainer>
-            </section>
+            {author.lessonPlans.length ?
+            (
+              <section>
+                <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
+                <StyledListContainer>
+                  {author.lessonPlans.map(lp => (
+                    <li
+                      key={lp.id}
+                    >
+                      <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
+                    </li>
+                  ))}
+                </StyledListContainer>
+              </section>
+            ) : null}
             <section>
               <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-              {author.transcriptions.map(lp => (
+              {author.transcriptions ? author.transcriptions.map(transcription => (
                   <li
-                    key={lp.id}
+                    key={transcription.id}
                   >
-                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
+                    <StyledLink href={`/transcriptions/${transcription.id}`}>{transcription.title}</StyledLink>
                   </li>
-                ))}
-            </section>
-            <section>
-              <StyledSecondaryHeading>Translations</StyledSecondaryHeading>
-              {author.translations.map(lp => (
-                  <li
-                    key={lp.id}
-                  >
-                    <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
-                  </li>
-                ))}
+                )) : null}
             </section>
           </StyledMainContentWrapper>
 

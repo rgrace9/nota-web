@@ -15,16 +15,16 @@ import { withRouter } from 'next/router';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import ChainLink from '@/components/shared/Icon/ChainLink';
-const Transcription = props => {
+const TranslationShow = props => {
 
   const {
-    transcription,
+    translation,
     error,
     router
   } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  const StyledTranscription = styled.div`
+  const StyledTranslation = styled.div`
     white-space: pre-wrap;
     font-size: 1.6rem;
   `
@@ -48,13 +48,13 @@ const Transcription = props => {
         title: "Home",
       },
       {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/transcriptions',
-        title: "Transcriptions",
+        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/translations',
+        title: "Translations",
         isCurrentPage: false,
       },
       {
         href: asPath,
-        title: transcription.title,
+        title: translation.title,
         isCurrentPage: true,
       },
     ]
@@ -64,63 +64,48 @@ const Transcription = props => {
 
   return (
     <Layout
-    pageTitle={`${transcription.title} | Project Nota`}
+    pageTitle={`${translation.title} | Project Nota`}
     breadcrumbsList={breadcrumbs}
   >
     <Container>
-      <PageContentWrapper title={transcription.title}>
-      {transcription.author ? (
-        <Link href={`/authors/${transcription.author.id}`} passHref>
+      <PageContentWrapper title={translation.title}>
+      <Link href={`/authors/${translation.author.id}`} passHref>
 
-            <StyledLink>{transcription.author.name}</StyledLink>
-        </Link>
-      ) : null}
+          <StyledLink>{translation.author.name}</StyledLink>
+      </Link>
       <div className='p-t-10'>
-        <StyledLink href={transcription.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
+        <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
 
       </div>
       <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
-      <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
+      <DefaultText className='p-t-10'>{translation.description}</DefaultText>
       
 
-      {transcription.originalText ? (
-        <>
-          <StyledSecondaryHeading className='p-t-20'>Original Text</StyledSecondaryHeading>
-          <StyledLink target='_blank' href={transcription.originalTextLink}>{transcription.originalText}</StyledLink>
-        </>
-
-      ) : null}
-        <StyledSecondaryHeading className='p-t-20' id='transcription'>Transcription</StyledSecondaryHeading>
-      <StyledTranscription
+        <StyledSecondaryHeading className='p-t-20' id='translation'>translation</StyledSecondaryHeading>
+      <StyledTranslation
           className='p-t-10'
           dangerouslySetInnerHTML={
-            { __html: transcription.body }
+            { __html: translation.body }
           }
       />
-      {transcription.translation ? (
-        <>
-          <StyledSecondaryHeading className='p-t-20'>Translations</StyledSecondaryHeading>
-          <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
-        </>
-
-      ) : null}
+      <StyledSecondaryHeading className='p-t-20'>Translations</StyledSecondaryHeading>
       </PageContentWrapper>
     </Container>
     </Layout>
   );
 };
 
-Transcription.propTypes = {
+TranslationShow.propTypes = {
   
 };
 
 export async function getStaticPaths() {
-  const transcriptions = await fetchStrapiApi("transcriptions");
+  const translations = await fetchStrapiApi("translations");
 
-  const paths = transcriptions.map((transcription) => {
+  const paths = translations.map((translation) => {
     return {
       params: {
-        slug: transcription.id.toString(),
+        slug: translation.id.toString(),
       },
     }
   })
@@ -130,13 +115,14 @@ export async function getStaticPaths() {
   }
 }
 export const getStaticProps = async ({ locale, params }) => {
+  
   try {
-    const transcription = await fetchStrapiApi(`transcriptions/${params.slug}`);
+    const translation = await fetchStrapiApi(`translations/${params.slug}`);
  
     return {
       props: {
         ...await serverSideTranslations(locale, ['common', 'nav', 'home']),
-        transcription,
+        translation,
       }
     }
 
@@ -149,4 +135,4 @@ export const getStaticProps = async ({ locale, params }) => {
   }
 }
 
-export default withRouter(Transcription);
+export default withRouter(TranslationShow);

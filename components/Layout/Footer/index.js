@@ -7,18 +7,21 @@ import AboutUs from './AboutUs';
 import LanguageSelector from './LanguageSelector';
 
 const StyledFooter = styled.footer`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
   bottom: 0;
   width: 100%;
   font-size: 1.6rem;
-  flex-grow: 0;
   background-color: #DEB9AD;
-
 `
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  text-align: 
   
   @media ${device.tablet} {
     flex-direction: row;
@@ -33,7 +36,8 @@ const StyledSectionMain = styled.div`
 
 const StyledSection = styled.div`
   padding: 0 20px;
-  flex: 1;
+  /* flex: 1; */
+  max-width: 1000px;
 `
 
 const StyledHeading = styled.p`
@@ -61,10 +65,10 @@ const Footer = () => {
             <LanguageSelector />
         </StyledSection>
 
-        <StyledSection>  
+        {/* <StyledSection>  
           <StyledHeading>About</StyledHeading>
           <AboutUs />
-        </StyledSection>
+        </StyledSection> */}
 
    
        
