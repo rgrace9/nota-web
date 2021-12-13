@@ -55,7 +55,7 @@ const Transcriptions = (props) => {
     }
   };
 
-  const handleTranscriptionsSearch = async(e) => {
+  const handleTranscriptionsSearch = async (e) => {
     e.preventDefault();
     try {
       setLoadingResults(true)

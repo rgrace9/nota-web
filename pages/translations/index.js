@@ -26,13 +26,77 @@ const Translations = (props) => {
     translations
   } = props;
   
+  const [translationResults, setTranslationsResults] = useState([])
+  const [loadingResults, setLoadingResults] = useState(false)
+
+
   const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  const handleTranslationsSearch = () => {
-    // e.preventDefault();
+  const {
+    value: selectedAuthor,
+    bind: bindAuthorName,
+    reset: resetAuthorName,
+  } = useListBox("all");
+
+  const onInitialSearch = async (authorValue) => {
+    try {
+      const searchParams = {
+        ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      setLoadingResults(true)
+      const res = await STRAPI_CLIENT.fetchAPI(`translations?${formattedSearchQuery}`);
+      setTranslationsResults(res)
+      setLoadingResults(false)
+    } catch (err) {
+      setTranslationsResults([])
+      setLoadingResults(false)
+      throw err
+    }
   };
+
+  const handleTranslationsSearch = async (e) => {
+    e.preventDefault();
+    try {
+      setLoadingResults(true)
+      const searchParams = {
+        ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
+
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      const newURL = `/translations?${formattedSearchQuery}`;
+      const res = await STRAPI_CLIENT.fetchAPI(`translations?${formattedSearchQuery}`);
+      setTranslationsResults(res)
+      setLoadingResults(false)
+      router.replace(newURL, undefined, { shallow: true })
+
+    } catch(err) {
+      setTranslationsResults([])
+      setLoadingResults(false)
+    }
+  };
+
+  useEffect(() => {
+
+    const fetchPageData = async () => {
+      if (isMounted) {
+        setLoadingResults(true)
+        bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
+        // bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
+        // bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
+        onInitialSearch(queryParams['author.id_eq']);
+      }
+    }
+    let isMounted = true;
+
+    fetchPageData();
+    return () => {
+      setLoadingResults(false)
+      isMounted = false;
+    };
+  }, [queryString])
 
   return (
     <Layout pageTitle="Translations">
@@ -45,7 +109,9 @@ const Translations = (props) => {
                 allObject={{ name: "All Authors", id: "all" }}
                 labelText="Author"
                 labelValue="author"
-                options={AUTHOR_OPTIONS}
+                options={authorOptions}
+                value={selectedAuthor}
+                {...bindAuthorName}
               />
             </StyledOptionContainer>
           </StyledFormRow>
@@ -57,7 +123,7 @@ const Translations = (props) => {
         </SearchFiltersContainer>
           
            
-            <TranslationsSearchResults results={translations} />
+            <TranslationsSearchResults results={translationResults} />
          
       </ContentLayout>
     </Layout>

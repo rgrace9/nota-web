@@ -88,7 +88,6 @@ const TranslationShow = props => {
             { __html: translation.body }
           }
       />
-      <StyledSecondaryHeading className='p-t-20'>Translations</StyledSecondaryHeading>
       </PageContentWrapper>
     </Container>
     </Layout>
@@ -115,7 +114,7 @@ export async function getStaticPaths() {
   }
 }
 export const getStaticProps = async ({ locale, params }) => {
-  
+
   try {
     const translation = await fetchStrapiApi(`translations/${params.slug}`);
  
