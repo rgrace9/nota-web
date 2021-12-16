@@ -109,7 +109,7 @@ NavMenu.defaultProps = {
 
 const StyledNavLink = styled.a`
   color: white;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   padding: 2px 5px;
   font-family: 'Nunito Sans', sans-serif;
   /* &:focus {
@@ -124,7 +124,7 @@ const StyledBtn = styled.button`
   color: var(--text);
   border: none;
   outline: inherit;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   padding: 2px 5px;
   font-family: 'Nunito Sans', sans-serif;
   &:focus-visible {
@@ -145,7 +145,7 @@ const StyledMenu = styled.div`
 .link {
   padding: 10px 20px;
   color: var(--text-dark);
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   &:focus {
     color:  var(--headerBg);
     outline: 1px solid var(--text-dark);

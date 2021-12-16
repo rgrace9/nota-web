@@ -69,7 +69,7 @@ const StyledInput = styled.input`
   border-radius: 3px;
   transition: all 0.3s ease;
   color: black;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   display: block;
   min-width: 450px;
   border: 1px solid;
@@ -78,6 +78,6 @@ const StyledInput = styled.input`
 
   &:focus {
     /* outline: none; */
-  box-shadow: 0.2rem 0.8rem 1.6rem black;
+  box-shadow: 0.4rem 0.8rem 2.5rem black;
   }
 `

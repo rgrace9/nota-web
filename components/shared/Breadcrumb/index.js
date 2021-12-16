@@ -13,7 +13,7 @@ import * as colors from 'styles/colors';
 
 const BreadcrumbContainer = styled(Breadcrumb)`
   padding: 5px 20px;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
 `
 
 
@@ -52,7 +52,7 @@ Breadcrumbs.defaultProps = {
 }
 
 const StyledLink = styled.a`
- /* font-size: 1.6rem; */
+ /* font-size: 2.5rem; */
  text-decoration: underline;
  padding: 2px 5px;
  font-weight: ${props => props.isCurrentPage ? 'bold' : 'normal'};

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const HeadingStyle = styled.h2`
   color: var(--text-dark);
-  font-size: 3.2rem;
+  font-size: 3.4rem;
 `
 const FeaturedContainer = styled.div`
   display: flex;

@@ -71,7 +71,7 @@ const StyledInput = styled.input`
   border-radius: 3px;
   transition: all 0.3s ease;
   color: black;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   ${props => props.visible && css`
   display: block;
   width: 250px;

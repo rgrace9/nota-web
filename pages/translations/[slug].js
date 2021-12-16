@@ -26,11 +26,11 @@ const TranslationShow = props => {
 
   const StyledTranslation = styled.div`
     white-space: pre-wrap;
-    font-size: 1.6rem;
+    font-size: 2.5rem;
   `
 
   const StyledSecondaryHeading = styled.h2`
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 500;
     scroll-margin-top: 100px;
   `

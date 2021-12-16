@@ -7,7 +7,7 @@ const StyledMainContentWrapper = styled.div`
   padding-right: 20px;
 `
 const StyledPrimaryHeading = styled.h1`
-  font-size: 2.8rem;
+  font-size: 5rem;
   font-weight: 500;
 `
 

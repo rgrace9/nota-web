@@ -9,7 +9,7 @@ const StyledPrimaryButton = styled.button`
   background-color: white;
   border-radius: 15px;
   min-height: 30px;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   background-color: ${burgundy};
   color: ${white};
   font-weight: bold;

@@ -47,12 +47,12 @@ const StyledContainer = styled.div`
 `
 
 const StyledTitle = styled.h3`
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: bold;
 `
 
 const StyledDescription = styled.p`
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   padding-bottom: 30px;
 `
 const ResourceTileContainer = styled.li`

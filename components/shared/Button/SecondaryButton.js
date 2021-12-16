@@ -7,7 +7,7 @@ const StyledSecondaryButton = styled.button`
   padding: 10px 60px;
   border-radius: 15px;
   min-height: 30px;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   background-color: transparent;
   color: black;
   border: ${burgundy} 4px solid;

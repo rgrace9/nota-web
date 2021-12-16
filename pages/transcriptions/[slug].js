@@ -26,11 +26,11 @@ const Transcription = props => {
 
   const StyledTranscription = styled.div`
     white-space: pre-wrap;
-    font-size: 1.6rem;
+    font-size: 2.5rem;
   `
 
   const StyledSecondaryHeading = styled.h2`
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 500;
     scroll-margin-top: 100px;
   `
@@ -62,6 +62,7 @@ const Transcription = props => {
 
   }, [])
 
+  console.log('transcription', transcription)
   return (
     <Layout
     pageTitle={`${transcription.title} | Project Nota`}
@@ -79,8 +80,13 @@ const Transcription = props => {
         <StyledLink href={transcription.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
 
       </div>
-      <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
-      <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
+      {transcription.description ? (
+        <>
+                  <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
+        <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
+        </>
+
+      ) : null}
       
 
       {transcription.originalText ? (
@@ -92,16 +98,15 @@ const Transcription = props => {
       ) : null}
         <StyledSecondaryHeading className='p-t-20' id='transcription'>Transcription</StyledSecondaryHeading>
       <StyledTranscription
-          className='p-t-10'
+          className='p-t-10 p-b-40'
           dangerouslySetInnerHTML={
             { __html: transcription.body }
           }
       />
       {transcription.translation ? (
-        <>
-          <StyledSecondaryHeading className='p-t-20'>Translations</StyledSecondaryHeading>
-          <DefaultText className='p-t-10'>{transcription.description}</DefaultText>
-        </>
+        
+                  <StyledLink className='m-t-20' target='_blank' href={`/translations/${transcription?.translation?.id}`}>View Translation</StyledLink>
+        
 
       ) : null}
       </PageContentWrapper>

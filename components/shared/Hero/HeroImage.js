@@ -68,7 +68,7 @@ const HeroTextContainer = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   width: 100%;
   background-color: hsla(0, 0%, 100%, 0.55);
 
@@ -98,12 +98,12 @@ const HeroTextContainer = styled.div`
 `
 const HeroTitle = styled.h1`
   color: var(--text-dark);
-  font-size: 4.2rem;
+  font-size: 4.4rem;
 `
 
 const HeroSubtitle = styled.p`
   color: var(--text-dark);
-  font-size: 2rem;
+  font-size: 2.5rem;
   
 `
 

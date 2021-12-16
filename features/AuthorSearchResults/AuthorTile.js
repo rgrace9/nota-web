@@ -33,14 +33,14 @@ ResourceTile.propTypes = {
 export default ResourceTile;
 
 const StyledDescription = styled.p`
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   padding-bottom: 30px;
 `
 
 const StyledTitle = styled.h3`
   font-weight: 500;
   padding-top: 10px;
-  font-size: 2rem;
+  font-size: 4rem;
   text-decoration: underline;
   margin-bottom: 20px;
 `
@@ -50,7 +50,7 @@ const TileContent = styled.div`
   flex-direction: column;
   color: var(--text-dark);
   height: 120px;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   position: relative;
   line-height: 1;
 

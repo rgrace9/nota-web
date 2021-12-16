@@ -58,7 +58,7 @@ const StyledText = styled.p`
   margin-top: 24px;
   font-family: ${amiri};
   color: ${colors.darkBrown};
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 400;
 
 `

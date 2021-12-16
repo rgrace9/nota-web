@@ -43,7 +43,7 @@ const StyledHeading = styled.h1`
 
 const StyledContent = styled.div`
   p, ul, ol {
-    font-size: 1.6rem;
+    font-size: 2.5rem;
   }
   ul, ol {
     margin-left: 40px;

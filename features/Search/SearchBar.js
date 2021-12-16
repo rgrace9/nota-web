@@ -456,7 +456,7 @@ const StyledFormItem = styled.div`
 const StyledLabel = styled.label`
   color: var(--text-dark);
   font-weight: bold;
-  font-size: 2.8rem;
+  font-size: 5rem;
   display: block;
   @media ${device.tablet} {
     font-size: 3.6rem;
@@ -517,7 +517,7 @@ const StyledMenu = styled.ul`
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   padding: 0;
   position: absolute;
   width: 100%;

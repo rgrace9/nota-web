@@ -14,13 +14,13 @@ const StyledFooter = styled.footer`
   padding: 20px;
   bottom: 0;
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   background-color: #DEB9AD;
 `
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   text-align: 
   
   @media ${device.tablet} {

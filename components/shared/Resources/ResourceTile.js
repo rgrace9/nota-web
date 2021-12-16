@@ -70,7 +70,7 @@ const TileContent = styled.div`
   padding: 1rem;
   color: var(--text-dark);
   height: 275px;
-  font-size: 1.6rem !important;
+  font-size: 2.5rem !important;
   overflow: hidden;
   text-overflow: ellipsis;
   a {

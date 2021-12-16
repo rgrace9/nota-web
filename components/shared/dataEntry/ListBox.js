@@ -15,7 +15,7 @@ import { Select } from "@chakra-ui/react"
 const StyledContainer = styled.div`
 
 label {
-  font-size: 1.6rem;
+  font-size: 2.5rem;
 }
 [data-reach-listbox-arrow]  {
   margin-left: auto;
@@ -39,12 +39,12 @@ width: 100%;
 const StyledListBox = styled(ListboxInput)`
   min-height: 50px;
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
 `
 
 const StyledList = styled(ListboxList)`
   color: black;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
 `
 
 const ListBoxContainer = props => {
