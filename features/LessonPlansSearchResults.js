@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import  {StyledUnorderedList} from '@/components/shared/List';
 import styled from '@emotion/styled';
 import {woodSmoke, white} from '@/styles/colors';
 import Container from '@/components/shared/Container';

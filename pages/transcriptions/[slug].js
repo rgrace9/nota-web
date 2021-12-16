@@ -7,7 +7,7 @@ import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import * as colors from 'styles/colors';
-import {StyledHeadingLinkContainer, StyledAnchorLink} from '@/components/shared/HeadingLink/StyledHeadingLink';
+import  {StyledUnorderedList} from '@/components/shared/List';
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React, { useEffect, useState } from 'react';
@@ -103,9 +103,18 @@ const Transcription = props => {
             { __html: transcription.body }
           }
       />
-      {transcription.translation ? (
+      {transcription.translations.length ? (
+        <>
+          <StyledSecondaryHeading className='p-t-20' id='transcription'>Translation{transcription.translations.length !== 1 ? 's' : ''}</StyledSecondaryHeading>
+          <StyledUnorderedList>
+            {transcription.translations.map(translation => (
+                <li key={translation.id}>
+                  <StyledLink className='m-t-20' href={`/translations/${translation?.id}`}>{translation.title}</StyledLink>
+                </li>
+            ))}
+          </StyledUnorderedList>
         
-                  <StyledLink className='m-t-20' target='_blank' href={`/translations/${transcription?.translation?.id}`}>View Translation</StyledLink>
+        </>
         
 
       ) : null}

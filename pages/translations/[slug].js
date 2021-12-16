@@ -81,7 +81,7 @@ const TranslationShow = props => {
       <DefaultText className='p-t-10'>{translation.description}</DefaultText>
       
 
-        <StyledSecondaryHeading className='p-t-20' id='translation'>translation</StyledSecondaryHeading>
+        <StyledSecondaryHeading className='p-t-20' id='translation'>Translation</StyledSecondaryHeading>
       <StyledTranslation
           className='p-t-10'
           dangerouslySetInnerHTML={
