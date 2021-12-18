@@ -6,6 +6,7 @@ const StyledLink = styled.a`
   color: ${colors.navyBlue};
   text-decoration: underline;
   font-size: 2.5rem;
+  cursor: pointer;
   &:hover {
     color: ${colors.lightCream};
     background: ${colors.navyBlue};

@@ -32,8 +32,6 @@ const DesktopNavbar = () => {
          
         </div>
         <NavLinks />
-
-        {/* <NavBarSearch /> */}
         <button onClick={() => setOpen(!isOpen)}>
           <span className='sr-only'>Menu</span>
           <Hamburger toggled={isOpen} duration={0} />

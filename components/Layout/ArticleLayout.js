@@ -49,10 +49,16 @@ const StyledContent = styled.div`
     margin-left: 40px;
   }
   h2, h3, h4 {
-    font-size: 2.4rem;
+    font-size: 3rem;
     display: inline-block;
     margin-bottom: 15px;
 
+    &::after {
+    height: 5px;
+    display: block;
+    background: var(--headerBg);
+    border-right: 1px white;
+    content: '';
   };
  
 `

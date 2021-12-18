@@ -35,20 +35,17 @@ const Transcription = props => {
     scroll-margin-top: 100px;
   `
 
-  const { asPath, query } = router;
-  // todo - add links to the headings so that there is navigation within the page.
-
+  const { asPath } = router;
 
   useEffect(() => {
   
-    const previousPageIsSearchPage = globalThis.sessionStorage?.prevPath?.includes('?') || '';
     const BREADCRUMBS_LIST = [
       {
         href: "/",
         title: "Home",
       },
       {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/transcriptions',
+        href: '/transcriptions',
         title: "Transcriptions",
         isCurrentPage: false,
       },
@@ -62,7 +59,6 @@ const Transcription = props => {
 
   }, [])
 
-  console.log('transcription', transcription)
   return (
     <Layout
     pageTitle={`${transcription.title} | Project Nota`}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import  {StyledUnorderedList} from '@/components/shared/List';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import Loading from '@/components/shared/Loading/LoadingPage'

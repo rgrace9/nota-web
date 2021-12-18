@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from "@emotion/styled";
-import StyledLink from '@/components/shared/Link/StyledLink'
 import { device } from "@/styles/screenSizes";
 import SocialMedia from './SocialMedia';
-import AboutUs from './AboutUs';
 import LanguageSelector from './LanguageSelector';
 
 const StyledFooter = styled.footer`
