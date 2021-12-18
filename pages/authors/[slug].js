@@ -12,6 +12,8 @@ import StyledLink from '@/components/shared/Link/StyledLink'
 import { useEffect, useState } from 'react';
 import { withRouter } from 'next/router'
 import PropTypes from "prop-types";
+import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
+import  {StyledUnorderedList} from '@/components/shared/List';
 
 const PageWrapper = styled.div`
     display: flex;    
@@ -26,8 +28,8 @@ const StyledPrimaryHeading = styled.h1`
   font-weight: 500;
 `
 const StyledSecondaryHeading = styled.h1`
-  font-size: 2.4rem;
-  font-weight: bold;
+  font-size: 4rem;
+  font-weight: 500;
 `
 
 const StyledText = styled.p`
@@ -77,13 +79,8 @@ const AuthorShow = (props) => {
       pageTitle={`${author.name} | Project Nota`}
       breadcrumbsList={breadcrumbs}
     >
-
-
       <Container>
-        <PageWrapper>
-          <StyledMainContentWrapper>
-            <section>
-              <StyledPrimaryHeading>{author.name}</StyledPrimaryHeading>
+        <PageContentWrapper title={author.name}>
               <div>
                 {author.timePeriod && (
                   <Link href={`/authors?timePeriod.id_eq=${author.timePeriod.id}`} passHref>
@@ -97,25 +94,22 @@ const AuthorShow = (props) => {
               
               ( 
               <Link href={`/authors?location.id_eq=${author.location.id}`} passHref>
-              <StyledLink target='_blank' >
+              <StyledLink target='_blank'>
                   {author.location.name}
                 </StyledLink>
               </Link>
               )}
-              
-            </section>
-
-
-
-            <section>
-              <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
-              <StyledText>{author.biography}</StyledText>
-            </section>
+              {author.biography ? (
+                <section>
+                  <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
+                  <StyledText>{author.biography}</StyledText>
+                </section>
+              ) : null}
             {author.lessonPlans.length ?
             (
               <section>
                 <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
-                <StyledListContainer>
+                <StyledUnorderedList>
                   {author.lessonPlans.map(lp => (
                     <li
                       key={lp.id}
@@ -123,22 +117,26 @@ const AuthorShow = (props) => {
                       <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
                     </li>
                   ))}
-                </StyledListContainer>
+                </StyledUnorderedList>
               </section>
             ) : null}
             <section>
-              <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-              {author.transcriptions ? author.transcriptions.map(transcription => (
-                  <li
-                    key={transcription.id}
-                  >
-                    <StyledLink href={`/transcriptions/${transcription.id}`}>{transcription.title}</StyledLink>
-                  </li>
-                )) : null}
+              {author.transcriptions ? (
+                <>
+                  <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
+                  <StyledUnorderedList>
+                    {author.transcriptions.map(transcription => (
+                        <li
+                          key={transcription.id}
+                        >
+                          <StyledLink href={`/transcriptions/${transcription.id}`}>{transcription.title}</StyledLink>
+                        </li>
+                      ))}
+                  </StyledUnorderedList>
+                </>
+              ) : null}
             </section>
-          </StyledMainContentWrapper>
-
-        </PageWrapper>
+        </PageContentWrapper>
       </Container>
     </Layout>
   );

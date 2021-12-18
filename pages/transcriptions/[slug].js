@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
-import ChainLink from '@/components/shared/Icon/ChainLink';
+
 const Transcription = props => {
 
   const {
@@ -32,7 +32,6 @@ const Transcription = props => {
   const StyledSecondaryHeading = styled.h2`
     font-size: 4rem;
     font-weight: 500;
-    scroll-margin-top: 100px;
   `
 
   const { asPath } = router;
