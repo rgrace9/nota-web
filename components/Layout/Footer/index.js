@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import SocialMedia from './SocialMedia';
-import LanguageSelector from './LanguageSelector';
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -60,16 +59,7 @@ const Footer = () => {
               many years of teaching experience, seven advanced degrees, many publications in
               academic journals, and multiple positions in professional organizations.
             </p>
-            <LanguageSelector />
         </StyledSection>
-
-        {/* <StyledSection>  
-          <StyledHeading>About</StyledHeading>
-          <AboutUs />
-        </StyledSection> */}
-
-   
-       
       </StyledContent>
       <div>
           <SocialMedia />
