@@ -19,8 +19,9 @@ const ResourceTile = props => {
           <a>{data.name}</a>
         </Link>
       </StyledTitle>
-
-      <StyledDescription>{data.shortBio || data.biography}</StyledDescription>
+      {data.shortBio ? (
+        <StyledDescription>{data.shortBio}</StyledDescription>
+      ) : null}
     
   </ResourceTileContainer>
   );

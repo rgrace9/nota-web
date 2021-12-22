@@ -60,13 +60,6 @@ const BREADCRUMBS_LIST = [
   },
 ];
 
-const INITIAL_DATA = {
-  authors: [],
-  locations: [],
-  timePeriods: [],
-  isError: false,
-  isLoading: false
-}
 const Authors = (props) => {
   const [authorResults, setAuthorResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
@@ -241,7 +234,7 @@ export default withRouter(Authors);
 export const getStaticProps = async (props) => {
   const { locale } = props;
  
-  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
   const locationOptions = await STRAPI_CLIENT.fetchAPI("author-locations");
   const timePeriodOptions = await STRAPI_CLIENT.fetchAPI('time-periods');
 

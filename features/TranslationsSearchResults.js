@@ -23,7 +23,7 @@ const TranslationsSearchResults = props => {
                     <a>{result.title}</a>
                   </Link>
                  </StyledTitle>
-                  <StyledDescription>{result.description}</StyledDescription>
+                  {/* <StyledDescription>{result.description}</StyledDescription> */}
                 </ResourceTileContainer>
             ))}
             </StyledUnorderedList>
@@ -60,16 +60,14 @@ const ResourceTileContainer = styled.li`
   margin-bottom: 20px;
   background-color: white;
   box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   background: white;
   cursor: pointer;
   width: 100%;
   border: solid 2px black;
-  padding: 10px 30px;
   width: 100%;
   padding: 20px;
+  padding-bottom: 30px;
   list-style-type: initial;
   position: relative;
   &:before {

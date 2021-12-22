@@ -30,7 +30,7 @@ const HeroImage = props => {
             <section>
 
             <Link href={href}>
-            <a className='hero-link'>{linkTitle}</a>
+              <a className='hero-link'>{linkTitle}</a>
             </Link>
             </section>
           ) : null}

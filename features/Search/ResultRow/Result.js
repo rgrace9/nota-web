@@ -42,6 +42,7 @@ const StyledTitle = styled.div`
 `
 const StyledShortBio = styled.div`
   color: #343a45;
+  margin-top: 20px;
   em {
     font-weight: 900;
   }
