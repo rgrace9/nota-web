@@ -14,7 +14,6 @@ import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
 import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
 import qs from 'qs'
-import Container from '@/components/shared/Container'
 const STRAPI_CLIENT = new StrapiClient();
 
 const StyledFieldsContainer = styled.div`
@@ -71,10 +70,7 @@ const INITIAL_DATA = {
 const Authors = (props) => {
   const [authorResults, setAuthorResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
-  const [searchQuery, setSearchQuery] = useState({});
-
-
-  const [data, setData] = useState(INITIAL_DATA)
+  
   const {
     router,
     authorOptions,
@@ -121,35 +117,44 @@ const Authors = (props) => {
   }, [queryString])
 
   const onInitialSearch = async (authorValue, locationValue, timeValue) => {
-    try {
-      const searchParams = {
-        ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
-        ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
-        ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
+    const searchParams = {
+      ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
+      ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
+      ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
+    }
+    if (authorValue || locationValue || timeValue) {
+      try {
+        const formattedSearchQuery = formatQuery(searchParams);
+        setLoadingResults(true)
+        const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
+        setAuthorResults(res)
+        setLoadingResults(false)
+      } catch (err) {
+        setAuthorResults([])
+        setLoadingResults(false)
+        throw err
       }
-      const formattedSearchQuery = formatQuery(searchParams);
-      setLoadingResults(true)
-      const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
-      setAuthorResults(res)
+    } else {
+      setAuthorResults(authorOptions)
       setLoadingResults(false)
-    } catch (err) {
-      setAuthorResults([])
-      setLoadingResults(false)
-      throw err
     }
   };
 
   const onSearch = async (authorValue, locationValue, timeValue) => {
-
+    setLoadingResults(true);
+    let newURL = '';
+    const searchParams = {
+      ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
+      ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
+      ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
+    }
+    if (authorValue !== 'all' && locationValue !== 'all' && timeValue !== 'all') {
+      setAuthorResults(authorOptions)
+      setLoadingResults(false)
+    } else 
     try {
-      setLoadingResults(true)
-      const searchParams = {
-        ...(authorValue !== 'all' && { 'id_eq': authorValue, }),
-        ...(locationValue !== 'all' && { 'location.id_eq': locationValue, }),
-        ...(timeValue !== 'all' && { 'timePeriod.id_eq': timeValue, }),
-      }
       const formattedSearchQuery = formatQuery(searchParams);
-      const newURL = `/authors?${formattedSearchQuery}`;
+      newURL = `/authors?${formattedSearchQuery}`;
       const res = await STRAPI_CLIENT.fetchAPI(`authors?${formattedSearchQuery}`);
       setAuthorResults(res)
       router.replace(newURL, undefined, { shallow: true })
@@ -172,9 +177,9 @@ const Authors = (props) => {
   }
 
   return (
-    <Layout loading={data.isLoading} pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
+    <Layout pageTitle='Project Nota | Authors' breadcrumbsList={BREADCRUMBS_LIST}>
       <ContentLayout title="Authors" maxWidth='1000px'>
-        <SearchFiltersContainer loading={data.isLoading}>
+        <SearchFiltersContainer>
           <form onSubmit={handleSubmit}>
             <StyledFieldsContainer>
                 <StyledSelectContainer>

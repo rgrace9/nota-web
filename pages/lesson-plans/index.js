@@ -40,14 +40,14 @@ const LessonPlans = (props) => {
   } = useListBox("all");
 
   const onInitialSearch = async (authorValue) => {
+    const searchParams = {
+      ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
+    }
     if (!authorValue) {
       setLessonPlanResults(lessonPlans)
       setLoadingResults(false)
     } else {
       try {
-        const searchParams = {
-          ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
-        }
         const formattedSearchQuery = formatQuery(searchParams);
         setLoadingResults(true)
         const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);

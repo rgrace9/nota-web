@@ -15,18 +15,12 @@ import PropTypes from "prop-types";
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import  {StyledUnorderedList} from '@/components/shared/List';
 
-const PageWrapper = styled.div`
-    display: flex;    
-    flex-direction: column;
-    justify-content: space-between;
-    transition: ease all .5s;
-    width: 100%;
+
+const StyledBiography = styled.div`
+  white-space: pre-wrap;
+  font-size: 2.5rem;
 `
 
-const StyledPrimaryHeading = styled.h1`
-  font-size: 5rem;
-  font-weight: 500;
-`
 const StyledSecondaryHeading = styled.h1`
   font-size: 4rem;
   font-weight: 500;
@@ -102,7 +96,12 @@ const AuthorShow = (props) => {
               {author.biography ? (
                 <section>
                   <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
-                  <StyledText>{author.biography}</StyledText>
+                  <StyledBiography
+                    className='p-t-10 p-b-40'
+                    dangerouslySetInnerHTML={
+                      { __html: author.biography}
+                    }
+                  />
                 </section>
               ) : null}
             {author.lessonPlans.length ?

@@ -39,14 +39,14 @@ const Transcriptions = (props) => {
   } = useListBox("all");
 
   const onInitialSearch = async (authorValue) => {
+    const searchParams = {
+      ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+    }
     if (!authorValue) {
       setTranscriptionResults(transcriptions)
       setLoadingResults(false)
     } else {
       try {
-        const searchParams = {
-          ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
-        }
         const formattedSearchQuery = formatQuery(searchParams);
         setLoadingResults(true)
         const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
@@ -63,24 +63,23 @@ const Transcriptions = (props) => {
 
   const handleTranscriptionsSearch = async (e) => {
     e.preventDefault();
+    setLoadingResults(true)
+    const searchParams = {
+      ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
+
+    }
     let newURL = '';
     try {
-      setLoadingResults(true)
       if (!selectedAuthor === 'all') {
-        setTranscriptionResults(transcriptions)
-        setLoadingResults(false)
+        setTranscriptionResults(transcriptions);
+        setLoadingResults(false);
       } else {
-        const searchParams = {
-          ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
-  
-        }
         const formattedSearchQuery = formatQuery(searchParams);
         newURL = `/transcriptions?${formattedSearchQuery}`;
         const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
-        setTranscriptionResults(res)
-        setLoadingResults(false)
-
+        setTranscriptionResults(res) 
       }
+      setLoadingResults(false)
       router.replace(newURL, undefined, { shallow: true })
 
     } catch(err) {

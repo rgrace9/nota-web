@@ -40,7 +40,7 @@ const StyledDescription = styled.p`
 const StyledTitle = styled.h3`
   font-weight: 500;
   padding-top: 10px;
-  font-size: 4rem;
+  font-size: 3rem;
   text-decoration: underline;
   margin-bottom: 20px;
 `
