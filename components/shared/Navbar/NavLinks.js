@@ -49,6 +49,10 @@ const DesktopNavLinks = () => {
           href: 'about/meet-our-team'
         },
         {
+          title: 'Advisory Board', 
+          href: 'about/advisory-board'
+        },
+        {
           title: t("contact"), 
           href: 'contact'
         },
