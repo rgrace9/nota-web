@@ -77,17 +77,33 @@ const TranslationShow = props => {
         <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
 
       </div>
-      <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
-      <DefaultText className='p-t-10'>{translation.description}</DefaultText>
-      
+      {translation.description ? (
+        <>
+        <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
+        <DefaultText className='p-t-10'>{translation.description}</DefaultText>  
+        </>
+      ) : null }
 
-        <StyledSecondaryHeading className='p-t-20' id='translation'>Translation</StyledSecondaryHeading>
+        <StyledSecondaryHeading className='p-t-20'>Translation</StyledSecondaryHeading>
       <StyledTranslation
           className='p-t-10'
           dangerouslySetInnerHTML={
             { __html: translation.body }
           }
       />
+
+      {translation.acknowledgement ? (
+        <>
+          <StyledSecondaryHeading className='p-t-20'>Acknowledgements</StyledSecondaryHeading>
+          <StyledTranslation
+            className='p-t-10'
+            dangerouslySetInnerHTML={
+              { __html: translation.acknowledgement }
+            }
+          />
+        </>
+      ) : null}
+
       </PageContentWrapper>
     </Container>
     </Layout>
