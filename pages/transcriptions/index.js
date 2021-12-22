@@ -35,14 +35,14 @@ const Transcriptions = (props) => {
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
   const {
-    value: authorLocation,
-    bind: bindAuthorLocation,
-    reset: resetAuthorLocation,
+    value: selectedTheme,
+    bind: bindTheme,
+    reset: resetTheme,
   } = useListBox("all");
   const {
     value: selectedGenre,
     bind: bindSelectedGenre,
-    reset: resetselectedGenre,
+    reset: resetSelectedGenre,
   } = useListBox("all");
 
   const {
@@ -51,11 +51,13 @@ const Transcriptions = (props) => {
     reset: resetAuthorName,
   } = useListBox("all");
 
-  const onInitialSearch = async (authorValue) => {
+  const onInitialSearch = async (authorValue, genreValue, themeValue) => {
     const searchParams = {
       ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+      ...(themeValue !== 'all' && { 'themes.id_in': themeValue, }),
+      ...(genreValue !== 'all' && { 'literary_genres.id_in': genreValue, }),
     }
-    if (!authorValue) {
+    if (!authorValue && !themeValue && !genreValue) {
       setTranscriptionResults(transcriptions)
       setLoadingResults(false)
     } else {
@@ -79,7 +81,8 @@ const Transcriptions = (props) => {
     setLoadingResults(true)
     const searchParams = {
       ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
-
+      ...(selectedTheme !== 'all' && { 'themes.id_in': selectedTheme, }),
+      ...(selectedGenre !== 'all' && { 'literary_genres.id_in': selectedGenre, }),
     }
     let newURL = '';
     try {
@@ -104,8 +107,8 @@ const Transcriptions = (props) => {
 
   const handleReset = () => {
     resetAuthorName();
-    resetAuthorLocation();
-    resetselectedGenre();
+    resetTheme();
+    resetSelectedGenre();
   }
 
   useEffect(() => {
@@ -114,7 +117,9 @@ const Transcriptions = (props) => {
       if (isMounted) {
         setLoadingResults(true)
         bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
-        onInitialSearch(queryParams['author.id_eq']);
+        bindSelectedGenre.onChange(queryParams['literary_genres.id_in'] || 'all');
+        bindTheme.onChange(queryParams['themes.id_in'] || 'all');
+        onInitialSearch(queryParams['author.id_eq'], queryParams['literary_genres.id_in'], queryParams['themes.id_in']);
       }
     }
     let isMounted = true;
@@ -151,8 +156,8 @@ const Transcriptions = (props) => {
                     labelText="Theme"
                     labelValue="theme"
                     options={themes}
-                    value={authorLocation}
-                    {...bindAuthorLocation}
+                    value={selectedTheme}
+                    {...bindTheme}
 
                   />
                 </StyledSelectContainer>

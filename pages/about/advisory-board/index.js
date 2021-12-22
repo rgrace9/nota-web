@@ -29,8 +29,8 @@ const MeetOurTeam = props => {
         <div dangerouslySetInnerHTML={{ __html: description }} />
         <StyledUnorderedList className='p-t-30'>
           {advisors.map(advisor => (
-            <li className='m-b-20' key={advisor.id}>
-                                <DefaultText fontWeight='bold'>{advisor.name}</DefaultText>
+            <li className='m-b-50' key={advisor.id}>
+                                <StyledName>{advisor.name}</StyledName>
                   {advisor.biography ? (
                     <StyledBiographyContainer>
                       {advisor.picture && (
@@ -92,5 +92,10 @@ const StyledImage = styled.img`
   height: 300px;
   object-fit: cover;
   padding-right: 10px;
+`
+const StyledName = styled.h2`
+  line-height: 1.5;
+  font-size: 3rem;
+  font-weight: bold;
 `
 

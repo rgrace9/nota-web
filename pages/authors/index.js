@@ -227,7 +227,12 @@ const Authors = (props) => {
   );
 };
 
-Authors.propTypes = {};
+Authors.propTypes = {
+  authorOptions: PropTypes.array,
+  locationOptions: PropTypes.array,
+  timePeriodOptions: PropTypes.array,
+  router: PropTypes.object,
+};
 
 export default withRouter(Authors);
 
@@ -235,9 +240,8 @@ export const getStaticProps = async (props) => {
   const { locale } = props;
  
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
-  const locationOptions = await STRAPI_CLIENT.fetchAPI("author-locations");
-  const timePeriodOptions = await STRAPI_CLIENT.fetchAPI('time-periods');
-
+  const locationOptions = await STRAPI_CLIENT.fetchAPI("author-locations?_sort=name:ASC");
+  const timePeriodOptions = await STRAPI_CLIENT.fetchAPI('time-periods?_sort=name:ASC');
 
   return {
     props: {
