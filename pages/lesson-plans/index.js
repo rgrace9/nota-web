@@ -7,7 +7,6 @@ import StrapiClient from "@/lib/StrapiClient";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { AUTHOR_OPTIONS, PRICES } from "@/constants/index";
 import { PrimaryButton } from "@/components/shared/Button";
 import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
@@ -25,14 +24,81 @@ const LessonPlans = (props) => {
     authorOptions,
     lessonPlans
   } = props;
+
+  const [lessonPlanResults, setLessonPlanResults] = useState([])
+  const [loadingResults, setLoadingResults] = useState(false)
+
   
   const { asPath, query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
-  const handleLessonPlansSearch = () => {
-    // e.preventDefault();
+  const {
+    value: selectedAuthor,
+    bind: bindAuthorName,
+    reset: resetAuthorName,
+  } = useListBox("all");
+
+  const onInitialSearch = async (authorValue) => {
+    try {
+      const searchParams = {
+        ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      setLoadingResults(true)
+      const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);
+      setLessonPlanResults(res)
+      setLoadingResults(false)
+    } catch (err) {
+      setLessonPlanResults([])
+      setLoadingResults(false)
+      throw err
+    }
   };
+
+  const handleLessonPlansSearch = async (e) => {
+    e.preventDefault();
+    try {
+      setLoadingResults(true)
+      const searchParams = {
+        ...(selectedAuthor !== 'all' && { 'authors.id_in': selectedAuthor }),
+
+      }
+      const formattedSearchQuery = formatQuery(searchParams);
+      const newURL = `/lesson-plans?${formattedSearchQuery}`;
+      const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);
+      setLessonPlanResults(res)
+      setLoadingResults(false)
+      router.replace(newURL, undefined, { shallow: true })
+
+    } catch(err) {
+      setLessonPlanResults([])
+      setLoadingResults(false)
+    }
+  };
+
+  useEffect(() => {
+
+    const fetchPageData = async () => {
+      if (isMounted) {
+        setLoadingResults(true)
+        bindAuthorName.onChange(queryParams['authors.id_in'] || 'all');
+        if (queryParams['authors.id_in']) {
+          onInitialSearch(queryParams['authors.id_in']);
+        } else {
+          setLessonPlanResults(lessonPlans)
+        }
+      }
+    }
+    let isMounted = true;
+
+    fetchPageData();
+    return () => {
+      setLoadingResults(false)
+      isMounted = false;
+    };
+  }, [queryString])
+
 
   return (
     <Layout pageTitle="Lesson Plans">
@@ -45,7 +111,9 @@ const LessonPlans = (props) => {
                 allObject={{ name: "All Authors", id: "all" }}
                 labelText="Author"
                 labelValue="author"
-                options={AUTHOR_OPTIONS}
+                options={authorOptions}
+                value={selectedAuthor}
+                {...bindAuthorName}
               />
             </StyledOptionContainer>
           </StyledFormRow>
@@ -57,7 +125,7 @@ const LessonPlans = (props) => {
         </SearchFiltersContainer>
           
            
-            <LessonPlansSearchResults results={lessonPlans} />
+            <LessonPlansSearchResults loading={loadingResults} results={lessonPlanResults} />
          
       </ContentLayout>
     </Layout>

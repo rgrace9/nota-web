@@ -4,13 +4,16 @@ import styled from '@emotion/styled';
 import {woodSmoke, white} from '@/styles/colors';
 import Container from '@/components/shared/Container';
 import Link from 'next/link';
+import Loading from '@/components/shared/Loading/LoadingPage'
 
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
 
   return (
     <StyledContainer>
-      
+           {(loading) ? (
+          <Loading />
+        ) : (
         <StyledUnorderedList >
         {<StyledResultsCount>{results.length || 'No' } Search Result{results.length !== 1 ? 's' : ''}</StyledResultsCount>}
           {results.map(result => (
@@ -26,7 +29,7 @@ const LessonPlansSearchResults = props => {
               </ResourceTileContainer>
           ))}
           </StyledUnorderedList>
-
+        )}
     </StyledContainer>
   );
 };
@@ -48,7 +51,7 @@ const StyledTitle = styled.h3`
   font-weight: bold;
   font-weight: 500;
   padding-top: 10px;
-  font-size: 4rem;
+  font-size: 3rem;
   text-decoration: underline;
   margin-bottom: 20px;
 `
@@ -83,9 +86,6 @@ const ResourceTileContainer = styled.li`
     content:  '\\200B';
     margin-left: 0;
   };
-  /* &:hover, &:focus-within {
-    box-shadow: 0 16px 16px 0 rgba(0,0,0,0.2);
-  } */
   &:hover, &:focus-within {
     box-shadow: 0 0 0 0.25rem;
   }
@@ -103,7 +103,6 @@ const ResourceTileContainer = styled.li`
 
 const StyledUnorderedList = styled.ul`
   display: flex;
-  /* flex-wrap: wrap; */
   flex-direction: column;
   list-style: none;
   padding: 0;
@@ -112,7 +111,7 @@ const StyledUnorderedList = styled.ul`
 `
 
 const StyledResultsCount = styled.h2`
-  font-size: 2.4rem;
+  font-size: 3rem;
   text-align: center;
   width: 100%;
   margin-top: 40px;
