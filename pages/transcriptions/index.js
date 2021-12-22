@@ -82,9 +82,12 @@ const Transcriptions = (props) => {
       if (isMounted) {
         setLoadingResults(true)
         bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
-        // bindAuthorLocation.onChange(queryParams['location.id_eq'] || 'all');
-        // bindSelectedTimePeriod.onChange(queryParams['timePeriod.id_eq'] || 'all');
         onInitialSearch(queryParams['author.id_eq']);
+        if (queryParams['author.id_eq']) {
+          onInitialSearch(queryParams['author.id_eq']);
+        } else {
+          setTranscriptionResults(transcriptions)
+        }
       }
     }
     let isMounted = true;
