@@ -36,5 +36,5 @@ const StyledContainer = styled.div`
   background-color: ${white};
 `
 const StyledSubheading = styled.h2`
-  font-size: 5rem;
+  font-size: 3rem;
 `
