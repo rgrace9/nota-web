@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "replace-algolia-objects": "node scripts/algolia/replaceAllObjects.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.0",
