@@ -40,19 +40,24 @@ const LessonPlans = (props) => {
   } = useListBox("all");
 
   const onInitialSearch = async (authorValue) => {
-    try {
-      const searchParams = {
-        ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
+    if (!authorValue) {
+      setLessonPlanResults(lessonPlans)
+      setLoadingResults(false)
+    } else {
+      try {
+        const searchParams = {
+          ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
+        }
+        const formattedSearchQuery = formatQuery(searchParams);
+        setLoadingResults(true)
+        const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);
+        setLessonPlanResults(res)
+        setLoadingResults(false)
+      } catch (err) {
+        setLessonPlanResults([])
+        setLoadingResults(false)
+        throw err
       }
-      const formattedSearchQuery = formatQuery(searchParams);
-      setLoadingResults(true)
-      const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);
-      setLessonPlanResults(res)
-      setLoadingResults(false)
-    } catch (err) {
-      setLessonPlanResults([])
-      setLoadingResults(false)
-      throw err
     }
   };
 
@@ -83,11 +88,7 @@ const LessonPlans = (props) => {
       if (isMounted) {
         setLoadingResults(true)
         bindAuthorName.onChange(queryParams['authors.id_in'] || 'all');
-        if (queryParams['authors.id_in']) {
-          onInitialSearch(queryParams['authors.id_in']);
-        } else {
-          setLessonPlanResults(lessonPlans)
-        }
+        onInitialSearch(queryParams['authors.id_in']);
       }
     }
     let isMounted = true;

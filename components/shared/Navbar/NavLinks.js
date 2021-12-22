@@ -54,7 +54,7 @@ const DesktopNavLinks = () => {
         },
         {
           title: t("contact"), 
-          href: 'contact'
+          href: 'about/contact-us'
         },
         {
           title: 'Mission Statement',

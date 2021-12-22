@@ -47,7 +47,7 @@ const Translations = (props) => {
       }
       const formattedSearchQuery = formatQuery(searchParams);
       setLoadingResults(true)
-      const res = await STRAPI_CLIENT.fetchAPI(`translations?${formattedSearchQuery}`);
+      const res = await STRAPI_CLIENT.fetchAPI(`translations?_sort=title:ASC&${formattedSearchQuery}`);
       setTranslationsResults(res)
       setLoadingResults(false)
     } catch (err) {
@@ -123,7 +123,7 @@ const Translations = (props) => {
         </SearchFiltersContainer>
           
            
-            <TranslationsSearchResults results={translationResults} />
+            <TranslationsSearchResults loading={loadingResults} results={translationResults} />
          
       </ContentLayout>
     </Layout>
@@ -135,7 +135,7 @@ Translations.propTypes = {};
 export default withRouter(Translations);
 
 export const getStaticProps = async ({ locale }) => {
-  const translations = await STRAPI_CLIENT.fetchAPI("translations");
+  const translations = await STRAPI_CLIENT.fetchAPI("translations?title:ASC");
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
 
   return {

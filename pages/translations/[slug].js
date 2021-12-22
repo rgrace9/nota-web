@@ -92,6 +92,13 @@ const TranslationShow = props => {
           }
       />
 
+      {translation.transcription ? (
+        <>
+          <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
+          <StyledLink className='m-t-20' href={`/transcriptions/${translation.transcription?.id}`}>{translation.title}</StyledLink>
+
+        </>
+      ) : null}
       {translation.acknowledgement ? (
         <>
           <StyledSecondaryHeading className='p-t-20'>Acknowledgements</StyledSecondaryHeading>

@@ -8,6 +8,6 @@ export const sanitizeHtmlString = (htmlString) => {
 }
 
 export const parseMarkdown = (markdown) => {
-  const htmlString = marked(markdown);
+  const htmlString = marked(markdown || '' );
   return htmlString;
 }

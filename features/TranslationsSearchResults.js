@@ -104,7 +104,7 @@ const StyledUnorderedList = styled.ul`
 `
 
 const StyledResultsCount = styled.h2`
-  font-size: 2.4rem;
+  font-size: 3rem;
   text-align: center;
   width: 100%;
   margin-top: 40px;

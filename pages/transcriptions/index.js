@@ -39,35 +39,48 @@ const Transcriptions = (props) => {
   } = useListBox("all");
 
   const onInitialSearch = async (authorValue) => {
-    try {
-      const searchParams = {
-        ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+    if (!authorValue) {
+      setTranscriptionResults(transcriptions)
+      setLoadingResults(false)
+    } else {
+      try {
+        const searchParams = {
+          ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
+        }
+        const formattedSearchQuery = formatQuery(searchParams);
+        setLoadingResults(true)
+        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+        setTranscriptionResults(res)
+        setLoadingResults(false)
+      } catch (err) {
+        setTranscriptionResults([])
+        setLoadingResults(false)
+        throw err
       }
-      const formattedSearchQuery = formatQuery(searchParams);
-      setLoadingResults(true)
-      const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
-      setTranscriptionResults(res)
-      setLoadingResults(false)
-    } catch (err) {
-      setTranscriptionResults([])
-      setLoadingResults(false)
-      throw err
+
     }
   };
 
   const handleTranscriptionsSearch = async (e) => {
     e.preventDefault();
+    let newURL = '';
     try {
       setLoadingResults(true)
-      const searchParams = {
-        ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
+      if (!selectedAuthor === 'all') {
+        setTranscriptionResults(transcriptions)
+        setLoadingResults(false)
+      } else {
+        const searchParams = {
+          ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
+  
+        }
+        const formattedSearchQuery = formatQuery(searchParams);
+        newURL = `/transcriptions?${formattedSearchQuery}`;
+        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+        setTranscriptionResults(res)
+        setLoadingResults(false)
 
       }
-      const formattedSearchQuery = formatQuery(searchParams);
-      const newURL = `/transcriptions?${formattedSearchQuery}`;
-      const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
-      setTranscriptionResults(res)
-      setLoadingResults(false)
       router.replace(newURL, undefined, { shallow: true })
 
     } catch(err) {
@@ -83,11 +96,6 @@ const Transcriptions = (props) => {
         setLoadingResults(true)
         bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
         onInitialSearch(queryParams['author.id_eq']);
-        if (queryParams['author.id_eq']) {
-          onInitialSearch(queryParams['author.id_eq']);
-        } else {
-          setTranscriptionResults(transcriptions)
-        }
       }
     }
     let isMounted = true;
@@ -139,7 +147,7 @@ Transcriptions.propTypes = {
 export default withRouter(Transcriptions);
 
 export const getStaticProps = async ({ locale }) => {
-  const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions");
+  const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions?_sort=title:ASC");
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
 
   return {
