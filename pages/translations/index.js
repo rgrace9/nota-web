@@ -136,7 +136,7 @@ export default withRouter(Translations);
 
 export const getStaticProps = async ({ locale }) => {
   const translations = await STRAPI_CLIENT.fetchAPI("translations?title:ASC");
-  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
 
   return {
     props: {

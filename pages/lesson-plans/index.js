@@ -50,7 +50,7 @@ const LessonPlans = (props) => {
       try {
         const formattedSearchQuery = formatQuery(searchParams);
         setLoadingResults(true)
-        const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?${formattedSearchQuery}`);
+        const res = await STRAPI_CLIENT.fetchAPI(`lesson-plans?_sort=title:ASC&${formattedSearchQuery}`);
         setLessonPlanResults(res)
         setLoadingResults(false)
       } catch (err) {
@@ -138,8 +138,8 @@ LessonPlans.propTypes = {};
 export default withRouter(LessonPlans);
 
 export const getStaticProps = async ({ locale }) => {
-  const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans");
-  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+  const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans?_sort=title:ASC");
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
 
   return {
     props: {

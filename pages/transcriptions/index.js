@@ -7,7 +7,7 @@ import StrapiClient from "@/lib/StrapiClient";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { PrimaryButton } from "@/components/shared/Button";
+import { PrimaryButton, SecondaryButton } from "@/components/shared/Button";
 import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
 import qs from 'qs'
@@ -22,15 +22,28 @@ const Transcriptions = (props) => {
   const {
     router,
     authorOptions,
-    transcriptions
+    transcriptions,
+    themes,
+    literaryGenres
   } = props;
   
   const [transcriptionResults, setTranscriptionResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
 
-  const { asPath, query } = router;
+  const { query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
+
+  const {
+    value: authorLocation,
+    bind: bindAuthorLocation,
+    reset: resetAuthorLocation,
+  } = useListBox("all");
+  const {
+    value: selectedGenre,
+    bind: bindSelectedGenre,
+    reset: resetselectedGenre,
+  } = useListBox("all");
 
   const {
     value: selectedAuthor,
@@ -76,7 +89,7 @@ const Transcriptions = (props) => {
       } else {
         const formattedSearchQuery = formatQuery(searchParams);
         newURL = `/transcriptions?${formattedSearchQuery}`;
-        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?_sort=title:ASC&${formattedSearchQuery}`);
         setTranscriptionResults(res) 
       }
       setLoadingResults(false)
@@ -88,6 +101,13 @@ const Transcriptions = (props) => {
     }
 
   };
+
+  const handleReset = () => {
+    resetAuthorName();
+    resetAuthorLocation();
+    resetselectedGenre();
+  }
+
   useEffect(() => {
 
     const fetchPageData = async () => {
@@ -111,22 +131,49 @@ const Transcriptions = (props) => {
       <ContentLayout maxWidth='1000px' title="Transcriptions">
         <SearchFiltersContainer>
           <form onSubmit={handleTranscriptionsSearch}>
-          <StyledFormRow>
-            <StyledOptionContainer>
-              <ListBox
-                allObject={{ name: "All Authors", id: "all" }}
-                labelText="Author"
-                labelValue="author"
-                options={authorOptions}
-                value={selectedAuthor}
-                {...bindAuthorName}
-              />
-            </StyledOptionContainer>
-          </StyledFormRow>
+          <StyledFieldsContainer>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Authors", id: "all" }}
+                    labelText="Author"
+                    labelValue="author"
+                    options={authorOptions}
+                    value={selectedAuthor}
+                    {...bindAuthorName}
+                  />
+                </StyledSelectContainer>
+              <StyledFormRow>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="title"
+                    allObject={{ title: "All Themes", id: "all" }}
+                    labelText="Theme"
+                    labelValue="theme"
+                    options={themes}
+                    value={authorLocation}
+                    {...bindAuthorLocation}
 
-            <div>
+                  />
+                </StyledSelectContainer>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="title"
+                    allObject={{ title: "All Literary Genres", id: "all" }}
+                    labelText="Literary Genres"
+                    labelValue="literary-genre"
+                    options={literaryGenres}
+                    value={selectedGenre}
+                    {...bindSelectedGenre}
+
+                  />
+                </StyledSelectContainer>
+              </StyledFormRow>
+            </StyledFieldsContainer>
+            <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
-            </div>
+              <SecondaryButton type="reset" text="Clear Fields" onClick={handleReset} />
+            </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
           
@@ -140,20 +187,29 @@ const Transcriptions = (props) => {
 
 Transcriptions.propTypes = {
   transcriptions: PropTypes.array,
-  authorOptions: PropTypes.array
+  authorOptions: PropTypes.array,
+  themes: PropTypes.array,
+  literaryGenres: PropTypes.array,
+  router: PropTypes.object,
 };
 
 export default withRouter(Transcriptions);
 
 export const getStaticProps = async ({ locale }) => {
   const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions?_sort=title:ASC");
-  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors");
+  const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
+
+  const themes = await STRAPI_CLIENT.fetchAPI("themes?_sort=title:ASC");
+  const literaryGenres = await STRAPI_CLIENT.fetchAPI('literary-genres?_sort=title:ASC');
+
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
       transcriptions,
       authorOptions,
+      themes,
+      literaryGenres
     },
   }
 };
@@ -168,3 +224,28 @@ const StyledFormRow = styled.div`
 const StyledOptionContainer = styled.div`
   width: 45%;
 `
+
+const StyledFieldsContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  @media ${device.tablet} {
+    justify-content: space-between;
+  }
+`;
+
+const StyledSelectContainer = styled.div`
+  flex: 0 0 45%;
+  margin: 0px;
+  width: 100%;
+  @media ${device.tablet} {
+  }
+`;
+
+const StyledBtnContainer = styled.div`
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`;
