@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 
 const Transcription = props => {
 
@@ -92,11 +93,10 @@ const Transcription = props => {
 
       ) : null}
         <StyledSecondaryHeading className='p-t-20' id='transcription'>Transcription</StyledSecondaryHeading>
-      <StyledTranscription
+      <ParsedMarkdown
           className='p-t-10 p-b-40'
-          dangerouslySetInnerHTML={
-            { __html: transcription.body }
-          }
+          markdownString={transcription.body}
+        
       />
       {transcription.translations.length ? (
         <>

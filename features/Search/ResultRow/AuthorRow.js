@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import QuillPenIcon from '@/components/shared/Icon/QuillPenIcon';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 
 const AuthorRow = props => {
   const {author} = props;
+
 
   const authorLocation = author?.location?.value;
   const authorName = author?.name?.value;
@@ -17,13 +19,11 @@ const AuthorRow = props => {
         <QuillPenIcon />
       </StyledIconContainer>
       <div>
-        <StyledTitle
-          dangerouslySetInnerHTML={
-            { __html: `${authorName}: ${authorLocation ? authorLocation : ''}${(authorLocation && authorPeriod) ? ';' : '' } ${authorPeriod ? authorPeriod : ''}` }
-          }
-        />
+        <StyledTitle>
+          {`${authorName}: ${authorLocation ? authorLocation : ''}${(authorLocation && authorPeriod) ? ';' : '' } ${authorPeriod ? authorPeriod : ''}` }
+        </StyledTitle>
         <div className='p-l-20'>
-          <StyledShortBio dangerouslySetInnerHTML={{ __html: authorShortBio}}/>
+          <ParsedMarkdown dangerouslySetInnerHTML={{ __html: authorShortBio}}/>
         </div>
       </div>
 

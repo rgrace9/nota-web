@@ -10,7 +10,6 @@ const StyledLink = styled.a`
   &:hover {
     color: ${colors.lightCream};
     background: ${colors.navyBlue};
-    /* text-decoration-style: dashed; */
   }
 `
 

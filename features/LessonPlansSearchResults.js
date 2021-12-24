@@ -5,9 +5,12 @@ import {woodSmoke, white} from '@/styles/colors';
 import Container from '@/components/shared/Container';
 import Link from 'next/link';
 import Loading from '@/components/shared/Loading/LoadingPage'
+import showdown from 'showdown';
 
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
+
+  const converter = new showdown.Converter({'simplifiedAutoLink': true});
 
   return (
     <StyledContainer>

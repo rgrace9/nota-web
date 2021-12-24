@@ -14,6 +14,7 @@ import { withRouter } from 'next/router'
 import PropTypes from "prop-types";
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import  {StyledUnorderedList} from '@/components/shared/List';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 
 
 const StyledBiography = styled.div`
@@ -96,11 +97,9 @@ const AuthorShow = (props) => {
               {author.biography ? (
                 <section>
                   <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
-                  <StyledBiography
+                  <ParsedMarkdown
                     className='p-t-10 p-b-40'
-                    dangerouslySetInnerHTML={
-                      { __html: author.biography}
-                    }
+                    markdownString={author.biography}
                   />
                 </section>
               ) : null}
