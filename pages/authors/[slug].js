@@ -4,23 +4,16 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
-import { device } from "@/styles/screenSizes";
-import * as colors from 'styles/colors';
-import qs from 'qs'
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
-import { useEffect, useState } from 'react';
 import { withRouter } from 'next/router'
 import PropTypes from "prop-types";
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import  {StyledUnorderedList} from '@/components/shared/List';
 import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
+import SectionContent from '@/components/shared/SectionContent';
+import SectionList from '@/components/shared/SectionList';
 
-
-const StyledBiography = styled.div`
-  white-space: pre-wrap;
-  font-size: 2.5rem;
-`
 
 const StyledSecondaryHeading = styled.h1`
   font-size: 4rem;
@@ -41,38 +34,31 @@ const StyledListContainer = styled.ul`
   padding-left: 40px;
 `
 const AuthorShow = (props) => {
-  const { author, relatedAuthors, router } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const { author, router } = props;
 
-  const { asPath, query } = router;
-  const { t } = useTranslation('home')
-  useEffect(() => {
-  
-    const previousPageIsSearchPage = globalThis.sessionStorage?.prevPath?.includes('?') || '';
-    const BREADCRUMBS_LIST = [
-      {
-        href: "/",
-        title: "Home",
-      },
-      {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/authors',
-        title: "Authors",
-        isCurrentPage: false,
-      },
-      {
-        href: asPath,
-        title: author.name,
-        isCurrentPage: true,
-      },
-    ]
-    setBreadcrumbs(BREADCRUMBS_LIST)
+  const { asPath } = router;
 
-  }, [])
+  const BREADCRUMBS_LIST = [
+    {
+      href: "/",
+      title: "Home",
+    },
+    {
+      href: '/authors',
+      title: "Authors",
+      isCurrentPage: false,
+    },
+    {
+      href: asPath,
+      title: author.name,
+      isCurrentPage: true,
+    },
+  ]
 
   return (
     <Layout
       pageTitle={`${author.name} | Project Nota`}
-      breadcrumbsList={breadcrumbs}
+      breadcrumbsList={BREADCRUMBS_LIST}
     >
       <Container>
         <PageContentWrapper title={author.name}>
@@ -94,46 +80,38 @@ const AuthorShow = (props) => {
                 </StyledLink>
               </Link>
               )}
-              {author.biography ? (
-                <section>
-                  <StyledSecondaryHeading>Biography</StyledSecondaryHeading>
-                  <ParsedMarkdown
-                    className='p-t-10 p-b-40'
-                    markdownString={author.biography}
-                  />
-                </section>
-              ) : null}
-            {author.lessonPlans.length ?
-            (
-              <section>
-                <StyledSecondaryHeading>Lesson Plans</StyledSecondaryHeading>
-                <StyledUnorderedList>
-                  {author.lessonPlans.map(lp => (
-                    <li
-                      key={lp.id}
-                    >
-                      <StyledLink target='_blank' href={lp.link}>{lp.title}</StyledLink>
-                    </li>
-                  ))}
-                </StyledUnorderedList>
-              </section>
-            ) : null}
-            <section>
-              {author.transcriptions ? (
-                <>
-                  <StyledSecondaryHeading>Transcriptions</StyledSecondaryHeading>
-                  <StyledUnorderedList>
-                    {author.transcriptions.map(transcription => (
-                        <li
-                          key={transcription.id}
-                        >
-                          <StyledLink href={`/transcriptions/${transcription.id}`}>{transcription.title}</StyledLink>
-                        </li>
-                      ))}
-                  </StyledUnorderedList>
-                </>
-              ) : null}
-            </section>
+              <SectionContent 
+                title='Biography'
+                body={author.biography}
+              />
+              
+              <SectionList
+                title={`Lesson Plan${author.lessonPlans.length !== 1 ? 's' : ''}`}
+                listLength={author.lessonPlans.length}
+              >
+                {author.lessonPlans.map(lessonPlan => (
+                  <li key={lessonPlan.id}>
+                    <StyledLink href={lessonPlan.link}>{lessonPlan.title}</StyledLink>
+                  </li>
+                ))}
+              </SectionList>
+
+              <SectionList
+                title={`Transcription${author.transcriptions.length !== 1 ? 's' : ''}`}
+                listLength={author.transcriptions.length}
+              >
+                {author.transcriptions.map(transcription => (
+                  <li key={transcription.id}>
+                    <Link href={`/transcriptions/${transcription.id}`} passHref>
+                      <StyledLink >{transcription.title}</StyledLink>
+                    </Link>
+                  </li>
+                ))}
+              </SectionList>
+              <SectionContent 
+                title='Acknowledgements'
+                body={author.acknowledgement}
+              />
         </PageContentWrapper>
       </Container>
     </Layout>
@@ -177,7 +155,8 @@ export const getStaticProps = async ({ locale, params }) => {
 }
 
 AuthorShow.propTypes = {
-  author: PropTypes.object
+  author: PropTypes.object,
+  router: PropTypes.object,
 };
 
 export default withRouter(AuthorShow)

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
@@ -12,6 +10,7 @@ import StyledLink from '@/components/shared/Link/StyledLink'
 import { withRouter } from 'next/router'
 import PageContainer from '@/components/shared/Container/PageContentWrapper';
 import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
+import SectionContent from '@/components/shared/SectionContent';
 
 const StyledPdfContainer = styled.div`
   height: 100%;
@@ -29,33 +28,28 @@ const LessonPlan = props => {
 
   const { asPath, query } = router;
 
-  useEffect(() => {
-  
-    const previousPageIsSearchPage = globalThis.sessionStorage?.prevPath?.includes('?') || '';
-    const BREADCRUMBS_LIST = [
-      {
-        href: "/",
-        title: "Home",
-      },
-      {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/lesson-plans',
-        title: "Lesson Plans",
-        isCurrentPage: false,
-      },
-      {
-        href: asPath,
-        title: lessonPlan.title,
-        isCurrentPage: true,
-      },
-    ]
-    setBreadcrumbs(BREADCRUMBS_LIST)
+  const BREADCRUMBS_LIST = [
+    {
+      href: "/",
+      title: "Home",
+    },
+    {
+      href: '/lesson-plans',
+      title: "Lesson Plans",
+      isCurrentPage: false,
+    },
+    {
+      href: asPath,
+      title: lessonPlan.title,
+      isCurrentPage: true,
+    },
+  ]
 
-  }, [])
 
   return (
     <Layout
     pageTitle={`${lessonPlan.title} | Project Nota`}
-    breadcrumbsList={breadcrumbs}
+    breadcrumbsList={BREADCRUMBS_LIST}
   >
 
 
@@ -63,7 +57,6 @@ const LessonPlan = props => {
       <PageContainer title={lessonPlan.title}>
         <section className='m-t-20'>
           <ParsedMarkdown markdownString={lessonPlan.description}/>
-
         </section>
         {hasPdf ? (
         <>
@@ -83,6 +76,7 @@ const LessonPlan = props => {
           <StyledLink className='m-t-10' href={lessonPlan.link}>Lesson Plan Link</StyledLink>
 
         )}
+        <SectionContent title='Acknowledgements' body={lessonPlan.acknowledgement} bodyClassName='p-t-20'/>
       </PageContainer>
     </Container>
     </Layout>

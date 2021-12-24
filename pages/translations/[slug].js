@@ -14,8 +14,6 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
-import ChainLink from '@/components/shared/Icon/ChainLink';
-import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 import SectionContent from '@/components/shared/SectionContent';
 
 const TranslationShow = props => {
