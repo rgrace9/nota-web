@@ -26,7 +26,9 @@ const PageContentWrapper = props => {
   return (
     <PageWrapper>
       <StyledMainContentWrapper>
-        <StyledPrimaryHeading>{title}</StyledPrimaryHeading>
+       {title ? (
+         <StyledPrimaryHeading>{title}</StyledPrimaryHeading>
+       ) : null } 
         {children}
       </StyledMainContentWrapper>
     </PageWrapper>
