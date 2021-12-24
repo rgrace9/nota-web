@@ -15,6 +15,9 @@ import { withRouter } from 'next/router';
 import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import ChainLink from '@/components/shared/Icon/ChainLink';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
+import SectionContent from '@/components/shared/SectionContent';
+
 const TranslationShow = props => {
 
   const {
@@ -66,53 +69,26 @@ const TranslationShow = props => {
     <Layout
     pageTitle={`${translation.title} | Project Nota`}
     breadcrumbsList={breadcrumbs}
-  >
-    <Container>
-      <PageContentWrapper title={translation.title}>
-      <Link href={`/authors/${translation.author.id}`} passHref>
-
-          <StyledLink>{translation.author.name}</StyledLink>
-      </Link>
-      <div className='p-t-10'>
-        <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
-
-      </div>
-      {translation.description ? (
-        <>
-        <StyledSecondaryHeading className='p-t-20'>Description</StyledSecondaryHeading>
-        <DefaultText className='p-t-10'>{translation.description}</DefaultText>  
-        </>
-      ) : null }
-
-        <StyledSecondaryHeading className='p-t-20'>Translation</StyledSecondaryHeading>
-      <StyledTranslation
-          className='p-t-10'
-          dangerouslySetInnerHTML={
-            { __html: translation.body }
-          }
-      />
-
-      {translation.transcription ? (
-        <>
-          <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
-          <StyledLink className='m-t-20' href={`/transcriptions/${translation.transcription?.id}`}>{translation.title}</StyledLink>
-
-        </>
-      ) : null}
-      {translation.acknowledgement ? (
-        <>
-          <StyledSecondaryHeading className='p-t-20'>Acknowledgements</StyledSecondaryHeading>
-          <StyledTranslation
-            className='p-t-10'
-            dangerouslySetInnerHTML={
-              { __html: translation.acknowledgement }
-            }
-          />
-        </>
-      ) : null}
-
-      </PageContentWrapper>
-    </Container>
+    >
+      <Container>
+        <PageContentWrapper title={translation.title}>
+          <Link href={`/authors/${translation.author.id}`} passHref>
+              <StyledLink>{translation.author.name}</StyledLink>
+          </Link>
+          <div className='p-t-10'>
+            <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
+          </div>
+          <SectionContent title='Description' body={translation.description} bodyClassName='p-t-20'/>
+          <SectionContent title='Translation' body={translation.body}  bodyClassName='p-t-20'/>
+          {translation.transcription ? (
+            <>
+              <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
+              <StyledLink className='m-t-20' href={`/transcriptions/${translation.transcription?.id}`}>{translation.title}</StyledLink>
+            </>
+          ) : null}
+          <SectionContent title='Acknowledgements' body={translation.acknowledgement} bodyClassName='p-t-20'/>
+        </PageContentWrapper>
+      </Container>
     </Layout>
   );
 };

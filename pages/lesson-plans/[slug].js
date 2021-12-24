@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import { withRouter } from 'next/router'
 import PageContainer from '@/components/shared/Container/PageContentWrapper';
-import {DefaultText} from '@/components/shared/Paragraph/StyledText';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 
 const StyledPdfContainer = styled.div`
   height: 100%;
@@ -62,7 +62,7 @@ const LessonPlan = props => {
     <Container>
       <PageContainer title={lessonPlan.title}>
         <section className='m-t-20'>
-          <DefaultText>{lessonPlan.description}</DefaultText>
+          <ParsedMarkdown markdownString={lessonPlan.description}/>
 
         </section>
         {hasPdf ? (

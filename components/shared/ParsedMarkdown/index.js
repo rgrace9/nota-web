@@ -16,10 +16,14 @@ const ParsedMarkdown = props => {
       color: ${colors.navyBlue};
       text-decoration: underline;
       cursor: pointer;
+      position: relative;
       &:hover {
         color: ${colors.lightCream};
         background: ${colors.navyBlue};
       }
+    }
+    ul, ol {
+      margin-left: 30px;
     }
   `
   return (
@@ -36,7 +40,7 @@ ParsedMarkdown.propTypes = {
 
 ParsedMarkdown.defaultProps = {
   markdownString: '',
-  className: ''
+  className: null
 };
 
 export default ParsedMarkdown;

@@ -5,12 +5,11 @@ import {woodSmoke, white} from '@/styles/colors';
 import Container from '@/components/shared/Container';
 import Link from 'next/link';
 import Loading from '@/components/shared/Loading/LoadingPage'
-import showdown from 'showdown';
+import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
+
 
 const LessonPlansSearchResults = props => {
   const {results, loading } = props;
-
-  const converter = new showdown.Converter({'simplifiedAutoLink': true});
 
   return (
     <StyledContainer>
@@ -28,7 +27,7 @@ const LessonPlansSearchResults = props => {
                 </Link>
                 </StyledTitle>
                 <StyledSubHeading>{result.authors.map(author => author.name).join(', ')}</StyledSubHeading>
-                <StyledDescription className='p-t-20'>{result.description}</StyledDescription>
+                <ParsedMarkdown className='p-t-20' markdownString={result.description}/>
               </ResourceTileContainer>
           ))}
           </StyledUnorderedList>
