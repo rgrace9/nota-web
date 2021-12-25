@@ -76,15 +76,15 @@ const TranslationShow = props => {
           <div className='p-t-10'>
             <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
           </div>
-          <SectionContent title='Description' body={translation.description} bodyClassName='p-t-20'/>
-          <SectionContent title='Translation' body={translation.body}  bodyClassName='p-t-20'/>
+          <SectionContent title='Description' body={translation.description} />
+          <SectionContent title='Translation' body={translation.body}  />
           {translation.transcription ? (
             <>
               <StyledSecondaryHeading className='p-t-20'>Transcription</StyledSecondaryHeading>
               <StyledLink className='m-t-20' href={`/transcriptions/${translation.transcription?.id}`}>{translation.title}</StyledLink>
             </>
           ) : null}
-          <SectionContent title='Acknowledgements' body={translation.acknowledgement} bodyClassName='p-t-20'/>
+          <SectionContent title='Acknowledgements' body={translation.acknowledgement}/>
         </PageContentWrapper>
       </Container>
     </Layout>

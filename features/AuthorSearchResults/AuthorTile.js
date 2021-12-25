@@ -40,7 +40,6 @@ const StyledDescription = styled.p`
 
 const StyledTitle = styled.h3`
   font-weight: 500;
-  padding-top: 10px;
   font-size: 3rem;
   text-decoration: underline;
   margin-bottom: 20px;
@@ -101,9 +100,6 @@ const ResourceTileContainer = styled.li`
   transition: 0.3s;
   margin-bottom: 20px;
   background-color: white;
-  box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   background: white;
   cursor: pointer;
