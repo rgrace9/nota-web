@@ -202,9 +202,11 @@ export default withRouter(Transcriptions);
 
 export const getStaticProps = async ({ locale }) => {
   const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions?_sort=title:ASC");
+  
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
 
   const themes = await STRAPI_CLIENT.fetchAPI("themes?_sort=title:ASC");
+  
   const literaryGenres = await STRAPI_CLIENT.fetchAPI('literary-genres?_sort=title:ASC');
 
 
@@ -224,10 +226,6 @@ const StyledFormRow = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-`
-
-const StyledOptionContainer = styled.div`
-  width: 45%;
 `
 
 const StyledFieldsContainer = styled.div`
