@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import VisuallyHidden from "@reach/visually-hidden";
 import styled from '@emotion/styled';
 import { Select } from "@chakra-ui/react"
+import { truncateString } from "@/utils/truncateString";
+
 const StyledContainer = styled.div`
 
 label {
@@ -48,7 +50,7 @@ const StyledList = styled(ListboxList)`
 `
 
 const ListBoxContainer = props => {
-  const {labelText, options, labelValue, dataKey, allObject, onChange, value} = props;
+  const {labelText, options, labelValue, dataKey, allObject, onChange, value, maxOptionLength} = props;
  
   const formattedList = [
     allObject,
@@ -71,7 +73,7 @@ const ListBoxContainer = props => {
             <StyledList>
             {formattedList.map(opt => (
               <ListboxOption key={opt.id} value={opt.id.toString()}>
-                {opt[dataKey]} 
+                {truncateString(opt[dataKey], maxOptionLength)} 
               </ListboxOption>
             ))}
             </StyledList>
@@ -85,10 +87,12 @@ const ListBoxContainer = props => {
 ListBoxContainer.propTypes = {
   dataKey: PropTypes.string,
   allObject: PropTypes.object,
+  maxOptionLength: PropTypes.number,
 };
 ListBoxContainer.defaultProps = {
   dataKey: 'name',
-  allObject: {}
+  allObject: {},
+  maxOptionLength: 30
 };
 
 export default ListBoxContainer;

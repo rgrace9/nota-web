@@ -18,6 +18,12 @@ import TranscriptionsResults from "@/features/TranscriptionsSearch/SearchResults
 
 const STRAPI_CLIENT = new StrapiClient();
 
+const AUTHOR_QUERY_KEY = 'author.id_eq';
+
+const THEME_QUERY_KEY = 'themes.id_in';
+
+const GENRE_QUERY_KEY = 'literary_genres.id_in';
+
 const Transcriptions = (props) => {
   const {
     router,
@@ -53,9 +59,9 @@ const Transcriptions = (props) => {
 
   const onInitialSearch = async (authorValue, genreValue, themeValue) => {
     const searchParams = {
-      ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
-      ...(themeValue !== 'all' && { 'themes.id_in': themeValue, }),
-      ...(genreValue !== 'all' && { 'literary_genres.id_in': genreValue, }),
+      ...(authorValue !== 'all' && { [AUTHOR_QUERY_KEY]: authorValue, }),
+      ...(themeValue !== 'all' && { [THEME_QUERY_KEY]: themeValue, }),
+      ...(genreValue !== 'all' && { [GENRE_QUERY_KEY]: genreValue, }),
     }
     if (!authorValue && !themeValue && !genreValue) {
       setTranscriptionResults(transcriptions)
@@ -80,9 +86,9 @@ const Transcriptions = (props) => {
     e.preventDefault();
     setLoadingResults(true)
     const searchParams = {
-      ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
-      ...(selectedTheme !== 'all' && { 'themes.id_in': selectedTheme, }),
-      ...(selectedGenre !== 'all' && { 'literary_genres.id_in': selectedGenre, }),
+      ...(selectedAuthor !== 'all' && { [AUTHOR_QUERY_KEY]: selectedAuthor }),
+      ...(selectedTheme !== 'all' && { [THEME_QUERY_KEY]: selectedTheme, }),
+      ...(selectedGenre !== 'all' && { [GENRE_QUERY_KEY]: selectedGenre, }),
     }
     let newURL = '';
     try {
@@ -116,10 +122,10 @@ const Transcriptions = (props) => {
     const fetchPageData = async () => {
       if (isMounted) {
         setLoadingResults(true)
-        bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
-        bindSelectedGenre.onChange(queryParams['literary_genres.id_in'] || 'all');
-        bindTheme.onChange(queryParams['themes.id_in'] || 'all');
-        onInitialSearch(queryParams['author.id_eq'], queryParams['literary_genres.id_in'], queryParams['themes.id_in']);
+        bindAuthorName.onChange(queryParams[AUTHOR_QUERY_KEY] || 'all');
+        bindSelectedGenre.onChange(queryParams[GENRE_QUERY_KEY] || 'all');
+        bindTheme.onChange(queryParams[THEME_QUERY_KEY] || 'all');
+        onInitialSearch(queryParams[AUTHOR_QUERY_KEY], queryParams[GENRE_QUERY_KEY], queryParams[THEME_QUERY_KEY]);
       }
     }
     let isMounted = true;

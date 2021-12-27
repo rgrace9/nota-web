@@ -18,21 +18,33 @@ import TranslationsSearchResults from "@/features/TranslationsSearchResults";
 
 const STRAPI_CLIENT = new StrapiClient();
 
+const AUTHOR_QUERY_KEY = 'author.id_eq';
+
+const THEME_QUERY_KEY = 'transcription.themes.id_in';
+
+const GENRE_QUERY_KEY = 'transcription.literary_genres.id_in';
+
+const TRANSLATION_QUERY_KEY = 'language.id_eq';
+
+
 const Translations = (props) => {
   const {
     router,
     authorOptions,
     translations,
     themes,
-    literaryGenres
+    literaryGenres,
+    translationLanguages
   } = props;
   
   const [translationResults, setTranslationsResults] = useState([])
+
   const [loadingResults, setLoadingResults] = useState(false)
 
-
   const { query } = router;
+
   const queryString = JSON.stringify(query);
+
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
   const {
@@ -53,20 +65,31 @@ const Translations = (props) => {
     reset: resetSelectedGenre,
   } = useListBox("all");
 
-  const onInitialSearch = async (authorValue, genreValue, themeValue) => {
+  const {
+    value: selectedLanguage,
+    bind: bindTranslationLanguage,
+    reset: resetTranslationLanguage,
+  } = useListBox("all");
+
+  const onInitialSearch = async (authorValue, genreValue, themeValue, languageValue) => {
     const searchParams = {
-      ...(authorValue !== 'all' && { 'author.id_eq': authorValue, }),
-      ...(themeValue !== 'all' && { 'transcription.themes.id_in': themeValue, }),
-      ...(genreValue !== 'all' && { 'transcription.literary_genres.id_in': genreValue, }),
+      ...(authorValue !== 'all' && { [AUTHOR_QUERY_KEY]: authorValue }),
+      ...(themeValue !== 'all' && { [THEME_QUERY_KEY]: themeValue }),
+      ...(genreValue !== 'all' && { [GENRE_QUERY_KEY]: genreValue }),
+      ...(languageValue !== 'all' && { [TRANSLATION_QUERY_KEY]: languageValue }),
     }
-    if (!authorValue && !themeValue && !genreValue) {
+  
+    if (!authorValue && !themeValue && !genreValue && !languageValue) {
       setTranslationsResults(translations)
       setLoadingResults(false)
     } else {
       try {
         const formattedSearchQuery = formatQuery(searchParams);
-        setLoadingResults(true)
+      
+        setLoadingResults(true);
+
         const res = await STRAPI_CLIENT.fetchAPI(`translations?_sort=title:ASC&${formattedSearchQuery}`);
+  
         setTranslationsResults(res)
         setLoadingResults(false)
       } catch (err) {
@@ -82,9 +105,10 @@ const Translations = (props) => {
     try {
       setLoadingResults(true)
       const searchParams = {
-        ...(selectedAuthor !== 'all' && { 'author.id_eq': selectedAuthor }),
-        ...(selectedTheme !== 'all' && { 'transcription.themes.id_in': selectedTheme, }),
-        ...(selectedGenre !== 'all' && { 'transcription.literary_genres.id_in': selectedGenre, }),
+        ...(selectedAuthor !== 'all' && { [AUTHOR_QUERY_KEY]: selectedAuthor }),
+        ...(selectedTheme !== 'all' && { [THEME_QUERY_KEY]: selectedTheme }),
+        ...(selectedGenre !== 'all' && { [GENRE_QUERY_KEY]: selectedGenre }),
+        ...(selectedLanguage !== 'all' && { [TRANSLATION_QUERY_KEY]: selectedLanguage }),
       }
       const formattedSearchQuery = formatQuery(searchParams);
       const newURL = `/translations?${formattedSearchQuery}`;
@@ -103,10 +127,11 @@ const Translations = (props) => {
     const fetchPageData = async () => {
       if (isMounted) {
         setLoadingResults(true)
-        bindAuthorName.onChange(queryParams['author.id_eq'] || 'all');
-        bindSelectedGenre.onChange(queryParams['transcription.literary_genres.id_in'] || 'all');
-        bindTheme.onChange(queryParams['transcription.themes.id_in'] || 'all');
-        onInitialSearch(queryParams['author.id_eq'], queryParams['transcription.literary_genres.id_in'], queryParams['transcription.themes.id_in']);
+        bindAuthorName.onChange(queryParams[AUTHOR_QUERY_KEY] || 'all');
+        bindSelectedGenre.onChange(queryParams[GENRE_QUERY_KEY] || 'all');
+        bindTheme.onChange(queryParams[THEME_QUERY_KEY] || 'all');
+        bindTranslationLanguage.onChange(queryParams[TRANSLATION_QUERY_KEY] || 'all');
+        onInitialSearch(queryParams[AUTHOR_QUERY_KEY], queryParams[GENRE_QUERY_KEY], queryParams[THEME_QUERY_KEY], queryParams[TRANSLATION_QUERY_KEY]);
       }
     }
 
@@ -122,6 +147,7 @@ const Translations = (props) => {
     resetAuthorName();
     resetTheme();
     resetSelectedGenre();
+    resetTranslationLanguage();
   }
 
   return (
@@ -129,7 +155,8 @@ const Translations = (props) => {
       <ContentLayout maxWidth='1000px' title="Translations">
         <SearchFiltersContainer>
           <form onSubmit={handleTranslationsSearch}>
-          <StyledFieldsContainer>
+            <StyledFieldsContainer>
+              <StyledFormRow>
                 <StyledSelectContainer>
                   <ListBox
                     dataKey="name"
@@ -141,6 +168,18 @@ const Translations = (props) => {
                     {...bindAuthorName}
                   />
                 </StyledSelectContainer>
+                <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Languages", id: "all" }}
+                    labelText="Language"
+                    labelValue="language"
+                    options={translationLanguages}
+                    value={selectedLanguage}
+                    {...bindTranslationLanguage}
+                  />
+                </StyledSelectContainer>
+              </StyledFormRow>
               <StyledFormRow>
                 <StyledSelectContainer>
                   <ListBox
@@ -157,12 +196,11 @@ const Translations = (props) => {
                   <ListBox
                     dataKey="title"
                     allObject={{ title: "All Literary Genres", id: "all" }}
-                    labelText="Literary Genres"
+                    labelText="Literary Genre"
                     labelValue="literary-genre"
                     options={literaryGenres}
                     value={selectedGenre}
                     {...bindSelectedGenre}
-
                   />
                 </StyledSelectContainer>
               </StyledFormRow>
@@ -172,11 +210,8 @@ const Translations = (props) => {
               <SecondaryButton type="reset" text="Clear Fields" onClick={handleReset} />
             </StyledBtnContainer>
           </form>
-        </SearchFiltersContainer>
-          
-           
-            <TranslationsSearchResults loading={loadingResults} results={translationResults} />
-         
+        </SearchFiltersContainer> 
+        <TranslationsSearchResults loading={loadingResults} results={translationResults} />
       </ContentLayout>
     </Layout>
   );
@@ -187,7 +222,16 @@ Translations.propTypes = {
   authorOptions: PropTypes.array,
   themes: PropTypes.array,
   literaryGenres: PropTypes.array,
+  translationLanguages: PropTypes.array,
   router: PropTypes.object,
+};
+
+Translations.defaultProps = {
+  translations: [],
+  authorOptions: [],
+  themes: [],
+  literaryGenres: [],
+  translationLanguages: [],
 };
 
 export default withRouter(Translations);
@@ -200,6 +244,8 @@ export const getStaticProps = async ({ locale }) => {
   const themes = await STRAPI_CLIENT.fetchAPI("themes?_sort=title:ASC");
   
   const literaryGenres = await STRAPI_CLIENT.fetchAPI('literary-genres?_sort=title:ASC');
+  
+  const translationLanguages = await STRAPI_CLIENT.fetchAPI('translation-languages?_sort=name:ASC');
 
   return {
     props: {
@@ -208,6 +254,7 @@ export const getStaticProps = async ({ locale }) => {
       authorOptions,
       themes,
       literaryGenres,
+      translationLanguages
     },
   }
 };
@@ -217,10 +264,11 @@ const StyledFormRow = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-`
-
-const StyledOptionContainer = styled.div`
-  width: 45%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  @media ${device.tablet} {
+    flex-direction: row;
+  }
 `
 
 const StyledFieldsContainer = styled.div`
@@ -236,8 +284,6 @@ const StyledSelectContainer = styled.div`
   flex: 0 0 45%;
   margin: 0px;
   width: 100%;
-  @media ${device.tablet} {
-  }
 `;
 
 const StyledBtnContainer = styled.div`

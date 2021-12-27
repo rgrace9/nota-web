@@ -183,6 +183,7 @@ const Authors = (props) => {
                     labelValue="author"
                     options={authorOptions}
                     value={selectedAuthor}
+                    maxOptionLength={200}
                     {...bindAuthorName}
                   />
                 </StyledSelectContainer>
