@@ -96,7 +96,7 @@ TranslationShow.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const translations = await fetchStrapiApi("translations");
+  const translations = await fetchStrapiApi("translations?_limit=300");
 
   const paths = translations.map((translation) => {
     return {
