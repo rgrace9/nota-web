@@ -1,18 +1,13 @@
 import PropTypes from 'prop-types';
 import Layout from '@/components/Layout';
 import Container from '@/components/shared/Container';
-import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
-import { device } from "@/styles/screenSizes";
-import * as colors from 'styles/colors';
-import {StyledHeadingLinkContainer, StyledAnchorLink} from '@/components/shared/HeadingLink/StyledHeadingLink';
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
-import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import SectionContent from '@/components/shared/SectionContent';
 
@@ -70,9 +65,11 @@ const TranslationShow = props => {
     >
       <Container>
         <PageContentWrapper title={translation.title}>
-          <Link href={`/authors/${translation.author.id}`} passHref>
-              <StyledLink>{translation.author.name}</StyledLink>
-          </Link>
+          {translation.author ? (
+            <Link href={`/authors/${translation.author.id}`} passHref>
+                <StyledLink>{translation.author.name}</StyledLink>
+            </Link>
+          ) : null}
           <div className='p-t-10'>
             <StyledLink href={translation.link} target='_blank' rel='noreferrer'>View PDF</StyledLink>
           </div>
@@ -96,7 +93,7 @@ TranslationShow.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const translations = await fetchStrapiApi("translations?_limit=300");
+  const translations = await fetchStrapiApi("translations?_limit=1000");
 
   const paths = translations.map((translation) => {
     return {
