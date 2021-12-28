@@ -5,7 +5,6 @@ import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import Layout from '@/components/Layout';
 import Container from '@/components/shared/Container';
-import { useEffect, useState } from 'react';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import { withRouter } from 'next/router'
 import PageContainer from '@/components/shared/Container/PageContentWrapper';
@@ -23,10 +22,10 @@ const StyledObject = styled.object`
 `
 
 const LessonPlan = props => {
-  const { lessonPlan, router, hasPdf } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  const { asPath, query } = router;
+  const { lessonPlan, router, hasPdf } = props;
+
+  const { asPath } = router;
 
   const BREADCRUMBS_LIST = [
     {
@@ -51,8 +50,6 @@ const LessonPlan = props => {
     pageTitle={`${lessonPlan.title} | Project Nota`}
     breadcrumbsList={BREADCRUMBS_LIST}
   >
-
-
     <Container>
       <PageContainer title={lessonPlan.title}>
         <section className='m-t-20'>
@@ -126,9 +123,9 @@ LessonPlan.propTypes = {
   lessonPlan: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
-    hasPdf: PropTypes.bool,
-    router: PropTypes.object
-  })
+  }),
+  hasPdf: PropTypes.bool,
+  router: PropTypes.object
 };
 
 export default withRouter(LessonPlan);

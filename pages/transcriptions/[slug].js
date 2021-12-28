@@ -3,8 +3,8 @@ import Layout from '@/components/Layout';
 import Container from '@/components/shared/Container';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
+import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import styled from "@emotion/styled";
-import  {StyledUnorderedList} from '@/components/shared/List';
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
 import React from 'react';
@@ -50,10 +50,12 @@ const Transcription = props => {
     >
     <Container>
       <PageContentWrapper title={transcription.title}>
+        {transcription.date ? (
+          <DefaultText>{transcription.date}</DefaultText>
+        ) : null}
         {transcription.author ? (
           <Link href={`/authors/${transcription.author.id}`} passHref>
-
-              <StyledLink>{transcription.author.name}</StyledLink>
+            <StyledLink>{transcription.author.name}</StyledLink>
           </Link>
         ) : null}
         <div className='p-t-10'>
@@ -105,7 +107,8 @@ Transcription.propTypes = {
     originalText: PropTypes.string,
     originalTextLink: PropTypes.string,
     link: PropTypes.string,
-    acknowledgement: PropTypes.string
+    acknowledgement: PropTypes.string,
+    date: PropTypes.string,
   }),
 };
 

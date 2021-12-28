@@ -7,7 +7,7 @@ import StrapiClient from "@/lib/StrapiClient";
 import Layout from "@/components/Layout";
 import ContentLayout from "@/components/Layout/ContentLayout";
 import { ListBox } from "@/components/shared/dataEntry";
-import { PrimaryButton } from "@/components/shared/Button";
+import { PrimaryButton, SecondaryButton } from "@/components/shared/Button";
 import { formatQuery } from 'utils/queryString';
 import { withRouter } from 'next/router'
 import qs from 'qs'
@@ -18,18 +18,24 @@ import LessonPlansSearchResults from "@/features/LessonPlansSearchResults";
 
 const STRAPI_CLIENT = new StrapiClient();
 
+const LANGUAGE_QUERY_KEY = 'language.id_eq';
+
+const AUTHOR_QUERY_KEY = 'authors.id_in';
+
+
 const LessonPlans = (props) => {
   const {
     router,
     authorOptions,
-    lessonPlans
+    lessonPlans,
+    languageOptions
   } = props;
 
   const [lessonPlanResults, setLessonPlanResults] = useState([])
   const [loadingResults, setLoadingResults] = useState(false)
 
   
-  const { asPath, query } = router;
+  const { query } = router;
   const queryString = JSON.stringify(query);
   const queryParams = useMemo(() => qs.parse(query), [queryString]);
 
@@ -39,11 +45,19 @@ const LessonPlans = (props) => {
     reset: resetAuthorName,
   } = useListBox("all");
 
-  const onInitialSearch = async (authorValue) => {
+  const {
+    value: selectedLanguage,
+    bind: bindTranslationLanguage,
+    reset: resetTranslationLanguage,
+  } = useListBox("all");
+
+  const onInitialSearch = async (authorValue, languageValue) => {
     const searchParams = {
-      ...(authorValue !== 'all' && { 'authors.id_in': authorValue, }),
+      ...(authorValue !== 'all' && { [AUTHOR_QUERY_KEY]: authorValue, }),
+      ...(languageValue !== 'all' && { [LANGUAGE_QUERY_KEY]: languageValue }),
     }
-    if (!authorValue) {
+
+    if (!authorValue && !languageValue) {
       setLessonPlanResults(lessonPlans)
       setLoadingResults(false)
     } else {
@@ -66,8 +80,8 @@ const LessonPlans = (props) => {
     try {
       setLoadingResults(true)
       const searchParams = {
-        ...(selectedAuthor !== 'all' && { 'authors.id_in': selectedAuthor }),
-
+        ...(selectedAuthor !== 'all' && { [AUTHOR_QUERY_KEY]: selectedAuthor }),
+        ...(selectedLanguage !== 'all' && { [LANGUAGE_QUERY_KEY]: selectedLanguage }),
       }
       const formattedSearchQuery = formatQuery(searchParams);
       const newURL = `/lesson-plans?${formattedSearchQuery}`;
@@ -87,8 +101,9 @@ const LessonPlans = (props) => {
     const fetchPageData = async () => {
       if (isMounted) {
         setLoadingResults(true)
-        bindAuthorName.onChange(queryParams['authors.id_in'] || 'all');
-        onInitialSearch(queryParams['authors.id_in']);
+        bindAuthorName.onChange(queryParams[AUTHOR_QUERY_KEY] || 'all');
+        bindTranslationLanguage.onChange(queryParams[LANGUAGE_QUERY_KEY] || 'all');
+        onInitialSearch(queryParams[AUTHOR_QUERY_KEY], queryParams[LANGUAGE_QUERY_KEY]);
       }
     }
     let isMounted = true;
@@ -100,6 +115,10 @@ const LessonPlans = (props) => {
     };
   }, [queryString])
 
+  const handleReset = () => {
+    resetAuthorName();
+    resetTranslationLanguage();
+  }
 
   return (
     <Layout pageTitle="Lesson Plans">
@@ -107,7 +126,7 @@ const LessonPlans = (props) => {
         <SearchFiltersContainer>
           <form onSubmit={handleLessonPlansSearch}>
           <StyledFormRow>
-            <StyledOptionContainer>
+            <StyledSelectContainer>
               <ListBox
                 allObject={{ name: "All Authors", id: "all" }}
                 labelText="Author"
@@ -116,12 +135,25 @@ const LessonPlans = (props) => {
                 value={selectedAuthor}
                 {...bindAuthorName}
               />
-            </StyledOptionContainer>
+            </StyledSelectContainer>
+            <StyledSelectContainer>
+                  <ListBox
+                    dataKey="name"
+                    allObject={{ name: "All Languages", id: "all" }}
+                    labelText="Language"
+                    labelValue="language"
+                    options={languageOptions}
+                    value={selectedLanguage}
+                    {...bindTranslationLanguage}
+                  />
+                </StyledSelectContainer>
           </StyledFormRow>
 
-            <div>
+            <StyledBtnContainer>
               <PrimaryButton type="submit" text="Search" />
-            </div>
+              <SecondaryButton type="reset" text="Clear Fields" onClick={handleReset} />
+
+            </StyledBtnContainer>
           </form>
         </SearchFiltersContainer>
           
@@ -133,19 +165,26 @@ const LessonPlans = (props) => {
   );
 };
 
-LessonPlans.propTypes = {};
+LessonPlans.propTypes = {
+  router: PropTypes.object,
+  languageOptions: PropTypes.array,
+};
 
 export default withRouter(LessonPlans);
 
 export const getStaticProps = async ({ locale }) => {
   const lessonPlans = await STRAPI_CLIENT.fetchAPI("lesson-plans?_sort=title:ASC");
+
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
+
+  const languageOptions = await STRAPI_CLIENT.fetchAPI('translation-languages?_sort=name:ASC');
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "nav", "home"])),
       lessonPlans,
       authorOptions,
+      languageOptions,
     },
   }
 };
@@ -155,8 +194,23 @@ const StyledFormRow = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  @media ${device.tablet} {
+    flex-direction: row;
+  }
 `
 
-const StyledOptionContainer = styled.div`
-  width: 45%;
-`
+const StyledSelectContainer = styled.div`
+  flex: 0 0 45%;
+  margin: 0px;
+  width: 100%;
+`;
+
+const StyledBtnContainer = styled.div`
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`;
