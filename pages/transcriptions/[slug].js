@@ -110,7 +110,7 @@ Transcription.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const transcriptions = await fetchStrapiApi("transcriptions");
+  const transcriptions = await fetchStrapiApi("transcriptions?_limit=1000");
 
   const paths = transcriptions.map((transcription) => {
     return {

@@ -6,7 +6,7 @@ import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
 import Link from 'next/link';
 import StyledLink from '@/components/shared/Link/StyledLink'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withRouter } from 'next/router';
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
 import SectionContent from '@/components/shared/SectionContent';
@@ -15,15 +15,9 @@ const TranslationShow = props => {
 
   const {
     translation,
-    error,
     router
   } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  const StyledTranslation = styled.div`
-    white-space: pre-wrap;
-    font-size: 2.5rem;
-  `
 
   const StyledSecondaryHeading = styled.h2`
     font-size: 4rem;
@@ -31,43 +25,35 @@ const TranslationShow = props => {
     scroll-margin-top: 100px;
   `
 
-  const { asPath, query } = router;
-  // todo - add links to the headings so that there is navigation within the page.
+  const { asPath } = router;
 
-
-  useEffect(() => {
-  
-    const previousPageIsSearchPage = globalThis.sessionStorage?.prevPath?.includes('?') || '';
-    const BREADCRUMBS_LIST = [
-      {
-        href: "/",
-        title: "Home",
-      },
-      {
-        href: previousPageIsSearchPage ? globalThis.sessionStorage.prevPath : '/translations',
-        title: "Translations",
-        isCurrentPage: false,
-      },
-      {
-        href: asPath,
-        title: translation.title,
-        isCurrentPage: true,
-      },
-    ]
-    setBreadcrumbs(BREADCRUMBS_LIST)
-
-  }, [])
+  const BREADCRUMBS_LIST = [
+    {
+      href: "/",
+      title: "Home",
+    },
+    {
+      href: '/translations',
+      title: "Translations",
+      isCurrentPage: false,
+    },
+    {
+      href: asPath,
+      title: translation.title,
+      isCurrentPage: true,
+    },
+  ]
 
   return (
     <Layout
     pageTitle={`${translation.title} | Project Nota`}
-    breadcrumbsList={breadcrumbs}
+    breadcrumbsList={BREADCRUMBS_LIST}
     >
       <Container>
         <PageContentWrapper title={translation.title}>
-          {translation.author ? (
-            <Link href={`/authors/${translation.author.id}`} passHref>
-                <StyledLink>{translation.author.name}</StyledLink>
+          {translation.authorName ? (
+            <Link href={`/authors/${translation.authorId}`} passHref>
+                <StyledLink>{translation.authorName}</StyledLink>
             </Link>
           ) : null}
           <div className='p-t-10'>
@@ -89,7 +75,17 @@ const TranslationShow = props => {
 };
 
 TranslationShow.propTypes = {
-  
+  translation: PropTypes.shape({
+    authorName: PropTypes.string,
+    authorId: PropTypes.id,
+    acknowledgement: PropTypes.string,
+    title: PropTypes.string,
+    transcription: PropTypes.object,
+    description: PropTypes.string,
+    body: PropTypes.string,
+    link: PropTypes.string,
+  }),
+  router: PropTypes.object,
 };
 
 export async function getStaticPaths() {

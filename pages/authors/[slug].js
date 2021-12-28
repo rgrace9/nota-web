@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import Container from '@/components/shared/Container';
-import { useTranslation } from 'next-i18next'
+import {DefaultText} from '@/components/shared/Paragraph/StyledText';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchStrapiApi } from "@/lib/StrapiClient";
 import styled from "@emotion/styled";
@@ -9,8 +9,6 @@ import StyledLink from '@/components/shared/Link/StyledLink'
 import { withRouter } from 'next/router'
 import PropTypes from "prop-types";
 import PageContentWrapper from '@/components/shared/Container/PageContentWrapper';
-import  {StyledUnorderedList} from '@/components/shared/List';
-import ParsedMarkdown from '@/components/shared/ParsedMarkdown';
 import SectionContent from '@/components/shared/SectionContent';
 import SectionList from '@/components/shared/SectionList';
 
@@ -71,18 +69,19 @@ const AuthorShow = (props) => {
                   </Link>
                 )}
               </div>
-              {author.location && 
-              
-              ( 
-              <Link href={`/authors?location.id_eq=${author.location.id}`} passHref>
-              <StyledLink target='_blank'>
+              {author.location &&
+              (<Link href={`/authors?location.id_eq=${author.location.id}`} passHref>
+                <StyledLink target='_blank'>
                   {author.location.name}
                 </StyledLink>
               </Link>
               )}
+              {author.date ? (
+                <DefaultText>{author.date}</DefaultText>
+              ) : null}
               <SectionContent 
                 title='Biography'
-                body={author.biography}
+                body={author.biography || author.shortBiography}
               />
               
               <SectionList
