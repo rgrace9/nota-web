@@ -50,10 +50,6 @@ const StyledTitle = styled.h3`
   font-weight: bold;
 `
 
-const StyledDescription = styled.p`
-  font-size: 2.5rem;
-  padding-bottom: 30px;
-`
 const ResourceTileContainer = styled.li`
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;

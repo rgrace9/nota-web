@@ -15,7 +15,6 @@ import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
 import TranscriptionsResults from "@/features/TranscriptionsSearch/SearchResults";
 
-
 const STRAPI_CLIENT = new StrapiClient();
 
 const AUTHOR_QUERY_KEY = 'author.id_eq';
@@ -23,6 +22,8 @@ const AUTHOR_QUERY_KEY = 'author.id_eq';
 const THEME_QUERY_KEY = 'themes.id_in';
 
 const GENRE_QUERY_KEY = 'literary_genres.id_in';
+
+const PAGE_SIZE = 1000;
 
 const Transcriptions = (props) => {
   const {
@@ -56,7 +57,6 @@ const Transcriptions = (props) => {
     bind: bindAuthorName,
     reset: resetAuthorName,
   } = useListBox("all");
-
   const onInitialSearch = async (authorValue, genreValue, themeValue) => {
     const searchParams = {
       ...(authorValue !== 'all' && { [AUTHOR_QUERY_KEY]: authorValue, }),
@@ -70,7 +70,7 @@ const Transcriptions = (props) => {
       try {
         const formattedSearchQuery = formatQuery(searchParams);
         setLoadingResults(true)
-        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}`);
+        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?${formattedSearchQuery}&_limit=${PAGE_SIZE}`);
         setTranscriptionResults(res)
         setLoadingResults(false)
       } catch (err) {
@@ -98,7 +98,7 @@ const Transcriptions = (props) => {
       } else {
         const formattedSearchQuery = formatQuery(searchParams);
         newURL = `/transcriptions?${formattedSearchQuery}`;
-        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?_sort=title:ASC&${formattedSearchQuery}`);
+        const res = await STRAPI_CLIENT.fetchAPI(`transcriptions?_sort=title:ASC&${formattedSearchQuery}&_limit=${PAGE_SIZE}`);
         setTranscriptionResults(res) 
       }
       setLoadingResults(false)
@@ -142,18 +142,19 @@ const Transcriptions = (props) => {
       <ContentLayout maxWidth='1000px' title="Transcriptions">
         <SearchFiltersContainer>
           <form onSubmit={handleTranscriptionsSearch}>
-          <StyledFieldsContainer>
-                <StyledSelectContainer>
-                  <ListBox
-                    dataKey="name"
-                    allObject={{ name: "All Authors", id: "all" }}
-                    labelText="Author"
-                    labelValue="author"
-                    options={authorOptions}
-                    value={selectedAuthor}
-                    {...bindAuthorName}
-                  />
-                </StyledSelectContainer>
+            <StyledFieldsContainer>              
+              <StyledSelectContainer>
+                <ListBox
+                  dataKey="name"
+                  allObject={{ name: "All Authors", id: "all" }}
+                  labelText="Author"
+                  labelValue="author"
+                  maxOptionLength={200}
+                  options={authorOptions}
+                  value={selectedAuthor}
+                  {...bindAuthorName}
+                />
+              </StyledSelectContainer>
               <StyledFormRow>
                 <StyledSelectContainer>
                   <ListBox
@@ -207,7 +208,7 @@ Transcriptions.propTypes = {
 export default withRouter(Transcriptions);
 
 export const getStaticProps = async ({ locale }) => {
-  const transcriptions = await STRAPI_CLIENT.fetchAPI("transcriptions?_sort=title:ASC");
+  const transcriptions = await STRAPI_CLIENT.fetchAPI(`transcriptions?_sort=title:ASC&_limit=${PAGE_SIZE}`);
   
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
 

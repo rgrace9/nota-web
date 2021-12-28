@@ -9,9 +9,7 @@ import {
 import "@reach/listbox/styles.css";
 import React from 'react';
 import PropTypes from 'prop-types';
-import VisuallyHidden from "@reach/visually-hidden";
 import styled from '@emotion/styled';
-import { Select } from "@chakra-ui/react"
 import { truncateString } from "@/utils/truncateString";
 
 const StyledContainer = styled.div`

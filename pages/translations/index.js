@@ -26,6 +26,7 @@ const GENRE_QUERY_KEY = 'transcription.literary_genres.id_in';
 
 const TRANSLATION_QUERY_KEY = 'language.id_eq';
 
+const PAGE_SIZE = 1000;
 
 const Translations = (props) => {
   const {
@@ -37,7 +38,8 @@ const Translations = (props) => {
     translationLanguages
   } = props;
   
-  const [translationResults, setTranslationsResults] = useState([])
+  const [translationResults, setTranslationsResults] = useState([]);
+  const [resultsCount, setResultsCount] = useState(0);
 
   const [loadingResults, setLoadingResults] = useState(false)
 
@@ -88,7 +90,7 @@ const Translations = (props) => {
       
         setLoadingResults(true);
 
-        const res = await STRAPI_CLIENT.fetchAPI(`translations?_sort=title:ASC&${formattedSearchQuery}`);
+        const res = await STRAPI_CLIENT.fetchAPI(`translations?_sort=title:ASC&${formattedSearchQuery}&_limit=${PAGE_SIZE}`);
   
         setTranslationsResults(res)
         setLoadingResults(false)
@@ -112,7 +114,7 @@ const Translations = (props) => {
       }
       const formattedSearchQuery = formatQuery(searchParams);
       const newURL = `/translations?${formattedSearchQuery}`;
-      const res = await STRAPI_CLIENT.fetchAPI(`translations?${formattedSearchQuery}`);
+      const res = await STRAPI_CLIENT.fetchAPI(`translations?${formattedSearchQuery}&_limit=${PAGE_SIZE}`);
       setTranslationsResults(res)
       setLoadingResults(false)
       router.replace(newURL, undefined, { shallow: true })
@@ -237,7 +239,7 @@ Translations.defaultProps = {
 export default withRouter(Translations);
 
 export const getStaticProps = async ({ locale }) => {
-  const translations = await STRAPI_CLIENT.fetchAPI("translations?_sort=title:ASC");
+  const translations = await STRAPI_CLIENT.fetchAPI(`translations?_sort=title:ASC&_limit=${PAGE_SIZE}`);
   
   const authorOptions = await STRAPI_CLIENT.fetchAPI("authors?_sort=name:ASC");
 
