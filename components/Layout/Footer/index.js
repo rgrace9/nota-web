@@ -63,7 +63,7 @@ const Footer = () => {
       </StyledContent>
       <div>
           <SocialMedia />
-      <StyledTrademark>Project Nota &copy; 2021</StyledTrademark>
+      <StyledTrademark>Project Nota &copy; 2022</StyledTrademark>
       </div>
     </StyledFooter>
   );
