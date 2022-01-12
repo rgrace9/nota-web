@@ -12,8 +12,8 @@ import { device } from "@/styles/screenSizes";
 import { useListBox } from "@/utils/hooks";
 import AuthorSearchResults from '@/features/AuthorSearchResults/ResultsList';
 import { formatQuery } from 'utils/queryString';
-import { withRouter } from 'next/router'
-import qs from 'qs'
+import qs from 'qs';
+import { withRouter } from 'next/router';
 const STRAPI_CLIENT = new StrapiClient();
 
 const StyledFieldsContainer = styled.div`
