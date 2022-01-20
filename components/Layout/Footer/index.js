@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "@emotion/styled";
 import { device } from "@/styles/screenSizes";
 import SocialMedia from './SocialMedia';
+import StyledLink from '@/components/shared/Link/StyledLink'
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -44,6 +45,14 @@ const StyledHeading = styled.p`
 
 const StyledTrademark = styled.div`
   text-align: center;
+  padding-top: 30px;
+`
+
+const StyledLinksContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
 `
 const Footer = () => {
   return (
@@ -59,12 +68,14 @@ const Footer = () => {
               many years of teaching experience, seven advanced degrees, many publications in
               academic journals, and multiple positions in professional organizations.
             </p>
+          <StyledLinksContainer>
+            <SocialMedia />
+            <StyledLink href='https://lupercallegit.us6.list-manage.com/subscribe?u=b948a5d7e659a651269706b5d&id=3ffcf2ec16'>Join Our Newsletter</StyledLink>
+            <StyledLink href='mailto:projectnotaforwomen@gmail.com'>projectnotaforwomen@gmail.com</StyledLink>
+        </StyledLinksContainer>
         </StyledSection>
       </StyledContent>
-      <div>
-          <SocialMedia />
       <StyledTrademark>Project Nota &copy; 2022</StyledTrademark>
-      </div>
     </StyledFooter>
   );
 };

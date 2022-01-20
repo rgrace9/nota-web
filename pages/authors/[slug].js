@@ -12,28 +12,9 @@ import PageContentWrapper from '@/components/shared/Container/PageContentWrapper
 import SectionContent from '@/components/shared/SectionContent';
 import SectionList from '@/components/shared/SectionList';
 
-
-const StyledSecondaryHeading = styled.h1`
-  font-size: 4rem;
-  font-weight: 500;
-`
-
-const StyledText = styled.p`
-  line-height: 1.5;
-  font-size: 2.5rem;
-`
-
-const StyledMainContentWrapper = styled.div`
-  width: 100%;
-  padding-right: 20px;
-`
-
-const StyledListContainer = styled.ul`
-  padding-left: 40px;
-`
 const AuthorShow = (props) => {
   const { author, router } = props;
-
+  
   const { asPath } = router;
 
   const BREADCRUMBS_LIST = [
