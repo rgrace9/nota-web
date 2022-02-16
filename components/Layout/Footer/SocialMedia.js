@@ -39,9 +39,6 @@ const StyledLink = styled.a`
 const SocialMedia = props => {
   return (
     <StyledContainer>
-    <StyledLink href={`mailto:${`projectnotaforwomen@gmail.com`}`}>
-      <img src='/contact/email.png' alt='Email Project Nota'/>
-    </StyledLink>
     <StyledLink href='https://www.facebook.com/projectnota' target='_blank' rel='noopener'>
       <img src='/contact/facebook.png' alt='Email Project Facebook'/>
     </StyledLink>
